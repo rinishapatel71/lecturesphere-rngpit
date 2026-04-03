@@ -4,343 +4,351 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LectureSphere – RNGPIT Working Professional Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <style>
   :root {
-    --primary: #1a6fb5;
-    --primary-light: #2d8de0;
-    --primary-dark: #0f4c80;
-    --accent: #00b4d8;
-    --accent2: #48cae4;
-    --bg: #e8f4fd;
-    --bg2: #d0eaf8;
-    --card: #ffffff;
-    --text: #1a2a3a;
-    --text2: #4a6080;
-    --border: #b8d8f0;
-    --success: #27ae60;
-    --danger: #e74c3c;
-    --warning: #f39c12;
-    --shadow: 0 4px 24px rgba(26,111,181,0.12);
-    --shadow2: 0 8px 40px rgba(26,111,181,0.18);
-    --radius: 16px;
-    --radius2: 10px;
+    --primary:#1a6fb5; --primary-light:#2d8de0; --primary-dark:#0f4c80;
+    --accent:#00b4d8; --accent2:#48cae4;
+    --bg:#e8f4fd; --bg2:#d0eaf8; --card:#ffffff;
+    --text:#1a2a3a; --text2:#4a6080; --border:#b8d8f0;
+    --success:#27ae60; --danger:#e74c3c; --warning:#f39c12;
+    --shadow:0 4px 24px rgba(26,111,181,0.12); --shadow2:0 8px 40px rgba(26,111,181,0.18);
+    --radius:16px; --radius2:10px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes floatChar{
+    0%  {transform:translateY(0px)   opacity:1;}
+    50% {transform:translateY(-12px);}
+    100%{transform:translateY(0px);}
+  }
+  @keyframes pulseDot{0%,100%{r:3;opacity:0.9;}50%{r:5;opacity:1;}}
+  @keyframes dashFlow{0%{stroke-dashoffset:200;}100%{stroke-dashoffset:0;}}
+  @keyframes charDrift{
+    0%  {opacity:0;transform:translateY(8px);}
+    10% {opacity:1;}
+    90% {opacity:0.7;}
+    100%{opacity:0;transform:translateY(-8px);}
+  }
+  @keyframes scanLine{
+    0%  {transform:translateY(-100%);}
+    100%{transform:translateY(100vh);}
+  }
+  @keyframes glowPulse{
+    0%,100%{box-shadow:0 20px 60px rgba(0,0,0,0.35);}
+    50%    {box-shadow:0 20px 60px rgba(0,0,0,0.35),0 0 40px rgba(0,180,216,0.08);}
   }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeInUp { from { opacity:0; transform:translateY(24px);} to { opacity:1; transform:translateY(0);} }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
-  @keyframes spin { to{transform:rotate(360deg)} }
-  @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
-  @keyframes slideIn { from{transform:translateX(-100%)} to{transform:translateX(0)} }
-  @keyframes ripple { to{transform:scale(4);opacity:0} }
-  @keyframes gradMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-
-  /* ── LOGIN PAGE ── */
-  #loginPage {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0f4c80 0%, #1a6fb5 35%, #2d8de0 65%, #00b4d8 100%);
-    background-size: 300% 300%;
-    animation: gradMove 8s ease infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  #loginPage::before {
-    content:'';
-    position:absolute;
-    top:-120px;left:-120px;width:400px;height:400px;
-    background:rgba(255,255,255,0.06);
-    border-radius:50%;
-  }
-  #loginPage::after {
-    content:'';
-    position:absolute;
-    bottom:-80px;right:-80px;width:300px;height:300px;
-    background:rgba(255,255,255,0.05);
-    border-radius:50%;
-  }
-  .login-card {
-    background: rgba(255,255,255,0.97);
-    border-radius: 24px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    padding: 48px 40px 40px;
-    width: 420px;
-    max-width: 95vw;
-    animation: fadeInUp 0.6s ease;
-    position: relative;
-    z-index: 1;
-  }
-  .login-logo {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-  .login-logo .logo-icon {
-    width: 72px;height:72px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    margin-bottom: 12px;
-    box-shadow: 0 8px 24px rgba(26,111,181,0.3);
-    animation: float 3s ease-in-out infinite;
-  }
-  .login-logo h1 { font-size: 1.6rem; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; }
-  .login-logo p { font-size: 0.78rem; color: var(--text2); margin-top: 2px; }
-  .login-tabs { display:flex; gap:4px; background:var(--bg2); border-radius:10px; padding:4px; margin-bottom:24px; }
-  .login-tab { flex:1; text-align:center; padding:8px; border-radius:8px; cursor:pointer; font-size:0.82rem; font-weight:600; color:var(--text2); transition:all .2s; }
-  .login-tab.active { background:white; color:var(--primary); box-shadow:0 2px 8px rgba(26,111,181,0.15); }
-  .form-group { margin-bottom:16px; }
-  .form-group label { display:block; font-size:0.78rem; font-weight:600; color:var(--text2); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
-  .form-group input, .form-group select {
-    width:100%; padding:12px 16px;
-    border:2px solid var(--border);
-    border-radius:10px;
-    font-family:'Poppins',sans-serif;
-    font-size:0.88rem;
-    color:var(--text);
-    outline:none;
-    transition:all .2s;
-    background:white;
-  }
-  .form-group input:focus, .form-group select:focus { border-color:var(--primary); box-shadow:0 0 0 4px rgba(26,111,181,0.1); }
-  .btn {
-    padding:12px 24px; border:none; border-radius:10px; font-family:'Poppins',sans-serif;
-    font-size:0.88rem; font-weight:600; cursor:pointer; transition:all .2s;
-    display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
-  }
-  .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; box-shadow:0 4px 16px rgba(26,111,181,0.3); }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(26,111,181,0.4); }
-  .btn-primary:active { transform:translateY(0); }
-  .btn-full { width:100%; justify-content:center; }
-  .btn-sm { padding:7px 14px; font-size:0.78rem; border-radius:8px; }
-  .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
-  .btn-outline:hover { background:var(--primary); color:white; }
-  .btn-danger { background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; }
-  .btn-success { background:linear-gradient(135deg,#27ae60,#229954); color:white; }
-  .btn-warning { background:linear-gradient(135deg,#f39c12,#d68910); color:white; }
-  .btn-info { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
-  .forgot-link { text-align:right; margin-top:-8px; margin-bottom:16px; }
-  .forgot-link a { font-size:0.78rem; color:var(--primary); text-decoration:none; font-weight:500; }
-  .forgot-link a:hover { text-decoration:underline; }
-
-  /* ── APP SHELL ── */
-  #appShell { display:none; min-height:100vh; }
-
-  /* ── SIDEBAR ── */
-  .sidebar {
-    width: 260px; min-height:100vh;
-    background: linear-gradient(175deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
-    position: fixed; top:0; left:0; z-index:100;
-    display:flex; flex-direction:column;
-    box-shadow: 4px 0 24px rgba(15,76,128,0.25);
-    transition: transform .3s;
-  }
-  .sidebar-logo {
-    padding: 24px 20px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-  }
-  .sidebar-logo .logo-row { display:flex; align-items:center; gap:12px; }
-  .sidebar-logo .s-icon {
-    width:44px;height:44px;
-    background:rgba(255,255,255,0.2);
-    border-radius:12px;
+  /* ══ LOGIN ══ */
+  #loginPage{
+    min-height:100vh;
+    background:linear-gradient(160deg,#071828 0%,#0b2d4e 30%,#0f4070 60%,#071828 100%);
     display:flex;align-items:center;justify-content:center;
-    font-size:22px;
-  }
-  .sidebar-logo h2 { font-size:1.05rem; font-weight:800; color:white; }
-  .sidebar-logo span { font-size:0.68rem; color:rgba(255,255,255,0.65); }
-  .sidebar-user {
-    padding:16px 20px;
-    background:rgba(255,255,255,0.07);
-    margin:12px;border-radius:12px;
-  }
-  .sidebar-user .u-name { font-size:0.88rem; font-weight:700; color:white; }
-  .sidebar-user .u-role { font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:2px; }
-  .sidebar-nav { flex:1; padding:8px 12px; overflow-y:auto; }
-  .nav-section { font-size:0.65rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; font-weight:600; padding:12px 8px 6px; }
-  .nav-item {
-    display:flex;align-items:center;gap:12px;
-    padding:11px 14px; border-radius:10px;
-    color:rgba(255,255,255,0.78); font-size:0.85rem; font-weight:500;
-    cursor:pointer; transition:all .2s; margin-bottom:2px;
-  }
-  .nav-item:hover { background:rgba(255,255,255,0.12); color:white; }
-  .nav-item.active { background:rgba(255,255,255,0.2); color:white; font-weight:600; box-shadow:0 2px 12px rgba(0,0,0,0.15); }
-  .nav-item .ni { font-size:18px; width:22px; text-align:center; }
-  .sidebar-footer { padding:16px; border-top:1px solid rgba(255,255,255,0.1); }
-  .sidebar-footer .btn { background:rgba(255,255,255,0.1); color:white; width:100%; justify-content:center; border:1px solid rgba(255,255,255,0.2); font-size:0.82rem; }
-  .sidebar-footer .btn:hover { background:rgba(255,255,255,0.2); }
-
-  /* ── MAIN ── */
-  .main-content { margin-left:260px; min-height:100vh; padding:0; }
-
-  /* ── TOPBAR ── */
-  .topbar {
-    background:white; padding:16px 28px;
-    display:flex;align-items:center;justify-content:space-between;
-    box-shadow:0 2px 12px rgba(26,111,181,0.08);
-    position:sticky;top:0;z-index:50;
-  }
-  .topbar h3 { font-size:1.15rem; font-weight:700; color:var(--primary-dark); }
-  .topbar .tb-right { display:flex;align-items:center;gap:12px; }
-  .topbar .badge { background:var(--accent); color:white; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:700; }
-
-  /* ── PAGES ── */
-  .page { display:none; padding:24px 28px; animation:fadeInUp .35s ease; }
-  .page.active { display:block; }
-
-  /* ── STATS CARDS ── */
-  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; margin-bottom:24px; }
-  .stat-card {
-    background:white;border-radius:var(--radius);padding:22px 24px;
-    box-shadow:var(--shadow);
-    display:flex;align-items:center;gap:16px;
-    transition:transform .2s,box-shadow .2s;
-    border-left:4px solid transparent;
     position:relative;overflow:hidden;
   }
-  .stat-card::after { content:''; position:absolute;top:-30px;right:-30px;width:80px;height:80px;background:currentColor;opacity:0.05;border-radius:50%; }
-  .stat-card:hover { transform:translateY(-3px);box-shadow:var(--shadow2); }
-  .stat-card.blue { border-left-color:var(--primary); }
-  .stat-card.cyan { border-left-color:var(--accent); }
-  .stat-card.green { border-left-color:var(--success); }
-  .stat-card.orange { border-left-color:var(--warning); }
-  .stat-icon { font-size:28px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center; }
-  .stat-card.blue .stat-icon { background:rgba(26,111,181,0.1);color:var(--primary); }
-  .stat-card.cyan .stat-icon { background:rgba(0,180,216,0.1);color:var(--accent); }
-  .stat-card.green .stat-icon { background:rgba(39,174,96,0.1);color:var(--success); }
-  .stat-card.orange .stat-icon { background:rgba(243,156,18,0.1);color:var(--warning); }
-  .stat-val { font-size:1.6rem;font-weight:800;color:var(--text); }
-  .stat-label { font-size:0.75rem;color:var(--text2);margin-top:2px; }
 
-  /* ── CARD ── */
-  .card { background:white;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden; }
-  .card-header { padding:18px 24px;border-bottom:1px solid var(--bg2);display:flex;align-items:center;justify-content:space-between; }
-  .card-header h4 { font-size:0.95rem;font-weight:700;color:var(--primary-dark); }
-  .card-body { padding:20px 24px; }
+  /* circuit + char layer */
+  .it-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  #circuitSvg{position:absolute;inset:0;width:100%;height:100%;}
 
-  /* ── TABLE ── */
-  .table-wrap { overflow-x:auto; }
-  table { width:100%;border-collapse:collapse;font-size:0.82rem; }
-  th { background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:12px 14px;text-align:left;font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px; }
-  th:first-child { border-radius:0; }
-  td { padding:11px 14px;border-bottom:1px solid var(--bg2);color:var(--text);vertical-align:middle; }
-  tr:hover td { background:var(--bg); }
-  tr:last-child td { border-bottom:none; }
+  /* Scan line sweep */
+  .scan-line{
+    position:absolute;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(0,180,216,0.06),transparent);
+    animation:scanLine 8s linear infinite;
+    z-index:1;
+  }
 
-  /* ── FORM MODAL ── */
-  .modal-overlay {
-    display:none;position:fixed;inset:0;z-index:200;
-    background:rgba(15,76,128,0.45);backdrop-filter:blur(4px);
+  /* Floating IT characters */
+  .it-char{
+    position:absolute;
+    font-family:'Source Code Pro','Courier New',monospace;
+    color:rgba(0,200,255,0.22);
+    font-weight:600;
+    font-size:13px;
+    white-space:nowrap;
+    animation:charDrift linear infinite;
+    user-select:none;
+    letter-spacing:1px;
+  }
+
+  /* Professional IT icon badges */
+  @keyframes iconFloat{
+    0%,100%{transform:translateY(0px);}
+    50%    {transform:translateY(-10px);}
+  }
+  .it-icon-badge{
+    position:absolute;
+    display:flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:14px;
+    padding:10px 16px;
+    backdrop-filter:blur(8px);
+    animation:iconFloat ease-in-out infinite;
+    pointer-events:none;user-select:none;
+    z-index:2;
+    min-width:110px;
+  }
+  .it-icon-badge .ib-icon{
+    width:36px;height:36px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;flex-shrink:0;
+  }
+  .it-icon-badge .ib-name{
+    font-family:'Poppins',sans-serif;font-size:11.5px;font-weight:700;
+    color:rgba(255,255,255,0.92);letter-spacing:0.3px;
+    white-space:nowrap;
+  }
+
+  .login-card{
+    background:rgba(255,255,255,0.97);border-radius:24px;
+    animation:fadeInUp 0.6s ease, glowPulse 4s ease-in-out infinite;
+    padding:44px 40px 36px;width:420px;max-width:95vw;
+    position:relative;z-index:1;
+  }
+  .login-logo{text-align:center;margin-bottom:24px;}
+  .login-logo .logo-icon{
+    width:68px;height:68px;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    border-radius:18px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:30px;margin-bottom:10px;
+    box-shadow:0 8px 24px rgba(26,111,181,0.3);
+    animation:float 3s ease-in-out infinite;
+  }
+  .login-logo h1{font-size:1.55rem;font-weight:800;color:var(--primary-dark);letter-spacing:-0.5px;}
+  .login-logo p{font-size:0.75rem;color:var(--text2);margin-top:2px;}
+
+  .login-tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;}
+  .login-tab{flex:1;text-align:center;padding:8px;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--text2);transition:all .2s;}
+  .login-tab.active{background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15);}
+
+  .form-group{margin-bottom:14px;}
+  .form-group label{display:block;font-size:0.74rem;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+  .form-group input,.form-group select{
+    width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:10px;
+    font-family:'Poppins',sans-serif;font-size:0.88rem;color:var(--text);outline:none;transition:all .2s;background:white;
+  }
+  .form-group input:focus,.form-group select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,111,181,0.1);}
+  .form-group input:disabled,.form-group select:disabled{background:#f0f4f8;color:var(--text2);cursor:not-allowed;}
+  /* Password wrapper — no eye button */
+  .pw-wrap{position:relative;}
+  .pw-wrap input{padding-right:16px;}
+
+  .btn{padding:11px 22px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;box-shadow:0 4px 16px rgba(26,111,181,0.3);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,111,181,0.4);}
+  .btn-full{width:100%;justify-content:center;}
+  .btn-sm{padding:7px 14px;font-size:0.78rem;border-radius:8px;}
+  .btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary);}
+  .btn-outline:hover{background:var(--primary);color:white;}
+  .btn-danger {background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;}
+  .btn-success{background:linear-gradient(135deg,#27ae60,#229954);color:white;}
+  .btn-warning{background:linear-gradient(135deg,#f39c12,#d68910);color:white;}
+  .btn-info   {background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;}
+
+  /* First-login overlay */
+  #firstLoginOverlay{
+    display:none;position:fixed;inset:0;z-index:500;
+    background:rgba(10,42,74,0.75);backdrop-filter:blur(6px);
     align-items:center;justify-content:center;
   }
-  .modal-overlay.show { display:flex; }
-  .modal {
-    background:white;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.2);
-    padding:32px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;
-    animation:fadeInUp .3s ease;position:relative;
+  #firstLoginOverlay.show{display:flex;}
+  .first-login-card{
+    background:white;border-radius:24px;padding:40px 36px;
+    width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    animation:fadeInUp .3s ease;
   }
-  .modal-sm { width:420px; }
-  .modal h3 { font-size:1.1rem;font-weight:800;color:var(--primary-dark);margin-bottom:20px; }
-  .modal-close { position:absolute;top:16px;right:16px;width:32px;height:32px;background:var(--bg2);border-radius:50%;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--text2); }
-  .modal-close:hover { background:var(--danger);color:white; }
-  .form-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
-  .form-row.three { grid-template-columns:1fr 1fr 1fr; }
-  .form-full { grid-column:1/-1; }
-  .chip { display:inline-flex;align-items:center;gap:4px;background:rgba(26,111,181,0.1);color:var(--primary);padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;margin:2px; }
-  .chip .x { cursor:pointer;opacity:0.6;margin-left:2px; }
-  .chip .x:hover { opacity:1; }
-  .topics-box { border:2px solid var(--border);border-radius:10px;padding:10px;min-height:60px;cursor:text; }
-  .topics-chips { display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px; }
-  .topic-select-list { max-height:150px;overflow-y:auto;border:2px solid var(--border);border-radius:10px;margin-top:6px; }
-  .topic-item { padding:8px 12px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid var(--bg2);transition:background .15s; }
-  .topic-item:hover { background:var(--bg); }
-  .topic-item.selected { background:rgba(26,111,181,0.1);color:var(--primary);font-weight:600; }
+  .first-login-card h2{font-size:1.15rem;font-weight:800;color:var(--primary-dark);margin-bottom:6px;}
+  .first-login-card p{font-size:0.82rem;color:var(--text2);margin-bottom:20px;}
 
-  /* ── TOAST ── */
-  #toastContainer { position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px; }
-  .toast {
-    background:white;border-radius:12px;padding:14px 18px;box-shadow:0 6px 24px rgba(0,0,0,0.15);
-    display:flex;align-items:center;gap:10px;font-size:0.82rem;font-weight:600;
-    animation:fadeInUp .3s ease;min-width:280px;border-left:4px solid var(--primary);
+  /* ══ APP SHELL ══ */
+  #appShell{display:none;min-height:100vh;}
+
+  /* ══ SIDEBAR ══ */
+  .sidebar{width:260px;min-height:100vh;background:linear-gradient(175deg,var(--primary-dark) 0%,var(--primary) 60%,var(--primary-light) 100%);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(15,76,128,0.25);transition:transform .3s;}
+  .sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.12);}
+  .sidebar-logo .logo-row{display:flex;align-items:center;gap:12px;}
+  .sidebar-logo .s-icon{width:42px;height:42px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+  .sidebar-logo h2{font-size:1rem;font-weight:800;color:white;}
+  .sidebar-logo span{font-size:0.66rem;color:rgba(255,255,255,0.65);}
+  .sidebar-user{padding:14px 18px;background:rgba(255,255,255,0.07);margin:10px;border-radius:12px;}
+  .sidebar-user .u-name{font-size:0.86rem;font-weight:700;color:white;}
+  .sidebar-user .u-role{font-size:0.70rem;color:rgba(255,255,255,0.6);margin-top:2px;}
+  .sidebar-nav{flex:1;padding:6px 10px;overflow-y:auto;}
+  .nav-section{font-size:0.63rem;color:rgba(255,255,255,0.42);text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:10px 8px 5px;}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;color:rgba(255,255,255,0.78);font-size:0.84rem;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:2px;}
+  .nav-item:hover{background:rgba(255,255,255,0.12);color:white;}
+  .nav-item.active{background:rgba(255,255,255,0.2);color:white;font-weight:600;}
+  .nav-item .ni{font-size:17px;width:22px;text-align:center;}
+  .sidebar-footer{padding:14px;border-top:1px solid rgba(255,255,255,0.1);}
+  .sidebar-footer .btn{background:rgba(255,255,255,0.1);color:white;width:100%;justify-content:center;border:1px solid rgba(255,255,255,0.2);font-size:0.82rem;}
+
+  /* ══ MAIN ══ */
+  .main-content{margin-left:260px;min-height:100vh;}
+  .topbar{background:white;padding:15px 26px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(26,111,181,0.08);position:sticky;top:0;z-index:50;}
+  .topbar h3{font-size:1.1rem;font-weight:700;color:var(--primary-dark);}
+  .topbar .tb-right{display:flex;align-items:center;gap:12px;}
+  .badge{background:var(--accent);color:white;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;}
+
+  /* ══ PAGES ══ */
+  .page{display:none;padding:22px 26px;animation:fadeInUp .35s ease;}
+  .page.active{display:block;}
+
+  /* ══ STATS ══ */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px;}
+  .stat-card{background:white;border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;transition:transform .2s,box-shadow .2s;border-left:4px solid transparent;position:relative;overflow:hidden;}
+  .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);}
+  .stat-card.blue  {border-left-color:var(--primary);}
+  .stat-card.cyan  {border-left-color:var(--accent);}
+  .stat-card.green {border-left-color:var(--success);}
+  .stat-card.orange{border-left-color:var(--warning);}
+  .stat-icon{font-size:26px;width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;}
+  .stat-card.blue  .stat-icon{background:rgba(26,111,181,0.1);color:var(--primary);}
+  .stat-card.cyan  .stat-icon{background:rgba(0,180,216,0.1);color:var(--accent);}
+  .stat-card.green .stat-icon{background:rgba(39,174,96,0.1);color:var(--success);}
+  .stat-card.orange.stat-icon{background:rgba(243,156,18,0.1);color:var(--warning);}
+  .stat-val  {font-size:1.55rem;font-weight:800;color:var(--text);}
+  .stat-label{font-size:0.73rem;color:var(--text2);margin-top:2px;}
+
+  /* ══ CARD ══ */
+  .card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;}
+  .card-header{padding:16px 22px;border-bottom:1px solid var(--bg2);display:flex;align-items:center;justify-content:space-between;}
+  .card-header h4{font-size:0.93rem;font-weight:700;color:var(--primary-dark);}
+  .card-body{padding:18px 22px;}
+
+  /* ══ TABLE ══ */
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:0.81rem;}
+  th{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:11px 13px;text-align:left;font-weight:600;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.5px;}
+  td{padding:10px 13px;border-bottom:1px solid var(--bg2);color:var(--text);vertical-align:middle;}
+  tr:hover td{background:var(--bg);}
+  tr:last-child td{border-bottom:none;}
+
+  /* ══ MODAL ══ */
+  .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,76,128,0.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:white;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.2);padding:30px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;animation:fadeInUp .3s ease;position:relative;}
+  .modal-sm{width:420px;}
+  .modal h3{font-size:1.05rem;font-weight:800;color:var(--primary-dark);margin-bottom:18px;}
+  .modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;background:var(--bg2);border-radius:50%;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text2);}
+  .modal-close:hover{background:var(--danger);color:white;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .form-full{grid-column:1/-1;}
+
+  /* ══ CHIPS / TOPICS ══ */
+  .chip{display:inline-flex;align-items:center;gap:5px;background:rgba(26,111,181,0.1);color:var(--primary);padding:4px 11px;border-radius:20px;font-size:0.73rem;font-weight:600;margin:2px;border:1px solid rgba(26,111,181,0.2);}
+  .chip .x{cursor:pointer;opacity:0.5;margin-left:3px;font-size:0.65rem;transition:opacity .15s;}
+  .chip .x:hover{opacity:1;}
+  .topics-box{border:2px solid var(--border);border-radius:10px;padding:10px 12px;min-height:52px;background:#fafcff;}
+  .topics-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
+  .topic-select-list{max-height:190px;overflow-y:auto;border:2px solid var(--border);border-radius:10px;margin-top:6px;background:white;}
+  .topic-unit-hdr{
+    padding:7px 14px;
+    background:linear-gradient(90deg,rgba(26,111,181,0.07),rgba(26,111,181,0.03));
+    font-size:0.68rem;font-weight:700;color:var(--primary);
+    text-transform:uppercase;letter-spacing:0.8px;
+    position:sticky;top:0;z-index:1;
+    border-bottom:1px solid rgba(26,111,181,0.1);
+    border-left:3px solid var(--primary);
   }
-  .toast.success { border-left-color:var(--success); }
-  .toast.error { border-left-color:var(--danger); }
-  .toast.warning { border-left-color:var(--warning); }
+  .topic-item{
+    padding:9px 14px;cursor:pointer;font-size:0.82rem;
+    border-bottom:1px solid var(--bg2);
+    transition:background .12s;user-select:none;
+    display:flex;align-items:center;gap:10px;
+    color:var(--text);
+  }
+  .topic-item:last-child{border-bottom:none;}
+  .topic-item:hover{background:var(--bg);}
+  .topic-item.selected{background:rgba(26,111,181,0.05);color:var(--primary-dark);}
+  /* Clean CSS checkbox — no emoji */
+  .topic-item .chk{
+    width:17px;height:17px;border-radius:4px;
+    border:2px solid #c0d4e8;
+    display:inline-flex;align-items:center;justify-content:center;
+    flex-shrink:0;transition:all .15s;background:white;
+    position:relative;
+  }
+  .topic-item.selected .chk{
+    background:var(--primary);border-color:var(--primary);
+  }
+  /* CSS-only checkmark via pseudo-element */
+  .topic-item.selected .chk::after{
+    content:'';
+    width:5px;height:9px;
+    border:2px solid white;
+    border-top:none;border-left:none;
+    transform:rotate(45deg) translateY(-1px);
+    display:block;
+  }
 
-  /* ── SEARCH BAR ── */
-  .search-bar { display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px; }
-  .search-input { flex:1;min-width:200px;padding:10px 16px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.83rem;outline:none;transition:all .2s; }
-  .search-input:focus { border-color:var(--primary); }
+  /* ══ TOAST ══ */
+  #toastContainer{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+  .toast{background:white;border-radius:12px;padding:13px 17px;box-shadow:0 6px 24px rgba(0,0,0,0.15);display:flex;align-items:center;gap:10px;font-size:0.81rem;font-weight:600;animation:fadeInUp .3s ease;min-width:260px;border-left:4px solid var(--primary);}
+  .toast.success{border-left-color:var(--success);}
+  .toast.error  {border-left-color:var(--danger);}
+  .toast.warning{border-left-color:var(--warning);}
 
-  /* ── PILL BADGE ── */
-  .pill { display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:700; }
-  .pill-blue { background:rgba(26,111,181,0.12);color:var(--primary); }
-  .pill-green { background:rgba(39,174,96,0.12);color:var(--success); }
-  .pill-orange { background:rgba(243,156,18,0.12);color:var(--warning); }
-  .pill-red { background:rgba(231,76,60,0.12);color:var(--danger); }
+  /* ══ SEARCH ══ */
+  .search-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .search-input{flex:1;min-width:180px;padding:9px 15px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.82rem;outline:none;transition:all .2s;}
+  .search-input:focus{border-color:var(--primary);}
 
-  /* ── TABS ── */
-  .tabs { display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content; }
-  .tab { padding:8px 18px;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--text2);transition:all .2s; }
-  .tab.active { background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15); }
+  /* ══ PILLS ══ */
+  .pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.69rem;font-weight:700;}
+  .pill-blue  {background:rgba(26,111,181,0.12);color:var(--primary);}
+  .pill-green {background:rgba(39,174,96,0.12);color:var(--success);}
+  .pill-orange{background:rgba(243,156,18,0.12);color:var(--warning);}
+  .pill-red   {background:rgba(231,76,60,0.12);color:var(--danger);}
 
-  /* BG decoration */
-  .page-bg-deco { position:fixed;bottom:0;right:0;width:340px;opacity:0.04;z-index:0;pointer-events:none; }
-  .content-z { position:relative;z-index:1; }
+  .swap-badge{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:white;padding:2px 7px;border-radius:6px;font-size:0.66rem;font-weight:700;}
 
-  /* ── SYLLABUS TAGS ── */
-  .unit-label { font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin:10px 0 4px; }
+  /* ══ BILLS TAB ══ */
+  .tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:18px;width:fit-content;}
+  .tab{padding:8px 18px;border-radius:8px;cursor:pointer;font-size:0.81rem;font-weight:600;color:var(--text2);transition:all .2s;}
+  .tab.active{background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15);}
 
-  /* ── RESPONSIVE ── */
+  /* ══ RESPONSIVE ══ */
+  .hamburger{display:none;background:var(--primary);color:white;border:none;padding:7px 11px;border-radius:8px;cursor:pointer;font-size:17px;}
   @media(max-width:768px){
     .sidebar{transform:translateX(-100%);}
     .sidebar.open{transform:translateX(0);}
     .main-content{margin-left:0;}
     .form-row{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:1fr 1fr;}
-    .modal{padding:22px 16px;}
-    .topbar{padding:12px 16px;}
-    .page{padding:16px;}
+    .modal{padding:20px 14px;}
+    .topbar{padding:11px 14px;}
+    .page{padding:14px;}
+    .hamburger{display:block;}
   }
-  .hamburger{display:none;background:var(--primary);color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:18px;}
-  @media(max-width:768px){.hamburger{display:block;}}
-
-  /* SWAP badge */
-  .swap-badge { background:linear-gradient(135deg,#9b59b6,#8e44ad);color:white;padding:3px 8px;border-radius:6px;font-size:0.68rem;font-weight:700; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ LOGIN PAGE ═══════════════════ -->
+<!-- ═══════ LOGIN ═══════ -->
 <div id="loginPage">
+  <!-- IT Background — circuit board + floating characters -->
+  <div class="it-bg" id="itBg">
+    <svg id="circuitSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="scan-line"></div>
+  </div>
+
   <div class="login-card">
     <div class="login-logo">
       <div class="logo-icon">🎓</div>
       <h1>LectureSphere</h1>
       <p>RNGPIT Working Professional Portal</p>
     </div>
-
     <div id="loginFormSection">
       <div class="login-tabs">
         <div class="login-tab active" onclick="setLoginTab('faculty')">Faculty</div>
-        <div class="login-tab" onclick="setLoginTab('admin')">Admin</div>
+        <div class="login-tab"        onclick="setLoginTab('admin')">Admin</div>
       </div>
       <div class="form-group">
         <label>Email Address</label>
@@ -348,122 +356,90 @@
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••">
-      </div>
-      <div class="forgot-link"><a href="#" onclick="showForgotPassword()">Forgot Password?</a></div>
-      <button class="btn btn-primary btn-full" onclick="handleLogin()">🔐 Sign In</button>
-    </div>
-
-    <div id="forgotSection" style="display:none;">
-      <h3 style="font-size:1rem;margin-bottom:16px;color:var(--primary-dark);">Reset Password</h3>
-      <div class="form-group">
-        <label>Reset via</label>
-        <select id="resetVia">
-          <option value="email">Email OTP</option>
-          <option value="phone">Phone Number OTP</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Email / Phone</label>
-        <input type="text" id="resetContact" placeholder="Enter email or phone number">
-      </div>
-      <div id="otpSection" style="display:none;">
-        <div class="form-group">
-          <label>Enter OTP (Demo: 1234)</label>
-          <input type="text" id="otpInput" placeholder="6-digit OTP">
-        </div>
-        <div class="form-group">
-          <label>New Password</label>
-          <input type="password" id="newPassword" placeholder="New password">
+        <div class="pw-wrap">
+          <input type="password" id="loginPassword" placeholder="Enter your password">
         </div>
       </div>
-      <div style="display:flex;gap:8px;margin-top:4px;">
-        <button class="btn btn-outline" onclick="showLoginForm()">← Back</button>
-        <button class="btn btn-primary" id="otpBtn" onclick="handleOTP()">Send OTP</button>
-      </div>
+      <button class="btn btn-primary btn-full" style="margin-top:4px;" onclick="handleLogin()">Sign In</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════ APP SHELL ═══════════════════ -->
+<!-- ═══════ FIRST LOGIN — SET NEW PASSWORD ═══════ -->
+<div id="firstLoginOverlay">
+  <div class="first-login-card">
+    <h2>🔐 Set Your New Password</h2>
+    <p>Welcome! For security, please set your own password before continuing. You received a temporary password from Admin — use it to verify, then choose a new one.</p>
+    <div class="form-group">
+      <label>Temporary Password (from Admin)</label>
+      <div class="pw-wrap"><input type="password" id="tempPwd" placeholder="Enter temporary password"></div>
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <div class="pw-wrap"><input type="password" id="fl_newPwd" placeholder="Choose a strong password"></div>
+    </div>
+    <div class="form-group">
+      <label>Confirm New Password</label>
+      <div class="pw-wrap"><input type="password" id="fl_confirmPwd" placeholder="Repeat new password"></div>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="completeFirstLogin()">Activate Account & Login</button>
+  </div>
+</div>
+
+<!-- ═══════ APP SHELL ═══════ -->
 <div id="appShell">
-  <!-- SIDEBAR -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="logo-row">
         <div class="s-icon">🎓</div>
-        <div>
-          <h2>LectureSphere</h2>
-          <span>RNGPIT Portal</span>
-        </div>
+        <div><h2>LectureSphere</h2><span>RNGPIT Portal</span></div>
       </div>
     </div>
     <div class="sidebar-user">
-      <div class="u-name" id="sidebarUserName">Loading...</div>
-      <div class="u-role" id="sidebarUserRole">Faculty</div>
+      <div class="u-name" id="sidebarUserName"></div>
+      <div class="u-role" id="sidebarUserRole"></div>
     </div>
-    <div class="sidebar-nav" id="sidebarNav">
-      <!-- Injected by JS -->
-    </div>
-    <div class="sidebar-footer">
-      <button class="btn" onclick="logout()">🚪 Logout</button>
-    </div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-footer"><button class="btn" onclick="logout()">🚪 Logout</button></div>
   </div>
 
-  <!-- MAIN -->
   <div class="main-content">
     <div class="topbar">
       <div style="display:flex;align-items:center;gap:12px;">
         <button class="hamburger" onclick="toggleSidebar()">☰</button>
         <h3 id="pageTitle">Dashboard</h3>
       </div>
-      <div class="tb-right">
-        <span id="todayDate" class="pill pill-blue"></span>
-        <span id="topbarBadge" class="badge" style="display:none;"></span>
-      </div>
+      <div class="tb-right"><span id="todayDate" class="pill pill-blue"></span></div>
     </div>
 
-    <!-- ── PAGES ── -->
-    <div style="position:relative;">
-    <svg class="page-bg-deco" viewBox="0 0 340 340"><circle cx="170" cy="170" r="160" fill="var(--primary)"/><circle cx="80" cy="80" r="60" fill="var(--accent)"/></svg>
-
     <!-- DASHBOARD -->
-    <div class="page content-z" id="page-dashboard">
+    <div class="page" id="page-dashboard">
       <div class="stats-grid" id="statsGrid"></div>
-      <div class="card" id="recentCard">
-        <div class="card-header">
-          <h4>📋 Recent Lectures</h4>
-          <button class="btn btn-primary btn-sm" onclick="openPage('lectures')">View All</button>
-        </div>
-        <div class="card-body">
-          <div class="table-wrap"><table id="recentLecturesTable"><thead><tr><th>Date</th><th>Faculty</th><th>Subject</th><th>Topics</th><th>Students</th></tr></thead><tbody id="recentLecTbody"></tbody></table></div>
-        </div>
+      <div class="card">
+        <div class="card-header"><h4>📋 Recent Lectures</h4><button class="btn btn-primary btn-sm" onclick="openPage('lectures')">View All</button></div>
+        <div class="card-body"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Faculty</th><th>Subject</th><th>Topics</th><th>Students</th></tr></thead><tbody id="recentLecTbody"></tbody></table></div></div>
       </div>
     </div>
 
     <!-- LECTURES -->
-    <div class="page content-z" id="page-lectures">
+    <div class="page" id="page-lectures">
       <div class="card">
         <div class="card-header">
           <h4>📚 Lecture Records</h4>
           <div style="display:flex;gap:8px;">
             <button class="btn btn-success btn-sm" onclick="openAddLectureModal()">➕ Add Lecture</button>
-            <button class="btn btn-info btn-sm" onclick="exportMonthlyPDF()">📄 Monthly PDF</button>
+            <button class="btn btn-info btn-sm"    onclick="exportMonthlyPDF()">📄 Monthly PDF</button>
           </div>
         </div>
         <div class="card-body">
           <div class="search-bar">
-            <input class="search-input" id="lecSearch" placeholder="🔍 Search by faculty, subject..." oninput="renderLectureTable()">
-            <select class="search-input" style="flex:0.5;" id="lecMonthFilter" onchange="renderLectureTable()">
-              <option value="">All Months</option>
-            </select>
-            <select class="search-input" style="flex:0.5;" id="lecFacultyFilter" onchange="renderLectureTable()">
-              <option value="">All Faculty</option>
-            </select>
+            <input class="search-input" id="lecSearch" placeholder="🔍 Search faculty, subject..." oninput="renderLectureTable()">
+            <select class="search-input" style="flex:0.5;" id="lecMonthFilter"   onchange="renderLectureTable()"><option value="">All Months</option></select>
+            <select class="search-input" style="flex:0.5;" id="lecFacultyFilter" onchange="renderLectureTable()"><option value="">All Faculty</option></select>
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics Covered</th><th>Students</th><th>Drive Link</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics</th><th>Students</th><th>Drive</th><th>Actions</th></tr></thead>
               <tbody id="lectureTbody"></tbody>
             </table>
           </div>
@@ -472,36 +448,62 @@
     </div>
 
     <!-- BILLS (Admin only) -->
-    <div class="page content-z" id="page-bills">
-      <div class="card">
-        <div class="card-header">
-          <h4>💰 Bills Summary</h4>
-          <div style="display:flex;gap:8px;">
-            <select class="search-input" style="width:auto;" id="billMonthFilter" onchange="renderBillTable()">
-              <option value="">Select Month</option>
-            </select>
-            <button class="btn btn-info btn-sm" onclick="exportBillPDF()">📄 Export Bill PDF</button>
+    <div class="page" id="page-bills">
+      <!-- Tab switcher -->
+      <div class="tabs">
+        <div class="tab active" id="tab-summary" onclick="switchBillTab('summary')">📊 Summary Bill</div>
+        <div class="tab"        id="tab-faculty" onclick="switchBillTab('faculty')">👤 Per Faculty Sheet</div>
+      </div>
+
+      <!-- Summary Bill -->
+      <div id="bill-summary-section">
+        <div class="card">
+          <div class="card-header">
+            <h4>💰 Bills Summary</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <select class="search-input" style="width:auto;" id="billMonthFilter" onchange="renderBillTable()"><option value="">All Months</option></select>
+              <button class="btn btn-info btn-sm" onclick="exportBillPDF()">📄 Export Bill PDF</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Sr.</th><th>Faculty Name</th><th>Month</th><th>Total Lectures</th><th>Amount (₹)</th><th>Signature</th></tr></thead>
+                <tbody id="billTbody"></tbody>
+                <tfoot id="billTfoot"></tfoot>
+              </table>
+            </div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Faculty Name</th><th>Month</th><th>Total Lectures</th><th>Amount (₹)</th><th>Signature</th></tr></thead>
-              <tbody id="billTbody"></tbody>
-            </table>
+      </div>
+
+      <!-- Per Faculty Sheet -->
+      <div id="bill-faculty-section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <h4>👤 Per Faculty Lecture Sheet</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <select class="search-input" style="width:auto;" id="perFacMonthFilter" onchange="renderPerFacultyTable()"><option value="">All Months</option></select>
+              <select class="search-input" style="width:auto;" id="perFacSelect"      onchange="renderPerFacultyTable()"><option value="">Select Faculty</option></select>
+              <button class="btn btn-info btn-sm" onclick="exportPerFacultyPDF()">📄 Export PDF</button>
+            </div>
           </div>
-          <div id="billTotal" style="text-align:right;margin-top:12px;font-weight:700;color:var(--primary-dark);font-size:1rem;"></div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics Covered</th><th>Students</th><th>Drive Link</th><th>Signature</th></tr></thead>
+                <tbody id="perFacTbody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- FACULTIES (Admin) -->
-    <div class="page content-z" id="page-faculties">
+    <div class="page" id="page-faculties">
       <div class="card">
-        <div class="card-header">
-          <h4>👥 Faculty Management</h4>
-          <button class="btn btn-success btn-sm" onclick="openAddFacultyModal()">➕ Add Faculty</button>
-        </div>
+        <div class="card-header"><h4>👥 Faculty Management</h4><button class="btn btn-success btn-sm" onclick="openAddFacultyModal()">➕ Add Faculty</button></div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
@@ -514,16 +516,13 @@
     </div>
 
     <!-- SYLLABUS (Admin) -->
-    <div class="page content-z" id="page-syllabus">
+    <div class="page" id="page-syllabus">
       <div class="card">
-        <div class="card-header">
-          <h4>📖 Syllabus Management</h4>
-          <button class="btn btn-success btn-sm" onclick="openAddSubjectModal()">➕ Add Subject</button>
-        </div>
+        <div class="card-header"><h4>📖 Syllabus Management</h4><button class="btn btn-success btn-sm" onclick="openAddSubjectModal()">➕ Add Subject</button></div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Subject</th><th>Code</th><th>Units / Topics</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Subject</th><th>Code</th><th>Topics Preview</th><th>Actions</th></tr></thead>
               <tbody id="syllabusTbody"></tbody>
             </table>
           </div>
@@ -531,17 +530,14 @@
       </div>
     </div>
 
-    <!-- SWAP LECTURES -->
-    <div class="page content-z" id="page-swap">
+    <!-- SWAP -->
+    <div class="page" id="page-swap">
       <div class="card">
-        <div class="card-header">
-          <h4>🔄 Lecture Swap Requests</h4>
-          <button class="btn btn-primary btn-sm" onclick="openSwapModal()">➕ New Swap Request</button>
-        </div>
+        <div class="card-header"><h4>🔄 Lecture Swap Requests</h4><button class="btn btn-primary btn-sm" onclick="openSwapModal()">➕ New Swap Request</button></div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Date</th><th>Original Faculty</th><th>Taking Faculty</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Date</th><th>Original Faculty</th><th>Taking Faculty</th><th>Subject</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody id="swapTbody"></tbody>
             </table>
           </div>
@@ -550,73 +546,58 @@
     </div>
 
     <!-- PROFILE -->
-    <div class="page content-z" id="page-profile">
+    <div class="page" id="page-profile">
       <div class="card">
         <div class="card-header"><h4>👤 My Profile</h4></div>
         <div class="card-body" id="profileBody"></div>
       </div>
     </div>
-
-    </div><!-- end position relative -->
   </div>
 </div>
 
-<!-- ── MODALS ── -->
-<!-- Add/Edit Lecture Modal -->
+<!-- ══ MODALS ══ -->
+<!-- Lecture Modal -->
 <div class="modal-overlay" id="lectureModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('lectureModal')">✕</button>
     <h3 id="lecModalTitle">➕ Add Lecture</h3>
     <input type="hidden" id="lecEditId">
     <div class="form-row">
-      <div class="form-group">
-        <label>Date *</label>
-        <input type="date" id="lecDate" required>
-      </div>
-      <div class="form-group">
-        <label>Day *</label>
-        <select id="lecDay" required>
-          <option value="">Select Day</option>
+      <div class="form-group"><label>Date *</label><input type="date" id="lecDate" onchange="autofillDay()"></div>
+      <div class="form-group"><label>Day *</label>
+        <select id="lecDay"><option value="">Select Day</option>
           <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
           <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
         </select>
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Time *</label>
-        <input type="time" id="lecTime" required>
-      </div>
-      <div class="form-group">
-        <label>Faculty *</label>
-        <select id="lecFaculty" required onchange="loadSubjectsForFaculty()">
-          <option value="">Select Faculty</option>
-        </select>
+      <div class="form-group"><label>Time *</label><input type="time" id="lecTime"></div>
+      <div class="form-group"><label>Faculty *</label>
+        <select id="lecFaculty" onchange="onFacultyChange()"><option value="">Select Faculty</option></select>
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Subject *</label>
-        <select id="lecSubject" required onchange="loadTopicsForSubject()">
-          <option value="">Select Subject</option>
-        </select>
+      <div class="form-group"><label>Subject *</label>
+        <select id="lecSubject" onchange="onSubjectChange()"><option value="">Select Subject</option></select>
       </div>
       <div class="form-group">
-        <label>Students Present *</label>
-        <input type="number" id="lecStudents" placeholder="e.g. 30" min="0" required>
+        <label id="studentsLabel">Students Present *</label>
+        <input type="number" id="lecStudents" placeholder="Enter count" min="0">
       </div>
     </div>
     <div class="form-group form-full">
-      <label>Topics Covered (from Syllabus) *</label>
-      <div class="topics-box" id="topicsBox">
-        <div class="topics-chips" id="selectedTopicsChips"></div>
-        <small style="color:var(--text2)">Select topics below after choosing subject</small>
+      <label>Topics Covered *</label>
+      <div class="topics-box">
+        <div class="topics-chips" id="selectedTopicsChips"><small style="color:var(--text2)">No topics selected yet</small></div>
       </div>
-      <div class="topic-select-list" id="topicSelectList"></div>
+      <div class="topic-select-list" id="topicSelectList">
+        <div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first to see topics</div>
+      </div>
     </div>
     <div class="form-group form-full">
       <label>Google Drive Link *</label>
-      <input type="url" id="lecDriveLink" placeholder="https://drive.google.com/..." required>
+      <input type="url" id="lecDriveLink" placeholder="https://drive.google.com/...">
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
       <button class="btn btn-outline" onclick="closeModal('lectureModal')">Cancel</button>
@@ -625,20 +606,23 @@
   </div>
 </div>
 
-<!-- Add Faculty Modal -->
+<!-- Faculty Modal -->
 <div class="modal-overlay" id="facultyModal">
   <div class="modal modal-sm">
     <button class="modal-close" onclick="closeModal('facultyModal')">✕</button>
     <h3 id="facModalTitle">➕ Add Faculty</h3>
     <input type="hidden" id="facEditId">
-    <div class="form-group"><label>Full Name *</label><input type="text" id="facName" placeholder="Dr. / Ms. / Mr. Full Name" required></div>
-    <div class="form-group"><label>Email Address *</label><input type="email" id="facEmail" placeholder="faculty@rngpit.ac.in" required></div>
-    <div class="form-group"><label>Phone Number *</label><input type="tel" id="facPhone" placeholder="10-digit phone" required></div>
-    <div class="form-group"><label>Password *</label><input type="password" id="facPassword" placeholder="Initial password" required></div>
+    <div class="form-group"><label>Full Name *</label><input type="text" id="facName" placeholder="Dr. / Ms. / Mr. Full Name"></div>
+    <div class="form-group"><label>Email Address *</label><input type="email" id="facEmail" placeholder="faculty@rngpit.ac.in"></div>
+    <div class="form-group"><label>Phone Number *</label><input type="tel" id="facPhone" placeholder="10-digit phone"></div>
+    <div class="form-group">
+      <label>Temporary Password (given to faculty) *</label>
+      <div class="pw-wrap"><input type="password" id="facPassword" placeholder="Set initial password"></div>
+      <small style="color:var(--text2);font-size:0.72rem;">Faculty will be asked to set a new password on first login</small>
+    </div>
     <div class="form-group">
       <label>Assigned Subjects</label>
-      <select id="facSubjectAssign" multiple style="height:90px;">
-      </select>
+      <select id="facSubjectAssign" multiple style="height:100px;"></select>
       <small style="color:var(--text2);font-size:0.72rem;">Hold Ctrl/Cmd to select multiple</small>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -648,18 +632,18 @@
   </div>
 </div>
 
-<!-- Add Subject Modal -->
+<!-- Subject Modal -->
 <div class="modal-overlay" id="subjectModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('subjectModal')">✕</button>
     <h3 id="subModalTitle">📖 Add Subject & Syllabus</h3>
     <input type="hidden" id="subEditId">
     <div class="form-row">
-      <div class="form-group"><label>Subject Name *</label><input type="text" id="subName" placeholder="e.g. Data Structures" required></div>
+      <div class="form-group"><label>Subject Name *</label><input type="text" id="subName" placeholder="e.g. Data Structures"></div>
       <div class="form-group"><label>Subject Code</label><input type="text" id="subCode" placeholder="e.g. IT301"></div>
     </div>
     <div class="form-group form-full">
-      <label>Syllabus Topics (one per line, use "Unit X:" prefix for units)</label>
+      <label>Syllabus Topics — one per line; prefix unit headers with "Unit X:"</label>
       <textarea id="subTopics" style="width:100%;height:200px;padding:12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.83rem;outline:none;resize:vertical;" placeholder="Unit 1: Introduction&#10;Arrays&#10;Linked Lists&#10;Unit 2: Trees&#10;Binary Trees&#10;BST"></textarea>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -674,126 +658,134 @@
   <div class="modal modal-sm">
     <button class="modal-close" onclick="closeModal('swapModal')">✕</button>
     <h3>🔄 Request Lecture Swap</h3>
-    <div class="form-group"><label>Lecture to Swap</label>
-      <select id="swapLecId"><option value="">Select your lecture...</option></select>
-    </div>
-    <div class="form-group"><label>Taking Faculty *</label>
-      <select id="swapToFaculty"><option value="">Select faculty to take lecture...</option></select>
-    </div>
-    <div class="form-group"><label>Reason</label>
-      <input type="text" id="swapReason" placeholder="Optional reason...">
-    </div>
+    <div class="form-group"><label>Lecture to Swap *</label><select id="swapLecId"><option value="">Select lecture...</option></select></div>
+    <div class="form-group"><label>Taking Faculty *</label><select id="swapToFaculty"><option value="">Select faculty...</option></select></div>
+    <div class="form-group"><label>Reason</label><input type="text" id="swapReason" placeholder="Optional reason..."></div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal('swapModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitSwap()">📤 Submit Request</button>
+      <button class="btn btn-primary" onclick="submitSwap()">📤 Submit</button>
     </div>
   </div>
 </div>
 
-<!-- Reset Password Modal (Admin) -->
+<!-- Reset Password Modal -->
 <div class="modal-overlay" id="resetPwdModal">
   <div class="modal modal-sm">
     <button class="modal-close" onclick="closeModal('resetPwdModal')">✕</button>
     <h3>🔑 Reset Faculty Password</h3>
     <input type="hidden" id="resetFacId">
-    <div class="form-group"><label>New Password</label><input type="password" id="newFacPwd" placeholder="Enter new password"></div>
+    <p style="font-size:0.82rem;color:var(--text2);margin-bottom:16px;">This sets a new temporary password. Faculty will be asked to create a new password on next login.</p>
+    <div class="form-group"><label>New Temporary Password</label><input type="password" id="newFacPwd" placeholder="Enter new temp password"></div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal('resetPwdModal')">Cancel</button>
-      <button class="btn btn-danger" onclick="doResetPassword()">🔄 Reset Password</button>
+      <button class="btn btn-danger"  onclick="doResetPassword()">🔄 Reset Password</button>
     </div>
   </div>
 </div>
 
-<!-- Toast container -->
 <div id="toastContainer"></div>
 
 <script>
-// ════════════════════════════════════════════
-//  STATE / DATA
-// ════════════════════════════════════════════
-let currentUser = null; // { id, name, email, role }
-let loginTab = 'faculty';
-let otpSent = false;
-
-// Persistent state
-const DB = {
-  get faculties() { return JSON.parse(localStorage.getItem('ls_faculties') || '[]'); },
-  set faculties(v) { localStorage.setItem('ls_faculties', JSON.stringify(v)); },
-  get lectures() { return JSON.parse(localStorage.getItem('ls_lectures') || '[]'); },
-  set lectures(v) { localStorage.setItem('ls_lectures', JSON.stringify(v)); },
-  get subjects() { return JSON.parse(localStorage.getItem('ls_subjects') || '[]'); },
-  set subjects(v) { localStorage.setItem('ls_subjects', JSON.stringify(v)); },
-  get swaps() { return JSON.parse(localStorage.getItem('ls_swaps') || '[]'); },
-  set swaps(v) { localStorage.setItem('ls_swaps', JSON.stringify(v)); },
+// ══════════════════════════════════
+//  DB
+// ══════════════════════════════════
+const DB={
+  get faculties(){return JSON.parse(localStorage.getItem('ls_faculties')||'[]');},
+  set faculties(v){localStorage.setItem('ls_faculties',JSON.stringify(v));},
+  get lectures() {return JSON.parse(localStorage.getItem('ls_lectures') ||'[]');},
+  set lectures(v){localStorage.setItem('ls_lectures', JSON.stringify(v));},
+  get subjects() {return JSON.parse(localStorage.getItem('ls_subjects') ||'[]');},
+  set subjects(v){localStorage.setItem('ls_subjects', JSON.stringify(v));},
+  get swaps()    {return JSON.parse(localStorage.getItem('ls_swaps')    ||'[]');},
+  set swaps(v)   {localStorage.setItem('ls_swaps',    JSON.stringify(v));},
 };
+const ADMIN ={id:'admin',name:'Ms. R.S.Patel',email:'admin@rngpit.ac.in',password:'admin@2025',role:'admin'};
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+let currentUser=null, loginTab='faculty', selectedTopics=[], pendingFirstLoginUser=null;
 
-// ── SEED DATA ──
-function seedData() {
-  if (DB.faculties.length === 0) {
-    DB.faculties = [
-      { id:'f1', name:'Dr. Amit Shah', email:'amit.shah@rngpit.ac.in', phone:'9876543210', password:'faculty123', subjects:['s1','s2'], role:'faculty' },
-      { id:'f2', name:'Ms. Priya Mehta', email:'priya.mehta@rngpit.ac.in', phone:'9876543211', password:'faculty123', subjects:['s2','s3'], role:'faculty' },
-      { id:'f3', name:'Mr. Raj Patel', email:'raj.patel@rngpit.ac.in', phone:'9876543212', password:'faculty123', subjects:['s1','s3'], role:'faculty' },
+// ── Seed ──
+function seedData(){
+  if(!DB.faculties.length){
+    DB.faculties=[
+      {id:'f1',name:'Dr. Amit Shah',  email:'amit.shah@rngpit.ac.in', phone:'9876543210',password:'faculty123',subjects:['s1','s2'],role:'faculty',mustChangePassword:false},
+      {id:'f2',name:'Ms. Priya Mehta',email:'priya.mehta@rngpit.ac.in',phone:'9876543211',password:'faculty123',subjects:['s2','s3'],role:'faculty',mustChangePassword:false},
+      {id:'f3',name:'Mr. Raj Patel',  email:'raj.patel@rngpit.ac.in',  phone:'9876543212',password:'faculty123',subjects:['s1','s3'],role:'faculty',mustChangePassword:false},
     ];
   }
-  if (DB.subjects.length === 0) {
-    DB.subjects = [
-      { id:'s1', name:'Data Structures', code:'IT301', topics:'Unit 1: Introduction\nArrays\nLinked Lists\nUnit 2: Trees\nBinary Trees\nBST\nAVL Trees\nUnit 3: Graphs\nBFS\nDFS\nShortest Path' },
-      { id:'s2', name:'Database Management', code:'IT302', topics:'Unit 1: Introduction\nER Model\nRelational Model\nUnit 2: SQL\nDDL Commands\nDML Commands\nJoins\nUnit 3: Normalization\n1NF 2NF 3NF\nBCNF' },
-      { id:'s3', name:'Computer Networks', code:'IT303', topics:'Unit 1: OSI Model\nPhysical Layer\nData Link Layer\nNetwork Layer\nUnit 2: TCP/IP\nIPv4 Addressing\nSubnetting\nUnit 3: Application Layer\nHTTP HTTPS\nDNS\nFTP' },
+  if(!DB.subjects.length){
+    DB.subjects=[
+      {id:'s1',name:'Data Structures',    code:'IT301',topics:'Unit 1: Introduction\nArrays\nLinked Lists\nStacks\nQueues\nUnit 2: Trees\nBinary Trees\nBST\nAVL Trees\nUnit 3: Graphs\nBFS\nDFS\nShortest Path'},
+      {id:'s2',name:'Database Management',code:'IT302',topics:'Unit 1: Introduction\nER Model\nRelational Model\nUnit 2: SQL\nDDL Commands\nDML Commands\nJoins\nUnit 3: Normalization\n1NF 2NF 3NF\nBCNF'},
+      {id:'s3',name:'Computer Networks',  code:'IT303',topics:'Unit 1: OSI Model\nPhysical Layer\nData Link Layer\nNetwork Layer\nUnit 2: TCP/IP\nIPv4 Addressing\nSubnetting\nUnit 3: Application Layer\nHTTP HTTPS\nDNS\nFTP'},
     ];
   }
-  if (DB.lectures.length === 0) {
-    const today = new Date();
-    const m = today.getMonth();
-    const y = today.getFullYear();
-    const sample = [
-      { id:'l1', date:`${y}-${String(m+1).padStart(2,'0')}-05`, day:'Monday', time:'10:00', facultyId:'f1', facultyName:'Dr. Amit Shah', subjectId:'s1', subjectName:'Data Structures', topics:['Arrays','Linked Lists'], students:28, driveLink:'https://drive.google.com/file/sample1', swappedFrom:null },
-      { id:'l2', date:`${y}-${String(m+1).padStart(2,'0')}-06`, day:'Tuesday', time:'11:00', facultyId:'f2', facultyName:'Ms. Priya Mehta', subjectId:'s2', subjectName:'Database Management', topics:['ER Model','Relational Model'], students:30, driveLink:'https://drive.google.com/file/sample2', swappedFrom:null },
-      { id:'l3', date:`${y}-${String(m+1).padStart(2,'0')}-07`, day:'Wednesday', time:'09:00', facultyId:'f3', facultyName:'Mr. Raj Patel', subjectId:'s3', subjectName:'Computer Networks', topics:['OSI Model','Physical Layer'], students:25, driveLink:'https://drive.google.com/file/sample3', swappedFrom:null },
+  if(!DB.lectures.length){
+    const t=new Date(),m=t.getMonth()+1,y=t.getFullYear(),mp=String(m).padStart(2,'0');
+    DB.lectures=[
+      {id:'l1',date:`${y}-${mp}-05`,day:'Monday',   time:'10:00',facultyId:'f1',facultyName:'Dr. Amit Shah',  subjectId:'s1',subjectName:'Data Structures',    topics:['Arrays','Linked Lists'],students:28,driveLink:'https://drive.google.com/file/sample1',swappedFrom:null},
+      {id:'l2',date:`${y}-${mp}-06`,day:'Tuesday',  time:'11:00',facultyId:'f2',facultyName:'Ms. Priya Mehta',subjectId:'s2',subjectName:'Database Management',topics:['ER Model','Relational Model'],students:30,driveLink:'https://drive.google.com/file/sample2',swappedFrom:null},
+      {id:'l3',date:`${y}-${mp}-07`,day:'Wednesday',time:'09:00',facultyId:'f3',facultyName:'Mr. Raj Patel',  subjectId:'s3',subjectName:'Computer Networks',  topics:['OSI Model','Physical Layer'],students:25,driveLink:'https://drive.google.com/file/sample3',swappedFrom:null},
     ];
-    DB.lectures = sample;
   }
 }
 seedData();
 
-const ADMIN = { id:'admin', name:'Ms. R.S.Patel', email:'admin@rngpit.ac.in', password:'admin@2025', role:'admin' };
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  LOGIN
-// ════════════════════════════════════════════
-function setLoginTab(tab) {
-  loginTab = tab;
-  document.querySelectorAll('.login-tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&tab==='faculty')||(i===1&&tab==='admin')));
+// ══════════════════════════════════
+function setLoginTab(t){
+  loginTab=t;
+  document.querySelectorAll('.login-tab').forEach((el,i)=>el.classList.toggle('active',(i===0&&t==='faculty')||(i===1&&t==='admin')));
 }
-
-function handleLogin() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const pwd = document.getElementById('loginPassword').value;
+function handleLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pwd  =document.getElementById('loginPassword').value;
   if(!email||!pwd){showToast('Please fill all fields','error');return;}
-  // Admin check
-  if(loginTab==='admin') {
-    if(email===ADMIN.email && pwd===ADMIN.password){ loginAs({...ADMIN}); return; }
-    showToast('Invalid admin credentials','error'); return;
+  if(loginTab==='admin'){
+    if(email===ADMIN.email&&pwd===ADMIN.password){loginAs({...ADMIN});return;}
+    showToast('Invalid admin credentials','error');return;
   }
-  // Faculty check
-  const fac = DB.faculties.find(f=>f.email===email && f.password===pwd);
-  if(fac){ loginAs({...fac}); return; }
-  showToast('Invalid credentials','error');
+  const fac=DB.faculties.find(f=>f.email===email&&f.password===pwd);
+  if(!fac){showToast('Invalid credentials','error');return;}
+  // Check if first login / must change password
+  if(fac.mustChangePassword){
+    pendingFirstLoginUser={...fac};
+    document.getElementById('tempPwd').value='';
+    document.getElementById('fl_newPwd').value='';
+    document.getElementById('fl_confirmPwd').value='';
+    document.getElementById('firstLoginOverlay').classList.add('show');
+    return;
+  }
+  loginAs({...fac});
 }
 
-function loginAs(user) {
-  currentUser = user;
-  sessionStorage.setItem('ls_user', JSON.stringify(user));
+function completeFirstLogin(){
+  const tempPwd=document.getElementById('tempPwd').value;
+  const newPwd =document.getElementById('fl_newPwd').value;
+  const confirm=document.getElementById('fl_confirmPwd').value;
+  if(!tempPwd||!newPwd||!confirm){showToast('Fill all fields','error');return;}
+  if(tempPwd!==pendingFirstLoginUser.password){showToast('Temporary password is incorrect','error');return;}
+  if(newPwd.length<6){showToast('New password must be at least 6 characters','error');return;}
+  if(newPwd!==confirm){showToast('Passwords do not match','error');return;}
+  // Save new password
+  const facs=DB.faculties;
+  const i=facs.findIndex(f=>f.id===pendingFirstLoginUser.id);
+  if(i>=0){facs[i].password=newPwd;facs[i].mustChangePassword=false;DB.faculties=facs;}
+  document.getElementById('firstLoginOverlay').classList.remove('show');
+  showToast('Password set! Logging you in...','success');
+  setTimeout(()=>loginAs({...facs[i]}),800);
+}
+
+function loginAs(user){
+  currentUser=user;
+  sessionStorage.setItem('ls_user',JSON.stringify(user));
   document.getElementById('loginPage').style.display='none';
   document.getElementById('appShell').style.display='block';
   initApp();
-  showToast(`Welcome back, ${user.name.split(' ')[0]}! 👋`,'success');
+  showToast(`Welcome back, ${user.name.split(' ').slice(-1)[0]}!`,'success');
 }
-
-function logout() {
-  currentUser = null;
+function logout(){
+  currentUser=null;
   sessionStorage.removeItem('ls_user');
   document.getElementById('appShell').style.display='none';
   document.getElementById('loginPage').style.display='flex';
@@ -801,148 +793,92 @@ function logout() {
   document.getElementById('loginPassword').value='';
 }
 
-// OTP / Forgot
-function showForgotPassword(){document.getElementById('loginFormSection').style.display='none';document.getElementById('forgotSection').style.display='block';}
-function showLoginForm(){document.getElementById('loginFormSection').style.display='block';document.getElementById('forgotSection').style.display='none';otpSent=false;document.getElementById('otpSection').style.display='none';document.getElementById('otpBtn').textContent='Send OTP';}
-function handleOTP(){
-  if(!otpSent){
-    const c=document.getElementById('resetContact').value;
-    if(!c){showToast('Enter email or phone','error');return;}
-    otpSent=true;
-    document.getElementById('otpSection').style.display='block';
-    document.getElementById('otpBtn').textContent='Verify & Reset';
-    showToast('OTP sent! (Demo OTP: 1234)','success');
-  } else {
-    const otp=document.getElementById('otpInput').value;
-    const np=document.getElementById('newPassword').value;
-    if(otp!=='1234'){showToast('Invalid OTP','error');return;}
-    if(!np){showToast('Enter new password','error');return;}
-    // Update password
-    const contact=document.getElementById('resetContact').value;
-    let faculties=DB.faculties;
-    const fi=faculties.findIndex(f=>f.email===contact||f.phone===contact);
-    if(fi>=0){faculties[fi].password=np;DB.faculties=faculties;}
-    showToast('Password reset successful!','success');
-    showLoginForm();
-  }
-}
-
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  APP INIT
-// ════════════════════════════════════════════
-function initApp() {
-  const u = currentUser;
-  document.getElementById('sidebarUserName').textContent = u.name;
-  document.getElementById('sidebarUserRole').textContent = u.role==='admin'?'Administrator':'Faculty · IT Dept';
-  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  buildSidebar();
-  populateFilters();
-  openPage('dashboard');
+// ══════════════════════════════════
+function initApp(){
+  document.getElementById('sidebarUserName').textContent=currentUser.name;
+  document.getElementById('sidebarUserRole').textContent=currentUser.role==='admin'?'Administrator':'Faculty · IT Dept';
+  document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  buildSidebar();populateFilters();openPage('dashboard');
 }
-
-function buildSidebar() {
-  const isAdmin = currentUser.role==='admin';
-  const items = [
+function buildSidebar(){
+  const isAdmin=currentUser.role==='admin';
+  const items=[
     {section:'Main'},
     {id:'dashboard',icon:'🏠',label:'Dashboard'},
-    {id:'lectures',icon:'📚',label:'Lectures'},
+    {id:'lectures', icon:'📚',label:'Lectures'},
     ...(isAdmin?[{id:'bills',icon:'💰',label:'Bills & Payments'}]:[]),
     {section:'Management'},
     ...(isAdmin?[{id:'faculties',icon:'👥',label:'Faculty Management'}]:[]),
-    ...(isAdmin?[{id:'syllabus',icon:'📖',label:'Syllabus Upload'}]:[]),
+    ...(isAdmin?[{id:'syllabus', icon:'📖',label:'Syllabus Upload'}]:[]),
     {id:'swap',icon:'🔄',label:'Swap Lectures'},
     {section:'Account'},
     {id:'profile',icon:'👤',label:'My Profile'},
   ];
-  let html='';
-  items.forEach(item=>{
-    if(item.section){ html+=`<div class="nav-section">${item.section}</div>`; return; }
-    html+=`<div class="nav-item" id="nav-${item.id}" onclick="openPage('${item.id}')"><span class="ni">${item.icon}</span>${item.label}</div>`;
-  });
-  document.getElementById('sidebarNav').innerHTML=html;
+  document.getElementById('sidebarNav').innerHTML=items.map(item=>
+    item.section?`<div class="nav-section">${item.section}</div>`
+    :`<div class="nav-item" id="nav-${item.id}" onclick="openPage('${item.id}')"><span class="ni">${item.icon}</span>${item.label}</div>`
+  ).join('');
 }
-
-function openPage(id) {
+function openPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const page=document.getElementById('page-'+id);
-  if(page)page.classList.add('active');
-  const nav=document.getElementById('nav-'+id);
-  if(nav)nav.classList.add('active');
-  const titles={'dashboard':'Dashboard','lectures':'Lecture Records','bills':'Bills & Payments','faculties':'Faculty Management','syllabus':'Syllabus Management','swap':'Lecture Swaps','profile':'My Profile'};
+  const pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');
+  const nv=document.getElementById('nav-'+id);if(nv)nv.classList.add('active');
+  const titles={dashboard:'Dashboard',lectures:'Lecture Records',bills:'Bills & Payments',faculties:'Faculty Management',syllabus:'Syllabus Management',swap:'Lecture Swaps',profile:'My Profile'};
   document.getElementById('pageTitle').textContent=titles[id]||id;
-  // Render
   if(id==='dashboard')renderDashboard();
-  if(id==='lectures')renderLectureTable();
-  if(id==='bills')renderBillTable();
+  if(id==='lectures') renderLectureTable();
+  if(id==='bills')    {renderBillTable();renderPerFacultyTable();}
   if(id==='faculties')renderFacultyTable();
-  if(id==='syllabus')renderSyllabusTable();
-  if(id==='swap')renderSwapTable();
-  if(id==='profile')renderProfile();
-  // Mobile close
+  if(id==='syllabus') renderSyllabusTable();
+  if(id==='swap')     renderSwapTable();
+  if(id==='profile')  renderProfile();
   if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
 }
-
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  DASHBOARD
-// ════════════════════════════════════════════
-function renderDashboard() {
-  const lectures = getVisibleLectures();
-  const thisMonth = new Date().getMonth();
-  const thisYear = new Date().getFullYear();
-  const monthLecs = lectures.filter(l=>{ const d=new Date(l.date);return d.getMonth()===thisMonth&&d.getFullYear()===thisYear; });
-  const totalStudents = lectures.reduce((s,l)=>s+(parseInt(l.students)||0),0);
-  const isAdmin = currentUser.role==='admin';
-  const facCount = DB.faculties.length;
-  const stats = [
-    {icon:'📚',label:'Total Lectures',val:lectures.length,cls:'blue'},
-    {icon:'📅',label:'This Month',val:monthLecs.length,cls:'cyan'},
-    {icon:'👨‍🎓',label:'Total Students',val:totalStudents,cls:'green'},
-    ...(isAdmin?[{icon:'👥',label:'Faculties',val:facCount,cls:'orange'}]:[]),
-  ];
-  document.getElementById('statsGrid').innerHTML=stats.map(s=>`
-    <div class="stat-card ${s.cls}">
-      <div class="stat-icon">${s.icon}</div>
-      <div><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div></div>
-    </div>`).join('');
-  // Recent 5
-  const recent=[...lectures].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
-  document.getElementById('recentLecTbody').innerHTML=recent.map(l=>`
-    <tr><td>${formatDate(l.date)}</td><td>${l.facultyName}</td><td>${l.subjectName}</td>
-    <td>${(l.topics||[]).slice(0,2).join(', ')}${l.topics.length>2?'…':''}</td><td>${l.students}</td></tr>`).join('');
+// ══════════════════════════════════
+function renderDashboard(){
+  const lecs=getVisibleLectures();
+  const now=new Date();
+  const mLecs=lecs.filter(l=>{const d=new Date(l.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+  const totalStu=lecs.reduce((s,l)=>s+(parseInt(l.students)||0),0);
+  const isAdmin=currentUser.role==='admin';
+  document.getElementById('statsGrid').innerHTML=[
+    {icon:'📚',label:'Total Lectures',val:lecs.length,cls:'blue'},
+    {icon:'📅',label:'This Month',val:mLecs.length,cls:'cyan'},
+    {icon:'👨‍🎓',label:'Total Students',val:totalStu,cls:'green'},
+    ...(isAdmin?[{icon:'👥',label:'Faculties',val:DB.faculties.length,cls:'orange'}]:[]),
+  ].map(s=>`<div class="stat-card ${s.cls}"><div class="stat-icon">${s.icon}</div><div><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div></div></div>`).join('');
+  document.getElementById('recentLecTbody').innerHTML=[...lecs].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5).map(l=>`<tr><td>${formatDate(l.date)}</td><td>${l.facultyName}</td><td>${l.subjectName}</td><td>${(l.topics||[]).slice(0,2).join(', ')}${(l.topics||[]).length>2?'…':''}</td><td>${l.students??'—'}</td></tr>`).join('');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  LECTURES
-// ════════════════════════════════════════════
-function getVisibleLectures() {
+// ══════════════════════════════════
+function getVisibleLectures(){
   if(currentUser.role==='admin')return DB.lectures;
   return DB.lectures.filter(l=>l.facultyId===currentUser.id);
 }
-
-function populateFilters() {
-  const lectures=DB.lectures;
-  const months=[...new Set(lectures.map(l=>l.date.substring(0,7)))].sort().reverse();
-  ['lecMonthFilter','billMonthFilter'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el)return;
-    const cur=el.value;
-    el.innerHTML='<option value="">All Months</option>'+months.map(m=>{const [y,mo]=m.split('-');return`<option value="${m}">${MONTHS[parseInt(mo)-1]} ${y}</option>`;}).join('');
-    if(cur)el.value=cur;
-  });
-  const facs=DB.faculties;
+function populateFilters(){
+  const months=[...new Set(DB.lectures.map(l=>l.date.substring(0,7)))].sort().reverse();
+  const mOpts='<option value="">All Months</option>'+months.map(m=>{const[y,mo]=m.split('-');return`<option value="${m}">${MONTHS[parseInt(mo)-1]} ${y}</option>`;}).join('');
+  ['lecMonthFilter','billMonthFilter','perFacMonthFilter'].forEach(id=>{const el=document.getElementById(id);if(el){const cur=el.value;el.innerHTML=mOpts;if(cur)el.value=cur;}});
   const ff=document.getElementById('lecFacultyFilter');
-  if(ff) ff.innerHTML='<option value="">All Faculty</option>'+facs.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  if(ff)ff.innerHTML='<option value="">All Faculty</option>'+DB.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  const pf=document.getElementById('perFacSelect');
+  if(pf)pf.innerHTML='<option value="">Select Faculty</option>'+DB.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
 }
-
-function renderLectureTable() {
+function renderLectureTable(){
   let lecs=getVisibleLectures();
-  const q=(document.getElementById('lecSearch')||{}).value?.toLowerCase()||'';
-  const mf=(document.getElementById('lecMonthFilter')||{}).value||'';
+  const q =(document.getElementById('lecSearch')       ||{}).value?.toLowerCase()||'';
+  const mf=(document.getElementById('lecMonthFilter')  ||{}).value||'';
   const ff=(document.getElementById('lecFacultyFilter')||{}).value||'';
-  if(q)lecs=lecs.filter(l=>l.facultyName.toLowerCase().includes(q)||l.subjectName.toLowerCase().includes(q)||(l.topics||[]).join(' ').toLowerCase().includes(q));
+  if(q) lecs=lecs.filter(l=>l.facultyName.toLowerCase().includes(q)||l.subjectName.toLowerCase().includes(q)||(l.topics||[]).join(' ').toLowerCase().includes(q));
   if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
   if(ff)lecs=lecs.filter(l=>l.facultyId===ff);
   lecs=[...lecs].sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -952,157 +888,197 @@ function renderLectureTable() {
       <td>${formatDate(l.date)}</td><td>${l.day}</td><td>${formatTime(l.time)}</td>
       <td>${l.facultyName}${l.swappedFrom?` <span class="swap-badge">SWAP</span>`:''}</td>
       <td>${l.subjectName}</td>
-      <td style="max-width:200px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
-      <td><span class="pill pill-blue">${l.students}</span></td>
-      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 Link</a></td>
-      <td>
-        <div style="display:flex;gap:4px;">
-          ${canEditLecture(l)?`<button class="btn btn-primary btn-sm" onclick="openEditLectureModal('${l.id}')">✏️</button>`:''}
-          ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteLecture('${l.id}')">🗑️</button>`:''}
-        </div>
-      </td>
+      <td style="max-width:180px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
+      <td><span class="pill pill-blue">${l.students??'—'}</span></td>
+      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 View</a></td>
+      <td><div style="display:flex;gap:4px;">
+        ${canEdit(l)?`<button class="btn btn-primary btn-sm" onclick="openEditLectureModal('${l.id}')">✏️</button>`:''}
+        ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteLecture('${l.id}')">🗑️</button>`:''}
+      </div></td>
     </tr>`).join('');
 }
+function canEdit(l){return currentUser.role==='admin'||l.facultyId===currentUser.id;}
 
-function canEditLecture(l){return currentUser.role==='admin'||l.facultyId===currentUser.id;}
-
-function openAddLectureModal() {
+// ══════════════════════════════════
+//  LECTURE MODAL
+// ══════════════════════════════════
+function openAddLectureModal(){
+  selectedTopics=[];
   document.getElementById('lecEditId').value='';
   document.getElementById('lecModalTitle').textContent='➕ Add Lecture';
   document.getElementById('lecDate').value=new Date().toISOString().split('T')[0];
   autofillDay();
-  document.getElementById('lecDay').value='';
   document.getElementById('lecTime').value='';
-  document.getElementById('lecStudents').value='';
   document.getElementById('lecDriveLink').value='';
-  document.getElementById('selectedTopicsChips').innerHTML='';
-  document.getElementById('topicSelectList').innerHTML='';
-  // Faculty dropdown
-  const facSel=document.getElementById('lecFaculty');
-  const faculties=currentUser.role==='admin'?DB.faculties:[DB.faculties.find(f=>f.id===currentUser.id)].filter(Boolean);
-  facSel.innerHTML='<option value="">Select Faculty</option>'+faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
-  if(currentUser.role==='faculty'){ facSel.value=currentUser.id; loadSubjectsForFaculty(); facSel.disabled=true; }
-  else { facSel.disabled=false; }
-  document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';
+  setupFacultyDropdown(null);
+  setupStudentsField(null);
+  renderSelectedTopics();
+  document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first</div>';
   document.getElementById('lectureModal').classList.add('show');
 }
-
-function openEditLectureModal(id) {
-  const l=DB.lectures.find(x=>x.id===id);
-  if(!l)return;
+function openEditLectureModal(id){
+  const l=DB.lectures.find(x=>x.id===id);if(!l)return;
+  selectedTopics=l.topics?[...l.topics]:[];
   document.getElementById('lecEditId').value=id;
   document.getElementById('lecModalTitle').textContent='✏️ Edit Lecture';
   document.getElementById('lecDate').value=l.date;
   document.getElementById('lecDay').value=l.day;
   document.getElementById('lecTime').value=l.time;
-  document.getElementById('lecStudents').value=l.students;
   document.getElementById('lecDriveLink').value=l.driveLink||'';
-  const facSel=document.getElementById('lecFaculty');
-  const faculties=currentUser.role==='admin'?DB.faculties:[DB.faculties.find(f=>f.id===currentUser.id)].filter(Boolean);
-  facSel.innerHTML='<option value="">Select Faculty</option>'+faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
-  facSel.value=l.facultyId;
-  facSel.disabled=currentUser.role==='faculty';
-  loadSubjectsForFaculty();
-  setTimeout(()=>{
-    document.getElementById('lecSubject').value=l.subjectId;
-    loadTopicsForSubject();
-    setTimeout(()=>{
-      selectedTopics=l.topics?[...l.topics]:[];
-      renderSelectedTopics();
-      refreshTopicList();
-    },50);
-  },50);
+  setupFacultyDropdown(l.facultyId);
+  setupStudentsField(l.students);
+  loadSubjectsForFaculty(l.facultyId,l.subjectId);
   document.getElementById('lectureModal').classList.add('show');
 }
-
-let selectedTopics=[];
-function loadSubjectsForFaculty(){
+function setupFacultyDropdown(selFacId){
+  const isAdmin=currentUser.role==='admin';
+  const facSel=document.getElementById('lecFaculty');
+  const facs=isAdmin?DB.faculties:DB.faculties.filter(f=>f.id===currentUser.id);
+  facSel.innerHTML='<option value="">Select Faculty</option>'+facs.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  if(isAdmin){facSel.disabled=false;facSel.value=selFacId||'';}
+  else{facSel.value=currentUser.id;facSel.disabled=true;}
+  const fid=facSel.value||selFacId;
+  if(fid)loadSubjectsForFaculty(fid,null);
+  else document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';
+}
+function setupStudentsField(val){
+  const isAdmin=currentUser.role==='admin';
+  const inp=document.getElementById('lecStudents');
+  const lbl=document.getElementById('studentsLabel');
+  if(isAdmin){
+    // Admin sees the count but cannot edit it — faculty enters it
+    inp.disabled=true;
+    inp.placeholder='Entered by Faculty';
+    lbl.textContent='Students Present (entered by Faculty)';
+    inp.value=val!==null&&val!==undefined?val:'';
+  } else {
+    // Faculty enters the actual present count
+    inp.disabled=false;
+    inp.placeholder='Enter present count';
+    lbl.textContent='Students Present *';
+    inp.value=val!==null&&val!==undefined?val:'';
+  }
+}
+function onFacultyChange(){
+  selectedTopics=[];renderSelectedTopics();
+  document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first</div>';
   const fid=document.getElementById('lecFaculty').value;
-  if(!fid){document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';return;}
+  if(fid)loadSubjectsForFaculty(fid,null);
+  else document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';
+}
+function loadSubjectsForFaculty(fid,preselectSubId){
+  const subjects=DB.subjects;
   const fac=DB.faculties.find(f=>f.id===fid);
-  const subs=DB.subjects.filter(s=>!fac||(fac.subjects||[]).includes(s.id));
-  document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>'+subs.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-  selectedTopics=[];renderSelectedTopics();
+  const assigned=fac&&fac.subjects&&fac.subjects.length>0?subjects.filter(s=>fac.subjects.includes(s.id)):subjects;
+  const subSel=document.getElementById('lecSubject');
+  subSel.innerHTML='<option value="">Select Subject</option>'+assigned.map(s=>`<option value="${s.id}">${s.name} (${s.code||'—'})</option>`).join('');
+  if(preselectSubId){subSel.value=preselectSubId;loadTopicsForSubject(preselectSubId);}
+  else{selectedTopics=[];renderSelectedTopics();document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first</div>';}
 }
-function loadTopicsForSubject(){
+function onSubjectChange(){
+  selectedTopics=[];renderSelectedTopics();
   const sid=document.getElementById('lecSubject').value;
-  selectedTopics=[];renderSelectedTopics();
-  refreshTopicList();
+  if(sid)loadTopicsForSubject(sid);
+  else document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first</div>';
 }
-function getTopicsForSubject(sid){
+
+// Topics list: unit headers are separators, NOT selectable — only individual topics are clickable
+function loadTopicsForSubject(sid){
   const sub=DB.subjects.find(s=>s.id===sid);
-  if(!sub)return[];
-  return (sub.topics||'').split('\n').map(t=>t.trim()).filter(t=>t&&!t.startsWith('Unit'));
+  if(!sub||!sub.topics){document.getElementById('topicSelectList').innerHTML='<div style="padding:12px;color:var(--text2);font-size:0.8rem;text-align:center;">No topics defined for this subject</div>';return;}
+  const lines=(sub.topics||'').split('\n').map(t=>t.trim()).filter(t=>t);
+  if(!lines.length){document.getElementById('topicSelectList').innerHTML='<div style="padding:12px;color:var(--text2);font-size:0.8rem;text-align:center;">No topics yet</div>';return;}
+  let html='';
+  lines.forEach(line=>{
+    if(/^unit\s/i.test(line)){
+      // Unit header — visual section divider, not clickable
+      html+=`<div class="topic-unit-hdr">${line}</div>`;
+    } else {
+      const sel=selectedTopics.includes(line);
+      const safe=line.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+      html+=`<div class="topic-item${sel?' selected':''}" onclick="toggleTopic('${safe}')">
+        <span class="chk"></span>
+        <span>${line}</span>
+      </div>`;
+    }
+  });
+  document.getElementById('topicSelectList').innerHTML=html;
 }
-function refreshTopicList(){
+function toggleTopic(topic){
+  const idx=selectedTopics.indexOf(topic);
+  if(idx>=0)selectedTopics.splice(idx,1);
+  else selectedTopics.push(topic);
+  renderSelectedTopics();
   const sid=document.getElementById('lecSubject').value;
-  const topics=getTopicsForSubject(sid);
-  document.getElementById('topicSelectList').innerHTML=topics.map(t=>`
-    <div class="topic-item ${selectedTopics.includes(t)?'selected':''}" onclick="toggleTopic('${t.replace(/'/g,"\\'")}')">
-      ${selectedTopics.includes(t)?'✅':''} ${t}
-    </div>`).join('');
-}
-function toggleTopic(t){
-  if(selectedTopics.includes(t))selectedTopics=selectedTopics.filter(x=>x!==t);
-  else selectedTopics.push(t);
-  renderSelectedTopics();refreshTopicList();
+  if(sid)loadTopicsForSubject(sid);
 }
 function renderSelectedTopics(){
-  document.getElementById('selectedTopicsChips').innerHTML=selectedTopics.map(t=>`
-    <span class="chip">${t}<span class="x" onclick="toggleTopic('${t.replace(/'/g,"\\'")}')">✕</span></span>`).join('');
+  const box=document.getElementById('selectedTopicsChips');
+  if(!selectedTopics.length){box.innerHTML='<small style="color:var(--text2)">No topics selected yet — pick from list below</small>';return;}
+  box.innerHTML=selectedTopics.map(t=>`<span class="chip">${t}<span class="x" onclick="removeTopicChip('${t.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">✕</span></span>`).join('');
 }
-
+function removeTopicChip(t){
+  selectedTopics=selectedTopics.filter(x=>x!==t);
+  renderSelectedTopics();
+  const sid=document.getElementById('lecSubject').value;
+  if(sid)loadTopicsForSubject(sid);
+}
 function autofillDay(){
   const d=document.getElementById('lecDate').value;
-  if(d){const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];document.getElementById('lecDay').value=days[new Date(d).getDay()];}
+  if(d){const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];document.getElementById('lecDay').value=days[new Date(d+'T00:00:00').getDay()];}
 }
-document.addEventListener('DOMContentLoaded',()=>{
-  const ld=document.getElementById('lecDate');
-  if(ld)ld.addEventListener('change',autofillDay);
-});
-
 function saveLecture(){
   const editId=document.getElementById('lecEditId').value;
-  const date=document.getElementById('lecDate').value;
-  const day=document.getElementById('lecDay').value;
-  const time=document.getElementById('lecTime').value;
-  const fid=document.getElementById('lecFaculty').value;
-  const sid=document.getElementById('lecSubject').value;
-  const students=document.getElementById('lecStudents').value;
-  const driveLink=document.getElementById('lecDriveLink').value;
-  if(!date||!day||!time||!fid||!sid||!students||!driveLink||selectedTopics.length===0){
-    showToast('Please fill all mandatory fields including topics and drive link','error');return;
-  }
+  const date =document.getElementById('lecDate').value;
+  const day  =document.getElementById('lecDay').value;
+  const time =document.getElementById('lecTime').value;
+  const fid  =document.getElementById('lecFaculty').value||currentUser.id;
+  const sid  =document.getElementById('lecSubject').value;
+  const driveLink=document.getElementById('lecDriveLink').value.trim();
+  const studVal  =document.getElementById('lecStudents').value;
+  const isAdmin  =currentUser.role==='admin';
+  if(!date||!day||!time||!fid||!sid||!driveLink||selectedTopics.length===0){showToast('Fill all fields and select at least one topic','error');return;}
+  // Only faculty is required to enter student count; admin cannot edit it
+  if(!isAdmin&&!studVal){showToast('Please enter students present count','error');return;}
   const fac=DB.faculties.find(f=>f.id===fid);
   const sub=DB.subjects.find(s=>s.id===sid);
-  const lectures=DB.lectures;
+  const students=studVal!==''?parseInt(studVal):null;
+  const lecs=DB.lectures;
   if(editId){
-    const i=lectures.findIndex(l=>l.id===editId);
-    if(i>=0){lectures[i]={...lectures[i],date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:parseInt(students),driveLink};}
+    const i=lecs.findIndex(l=>l.id===editId);
+    if(i>=0){
+      lecs[i]={...lecs[i],date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,driveLink};
+      // Only faculty updates the student count; preserve existing if admin edits
+      if(!isAdmin) lecs[i].students=students;
+    }
     showToast('Lecture updated!','success');
   } else {
-    lectures.push({id:'l'+Date.now(),date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:parseInt(students),driveLink,swappedFrom:null});
+    lecs.push({id:'l'+Date.now(),date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:isAdmin?null:students,driveLink,swappedFrom:null});
     showToast('Lecture added!','success');
   }
-  DB.lectures=lectures;
-  closeModal('lectureModal');
-  renderLectureTable();
-  populateFilters();
-  renderDashboard();
+  DB.lectures=lecs;closeModal('lectureModal');renderLectureTable();populateFilters();renderDashboard();
 }
-
 function deleteLecture(id){
-  if(!confirm('Delete this lecture record?'))return;
+  if(!confirm('Delete this lecture?'))return;
   DB.lectures=DB.lectures.filter(l=>l.id!==id);
-  renderLectureTable();populateFilters();renderDashboard();
-  showToast('Lecture deleted','warning');
+  renderLectureTable();populateFilters();renderDashboard();showToast('Lecture deleted','warning');
 }
 
-// ════════════════════════════════════════════
-//  BILLS (Admin)
-// ════════════════════════════════════════════
+// ══════════════════════════════════
+//  BILLS — TAB SWITCHER
+// ══════════════════════════════════
+function switchBillTab(tab){
+  document.getElementById('tab-summary').classList.toggle('active',tab==='summary');
+  document.getElementById('tab-faculty').classList.toggle('active',tab==='faculty');
+  document.getElementById('bill-summary-section').style.display=tab==='summary'?'block':'none';
+  document.getElementById('bill-faculty-section').style.display=tab==='faculty'?'block':'none';
+}
+
+// ══════════════════════════════════
+//  BILLS SUMMARY
+// ══════════════════════════════════
 function renderBillTable(){
-  const mf=document.getElementById('billMonthFilter').value;
+  const mf=(document.getElementById('billMonthFilter')||{}).value||'';
   let lecs=DB.lectures;
   if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
   const byFac={};
@@ -1110,45 +1086,80 @@ function renderBillTable(){
     if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};
     byFac[l.facultyId].count++;
   });
-  const rate=750;
-  const rows=Object.values(byFac);
-  let total=0;
+  const rate=750, rows=Object.values(byFac);
+  // Two-pass: build rows first, then sum total cleanly
+  let grandTotal=0;
+  rows.forEach(r=>{ grandTotal+=r.count*rate; });
+  let sr=1;
+  const monthStr=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All';
   document.getElementById('billTbody').innerHTML=rows.map(r=>{
-    const amt=r.count*rate;total+=amt;
-    return`<tr><td><strong>${r.name}</strong></td><td>${mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All'}</td><td>${r.count}</td><td>₹${amt.toLocaleString('en-IN')}</td><td style="width:120px;border-bottom:1px solid #ccc;padding-bottom:8px;">&nbsp;</td></tr>`;
+    const amt=r.count*rate;
+    return`<tr>
+      <td>${sr++}</td>
+      <td><strong>${r.name}</strong></td>
+      <td>${monthStr}</td>
+      <td style="text-align:center;">${r.count}</td>
+      <td style="text-align:right;">&#8377;${amt.toLocaleString('en-IN')}</td>
+      <td style="width:120px;">&nbsp;</td>
+    </tr>`;
   }).join('');
-  document.getElementById('billTotal').innerHTML=`Grand Total: <span style="color:var(--primary)">₹${total.toLocaleString('en-IN')}</span>`;
+  document.getElementById('billTfoot').innerHTML=`
+    <tr style="background:rgba(26,111,181,0.08);font-weight:700;border-top:2px solid var(--primary);">
+      <td colspan="3" style="text-align:right;padding:12px 14px;color:var(--primary-dark);">Grand Total</td>
+      <td style="text-align:center;color:var(--primary-dark);">${lecs.length} lec.</td>
+      <td style="text-align:right;color:var(--primary-dark);font-size:1rem;">&#8377;${grandTotal.toLocaleString('en-IN')}</td>
+      <td></td>
+    </tr>`;
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
+//  PER FACULTY SHEET
+// ══════════════════════════════════
+function renderPerFacultyTable(){
+  const mf =(document.getElementById('perFacMonthFilter')||{}).value||'';
+  const fid=(document.getElementById('perFacSelect')     ||{}).value||'';
+  let lecs=DB.lectures;
+  if(mf) lecs=lecs.filter(l=>l.date.startsWith(mf));
+  if(fid)lecs=lecs.filter(l=>l.facultyId===fid);
+  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  document.getElementById('perFacTbody').innerHTML=lecs.length===0
+    ?'<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:20px;">Select faculty and/or month above</td></tr>'
+    :lecs.map(l=>`<tr>
+      <td>${formatDate(l.date)}</td><td>${l.day}</td><td>${formatTime(l.time)}</td>
+      <td>${l.facultyName}</td><td>${l.subjectName}</td>
+      <td style="max-width:160px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
+      <td>${l.students??'—'}</td>
+      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 View</a></td>
+      <td style="width:100px;">&nbsp;</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════
 //  FACULTY
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 function renderFacultyTable(){
-  const lecs=DB.lectures;
   document.getElementById('facultyTbody').innerHTML=DB.faculties.map(f=>{
-    const cnt=lecs.filter(l=>l.facultyId===f.id).length;
+    const cnt=DB.lectures.filter(l=>l.facultyId===f.id).length;
     const subs=DB.subjects.filter(s=>(f.subjects||[]).includes(s.id)).map(s=>s.name).join(', ');
     return`<tr>
-      <td><strong>${f.name}</strong></td><td>${f.email}</td><td>${f.phone}</td>
-      <td>${subs||'—'}</td><td><span class="pill pill-blue">${cnt}</span></td>
+      <td><strong>${f.name}</strong>${f.mustChangePassword?` <span class="pill pill-orange" style="font-size:0.62rem;">Temp Pwd</span>`:''}</td>
+      <td>${f.email}</td><td>${f.phone}</td><td>${subs||'—'}</td>
+      <td><span class="pill pill-blue">${cnt}</span></td>
       <td><div style="display:flex;gap:4px;">
         <button class="btn btn-primary btn-sm" onclick="openEditFaculty('${f.id}')">✏️</button>
         <button class="btn btn-warning btn-sm" onclick="openResetPwd('${f.id}')">🔑</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteFaculty('${f.id}')">🗑️</button>
+        <button class="btn btn-danger btn-sm"  onclick="deleteFaculty('${f.id}')">🗑️</button>
       </div></td>
     </tr>`;
   }).join('');
 }
-
 function openAddFacultyModal(){
   document.getElementById('facEditId').value='';
   document.getElementById('facModalTitle').textContent='➕ Add Faculty';
   ['facName','facEmail','facPhone','facPassword'].forEach(id=>document.getElementById(id).value='');
-  const sel=document.getElementById('facSubjectAssign');
-  sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  refreshFacSubjectList([]);
   document.getElementById('facultyModal').classList.add('show');
 }
-
 function openEditFaculty(id){
   const f=DB.faculties.find(x=>x.id===id);if(!f)return;
   document.getElementById('facEditId').value=id;
@@ -1157,349 +1168,627 @@ function openEditFaculty(id){
   document.getElementById('facEmail').value=f.email;
   document.getElementById('facPhone').value=f.phone;
   document.getElementById('facPassword').value=f.password;
-  const sel=document.getElementById('facSubjectAssign');
-  sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}" ${(f.subjects||[]).includes(s.id)?'selected':''}>${s.name}</option>`).join('');
+  refreshFacSubjectList(f.subjects||[]);
   document.getElementById('facultyModal').classList.add('show');
 }
-
+function refreshFacSubjectList(sel){
+  document.getElementById('facSubjectAssign').innerHTML=DB.subjects.map(s=>`<option value="${s.id}"${sel.includes(s.id)?' selected':''}>${s.name} (${s.code||'—'})</option>`).join('');
+}
 function saveFaculty(){
-  const editId=document.getElementById('facEditId').value;
-  const name=document.getElementById('facName').value.trim();
-  const email=document.getElementById('facEmail').value.trim();
-  const phone=document.getElementById('facPhone').value.trim();
+  const editId  =document.getElementById('facEditId').value;
+  const name    =document.getElementById('facName').value.trim();
+  const email   =document.getElementById('facEmail').value.trim();
+  const phone   =document.getElementById('facPhone').value.trim();
   const password=document.getElementById('facPassword').value;
-  const sel=document.getElementById('facSubjectAssign');
-  const subjects=[...sel.selectedOptions].map(o=>o.value);
+  const subjects=[...document.getElementById('facSubjectAssign').selectedOptions].map(o=>o.value);
   if(!name||!email||!phone||!password){showToast('Fill all mandatory fields','error');return;}
-  let faculties=DB.faculties;
+  let facs=DB.faculties;
   if(editId){
-    const i=faculties.findIndex(f=>f.id===editId);
-    if(i>=0)faculties[i]={...faculties[i],name,email,phone,password,subjects};
+    const i=facs.findIndex(f=>f.id===editId);
+    if(i>=0)facs[i]={...facs[i],name,email,phone,password,subjects};
     showToast('Faculty updated!','success');
   } else {
-    if(faculties.find(f=>f.email===email)){showToast('Email already exists','error');return;}
-    faculties.push({id:'f'+Date.now(),name,email,phone,password,subjects,role:'faculty'});
-    showToast('Faculty added!','success');
+    if(facs.find(f=>f.email===email)){showToast('Email already exists','error');return;}
+    // New faculty always must change password on first login
+    facs.push({id:'f'+Date.now(),name,email,phone,password,subjects,role:'faculty',mustChangePassword:true});
+    showToast('Faculty added! They will set a new password on first login.','success');
   }
-  DB.faculties=faculties;
-  closeModal('facultyModal');renderFacultyTable();
+  DB.faculties=facs;closeModal('facultyModal');renderFacultyTable();populateFilters();
 }
-
 function deleteFaculty(id){
   if(!confirm('Delete this faculty?'))return;
   DB.faculties=DB.faculties.filter(f=>f.id!==id);
   renderFacultyTable();showToast('Faculty removed','warning');
 }
-
 function openResetPwd(id){document.getElementById('resetFacId').value=id;document.getElementById('newFacPwd').value='';document.getElementById('resetPwdModal').classList.add('show');}
 function doResetPassword(){
   const id=document.getElementById('resetFacId').value;
   const np=document.getElementById('newFacPwd').value;
   if(!np){showToast('Enter new password','error');return;}
-  let faculties=DB.faculties;
-  const i=faculties.findIndex(f=>f.id===id);
-  if(i>=0){faculties[i].password=np;DB.faculties=faculties;}
-  closeModal('resetPwdModal');showToast('Password reset!','success');
+  const facs=DB.faculties;const i=facs.findIndex(f=>f.id===id);
+  if(i>=0){facs[i].password=np;facs[i].mustChangePassword=true;DB.faculties=facs;}
+  closeModal('resetPwdModal');showToast('Password reset! Faculty will create new password on next login.','success');
+  renderFacultyTable();
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  SYLLABUS
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 function renderSyllabusTable(){
-  document.getElementById('syllabusTbody').innerHTML=DB.subjects.map(s=>`
-    <tr>
-      <td><strong>${s.name}</strong></td><td><span class="pill pill-blue">${s.code||'—'}</span></td>
-      <td style="max-width:300px;font-size:0.76rem;white-space:pre-wrap;">${s.topics||''}</td>
+  document.getElementById('syllabusTbody').innerHTML=DB.subjects.map(s=>{
+    const topics=(s.topics||'').split('\n').filter(t=>t.trim()&&!/^unit\s/i.test(t.trim()));
+    return`<tr>
+      <td><strong>${s.name}</strong></td>
+      <td><span class="pill pill-blue">${s.code||'—'}</span></td>
+      <td style="max-width:240px;font-size:0.76rem;color:var(--text2);">${topics.slice(0,5).join(', ')}${topics.length>5?'…':''}</td>
       <td><div style="display:flex;gap:4px;">
         <button class="btn btn-primary btn-sm" onclick="openEditSubject('${s.id}')">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">🗑️</button>
+        <button class="btn btn-danger btn-sm"  onclick="deleteSubject('${s.id}')">🗑️</button>
       </div></td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
-
 function openAddSubjectModal(){
-  document.getElementById('subEditId').value='';
-  document.getElementById('subModalTitle').textContent='📖 Add Subject & Syllabus';
-  document.getElementById('subName').value='';document.getElementById('subCode').value='';document.getElementById('subTopics').value='';
+  document.getElementById('subEditId').value='';document.getElementById('subModalTitle').textContent='📖 Add Subject & Syllabus';
+  ['subName','subCode','subTopics'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('subjectModal').classList.add('show');
 }
 function openEditSubject(id){
   const s=DB.subjects.find(x=>x.id===id);if(!s)return;
-  document.getElementById('subEditId').value=id;
-  document.getElementById('subModalTitle').textContent='✏️ Edit Subject';
+  document.getElementById('subEditId').value=id;document.getElementById('subModalTitle').textContent='✏️ Edit Subject';
   document.getElementById('subName').value=s.name;document.getElementById('subCode').value=s.code||'';document.getElementById('subTopics').value=s.topics||'';
   document.getElementById('subjectModal').classList.add('show');
 }
 function saveSubject(){
   const editId=document.getElementById('subEditId').value;
-  const name=document.getElementById('subName').value.trim();
-  const code=document.getElementById('subCode').value.trim();
+  const name  =document.getElementById('subName').value.trim();
+  const code  =document.getElementById('subCode').value.trim();
   const topics=document.getElementById('subTopics').value;
   if(!name){showToast('Subject name required','error');return;}
-  let subjects=DB.subjects;
-  if(editId){
-    const i=subjects.findIndex(s=>s.id===editId);if(i>=0)subjects[i]={...subjects[i],name,code,topics};
-    showToast('Subject updated!','success');
-  } else {
-    subjects.push({id:'s'+Date.now(),name,code,topics});showToast('Subject added!','success');
-  }
-  DB.subjects=subjects;closeModal('subjectModal');renderSyllabusTable();
-  // Refresh faculty modal
-  const sel=document.getElementById('facSubjectAssign');
-  if(sel)sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  let subs=DB.subjects;
+  if(editId){const i=subs.findIndex(s=>s.id===editId);if(i>=0)subs[i]={...subs[i],name,code,topics};showToast('Subject updated!','success');}
+  else{subs.push({id:'s'+Date.now(),name,code,topics});showToast('Subject added!','success');}
+  DB.subjects=subs;closeModal('subjectModal');renderSyllabusTable();
 }
 function deleteSubject(id){
   if(!confirm('Delete this subject?'))return;
-  DB.subjects=DB.subjects.filter(s=>s.id!==id);
-  renderSyllabusTable();showToast('Subject deleted','warning');
+  DB.subjects=DB.subjects.filter(s=>s.id!==id);renderSyllabusTable();showToast('Subject deleted','warning');
 }
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  SWAP
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 function renderSwapTable(){
-  const swaps=DB.swaps;
-  const isAdmin=currentUser.role==='admin';
-  document.getElementById('swapTbody').innerHTML=swaps.map(sw=>`
-    <tr>
-      <td>${formatDate(sw.date)}</td>
-      <td>${sw.fromName}</td><td>${sw.toName}</td><td>${sw.subjectName}</td>
+  const swaps=DB.swaps,isAdmin=currentUser.role==='admin';
+  document.getElementById('swapTbody').innerHTML=!swaps.length
+    ?'<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">No swap requests yet</td></tr>'
+    :swaps.map(sw=>`<tr>
+      <td>${formatDate(sw.date)}</td><td>${sw.fromName}</td><td>${sw.toName}</td><td>${sw.subjectName}</td>
+      <td>${sw.reason||'—'}</td>
       <td><span class="pill ${sw.status==='approved'?'pill-green':sw.status==='rejected'?'pill-red':'pill-orange'}">${sw.status.toUpperCase()}</span></td>
-      <td>
-        ${isAdmin&&sw.status==='pending'?`<div style="display:flex;gap:4px;"><button class="btn btn-success btn-sm" onclick="approveSwap('${sw.id}')">✅ Approve</button><button class="btn btn-danger btn-sm" onclick="rejectSwap('${sw.id}')">❌ Reject</button></div>`:''}
-        ${!isAdmin&&sw.fromId===currentUser.id&&sw.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelSwap('${sw.id}')">Cancel</button>`:''}
-      </td>
+      <td>${isAdmin&&sw.status==='pending'?`<div style="display:flex;gap:4px;"><button class="btn btn-success btn-sm" onclick="approveSwap('${sw.id}')">✅</button><button class="btn btn-danger btn-sm" onclick="rejectSwap('${sw.id}')">❌</button></div>`:''}
+          ${!isAdmin&&sw.fromId===currentUser.id&&sw.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelSwap('${sw.id}')">Cancel</button>`:''}</td>
     </tr>`).join('');
 }
-
 function openSwapModal(){
-  const myLecs=getVisibleLectures().filter(l=>l.facultyId===currentUser.id);
-  const sl=document.getElementById('swapLecId');
-  sl.innerHTML='<option value="">Select lecture...</option>'+myLecs.map(l=>`<option value="${l.id}">${formatDate(l.date)} — ${l.subjectName}</option>`).join('');
-  const tf=document.getElementById('swapToFaculty');
-  const others=DB.faculties.filter(f=>f.id!==currentUser.id);
-  tf.innerHTML='<option value="">Select faculty...</option>'+others.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  const myLecs=currentUser.role==='admin'?DB.lectures:DB.lectures.filter(l=>l.facultyId===currentUser.id);
+  document.getElementById('swapLecId').innerHTML='<option value="">Select lecture...</option>'+myLecs.map(l=>`<option value="${l.id}">${formatDate(l.date)} — ${l.subjectName}</option>`).join('');
+  document.getElementById('swapToFaculty').innerHTML='<option value="">Select faculty...</option>'+DB.faculties.filter(f=>f.id!==currentUser.id).map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
   document.getElementById('swapReason').value='';
   document.getElementById('swapModal').classList.add('show');
 }
 function submitSwap(){
-  const lid=document.getElementById('swapLecId').value;
-  const toId=document.getElementById('swapToFaculty').value;
-  const reason=document.getElementById('swapReason').value;
+  const lid=document.getElementById('swapLecId').value,toId=document.getElementById('swapToFaculty').value;
   if(!lid||!toId){showToast('Select lecture and target faculty','error');return;}
-  const lec=DB.lectures.find(l=>l.id===lid);
-  const toFac=DB.faculties.find(f=>f.id===toId);
+  const lec=DB.lectures.find(l=>l.id===lid),toFac=DB.faculties.find(f=>f.id===toId);
   const swaps=DB.swaps;
-  swaps.push({id:'sw'+Date.now(),lectureId:lid,date:lec.date,fromId:currentUser.id,fromName:currentUser.name,toId,toName:toFac.name,subjectName:lec.subjectName,reason,status:'pending'});
-  DB.swaps=swaps;closeModal('swapModal');renderSwapTable();
-  showToast('Swap request submitted!','success');
+  swaps.push({id:'sw'+Date.now(),lectureId:lid,date:lec.date,fromId:currentUser.id,fromName:currentUser.name,toId,toName:toFac.name,subjectName:lec.subjectName,reason:document.getElementById('swapReason').value,status:'pending'});
+  DB.swaps=swaps;closeModal('swapModal');renderSwapTable();showToast('Swap request submitted!','success');
 }
 function approveSwap(id){
-  const swaps=DB.swaps;const i=swaps.findIndex(s=>s.id===id);if(i<0)return;
+  const swaps=DB.swaps,i=swaps.findIndex(s=>s.id===id);if(i<0)return;
   swaps[i].status='approved';
-  // Update lecture
-  const lectures=DB.lectures;const li=lectures.findIndex(l=>l.id===swaps[i].lectureId);
-  if(li>=0){const toFac=DB.faculties.find(f=>f.id===swaps[i].toId);lectures[li].swappedFrom=lectures[li].facultyId;lectures[li].facultyId=swaps[i].toId;lectures[li].facultyName=toFac.name;DB.lectures=lectures;}
-  DB.swaps=swaps;renderSwapTable();renderLectureTable();
-  showToast('Swap approved!','success');
+  const lecs=DB.lectures,li=lecs.findIndex(l=>l.id===swaps[i].lectureId);
+  if(li>=0){const tf=DB.faculties.find(f=>f.id===swaps[i].toId);lecs[li].swappedFrom=lecs[li].facultyId;lecs[li].facultyId=swaps[i].toId;lecs[li].facultyName=tf.name;DB.lectures=lecs;}
+  DB.swaps=swaps;renderSwapTable();renderLectureTable();showToast('Swap approved!','success');
 }
 function rejectSwap(id){
-  const swaps=DB.swaps;const i=swaps.findIndex(s=>s.id===id);if(i>=0){swaps[i].status='rejected';DB.swaps=swaps;}
-  renderSwapTable();showToast('Swap rejected','warning');
+  const swaps=DB.swaps,i=swaps.findIndex(s=>s.id===id);
+  if(i>=0){swaps[i].status='rejected';DB.swaps=swaps;}renderSwapTable();showToast('Swap rejected','warning');
 }
-function cancelSwap(id){
-  DB.swaps=DB.swaps.filter(s=>s.id!==id);renderSwapTable();showToast('Request cancelled','warning');
-}
+function cancelSwap(id){DB.swaps=DB.swaps.filter(s=>s.id!==id);renderSwapTable();showToast('Cancelled','warning');}
 
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 //  PROFILE
-// ════════════════════════════════════════════
+// ══════════════════════════════════
 function renderProfile(){
-  const u=currentUser;
-  const myLecs=getVisibleLectures();
+  const u=currentUser,myLecs=getVisibleLectures();
+  const mLecs=myLecs.filter(l=>{const d=new Date(l.date);return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear();});
   document.getElementById('profileBody').innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:22px;">
       <div>
-        <div style="width:80px;height:80px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:16px;">👤</div>
-        <h3 style="font-size:1.2rem;font-weight:800;color:var(--primary-dark);">${u.name}</h3>
+        <div style="width:76px;height:76px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;margin-bottom:14px;">👤</div>
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--primary-dark);">${u.name}</h3>
         <p style="color:var(--text2);margin:4px 0;">${u.email}</p>
         <p style="color:var(--text2);">${u.phone||'—'}</p>
         <span class="pill ${u.role==='admin'?'pill-orange':'pill-blue'}" style="margin-top:8px;display:inline-block;">${u.role==='admin'?'Administrator':'Faculty'}</span>
       </div>
       <div>
-        <div class="stat-card blue" style="margin-bottom:12px;"><div class="stat-icon">📚</div><div><div class="stat-val">${myLecs.length}</div><div class="stat-label">Total Lectures</div></div></div>
-        ${u.role!=='admin'?`<div class="stat-card cyan"><div class="stat-icon">📅</div><div><div class="stat-val">${myLecs.filter(l=>{const d=new Date(l.date);return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear();}).length}</div><div class="stat-label">This Month</div></div></div>`:''}
+        <div class="stat-card blue" style="margin-bottom:10px;"><div class="stat-icon">📚</div><div><div class="stat-val">${myLecs.length}</div><div class="stat-label">Total Lectures</div></div></div>
+        <div class="stat-card cyan"><div class="stat-icon">📅</div><div><div class="stat-val">${mLecs.length}</div><div class="stat-label">This Month</div></div></div>
       </div>
     </div>
-    <hr style="margin:20px 0;border:none;border-top:1px solid var(--border);">
-    <h4 style="margin-bottom:12px;color:var(--primary-dark);">Change Password</h4>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:600px;">
-      <div class="form-group"><label>Current Password</label><input type="password" id="curPwd" placeholder="Current password"></div>
-      <div class="form-group"><label>New Password</label><input type="password" id="profNewPwd" placeholder="New password"></div>
-      <div class="form-group" style="display:flex;align-items:flex-end;">
-        <button class="btn btn-primary" onclick="changeMyPassword()">🔄 Update</button>
-      </div>
+    <hr style="margin:0 0 18px;border:none;border-top:1px solid var(--border);">
+    <h4 style="margin-bottom:12px;color:var(--primary-dark);">🔑 Change Password</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;max-width:600px;align-items:end;">
+      <div class="form-group" style="margin:0;"><label>Current Password</label><input type="password" id="curPwd" placeholder="Current password"></div>
+      <div class="form-group" style="margin:0;"><label>New Password</label><input type="password" id="profNewPwd" placeholder="New password"></div>
+      <button class="btn btn-primary" onclick="changeMyPassword()">Update</button>
     </div>`;
 }
 function changeMyPassword(){
-  const cur=document.getElementById('curPwd').value;
-  const np=document.getElementById('profNewPwd').value;
+  const cur=document.getElementById('curPwd').value,np=document.getElementById('profNewPwd').value;
   if(!cur||!np){showToast('Fill both fields','error');return;}
   if(currentUser.role==='admin'){if(cur!==ADMIN.password){showToast('Current password incorrect','error');return;}ADMIN.password=np;currentUser.password=np;showToast('Password updated!','success');return;}
-  let faculties=DB.faculties;const i=faculties.findIndex(f=>f.id===currentUser.id);
-  if(i<0)return;if(faculties[i].password!==cur){showToast('Current password incorrect','error');return;}
-  faculties[i].password=np;currentUser.password=np;DB.faculties=faculties;
-  showToast('Password updated!','success');
+  const facs=DB.faculties,i=facs.findIndex(f=>f.id===currentUser.id);
+  if(i<0)return;if(facs[i].password!==cur){showToast('Current password incorrect','error');return;}
+  facs[i].password=np;currentUser.password=np;DB.faculties=facs;showToast('Password updated!','success');
 }
 
-// ════════════════════════════════════════════
-//  PDF – MONTHLY LECTURES
-// ════════════════════════════════════════════
-function exportMonthlyPDF(){
-  const mf=document.getElementById('lecMonthFilter').value;
-  let lecs=getVisibleLectures();
-  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
-  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  if(lecs.length===0){showToast('No lectures for selected period','error');return;}
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  const pageW=doc.internal.pageSize.getWidth();
-  const pageH=doc.internal.pageSize.getHeight();
-  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
-  function addHeader(doc){
-    // Header bg
-    doc.setFillColor(26,111,181);doc.rect(0,0,pageW,22,'F');
-    doc.setFillColor(0,180,216);doc.rect(0,22,pageW,5,'F');
-    doc.setTextColor(255,255,255);
-    doc.setFont('helvetica','bold');doc.setFontSize(13);
-    doc.text('R.N.G.PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pageW/2,10,{align:'center'});
-    doc.setFontSize(9);
-    doc.text('Daily Lecture Sheet – '+monthLabel,pageW/2,16,{align:'center'});
-    // Dept info line
-    doc.setFillColor(240,248,255);doc.rect(0,27,pageW,10,'F');
-    doc.setTextColor(26,111,181);doc.setFontSize(8.5);
-    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pageW/2,33,{align:'center'});
-  }
-  function addFooter(doc,pn,tp){
-    doc.setFillColor(240,248,255);doc.rect(0,pageH-22,pageW,22,'F');
-    doc.setDrawColor(26,111,181);doc.line(0,pageH-22,pageW,pageH-22);
-    doc.setTextColor(50,50,80);doc.setFontSize(7.5);doc.setFont('helvetica','normal');
-    const col=pageW/3;
-    doc.text('Prepared by:\nMs. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',col*0+8,pageH-18);
-    doc.text('Verified by:\nMr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',col*1+8,pageH-18);
-    doc.text('Approved by:\nDr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',col*2+8,pageH-18);
-    // Signature lines
-    [col*0+50,col*1+50,col*2+50].forEach(x=>{doc.setDrawColor(150,150,180);doc.line(x,pageH-5,x-40,pageH-5);});
-    doc.setTextColor(150,150,180);doc.setFontSize(6.5);
-    doc.text(`Page ${pn} of ${tp}`,pageW-14,pageH-4,{align:'right'});
-  }
-  addHeader(doc);
-  doc.autoTable({
-    startY:38,
-    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link']],
-    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join('\n'),l.students,l.driveLink]),
-    styles:{fontSize:7.5,cellPadding:3,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
-    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:8},
-    alternateRowStyles:{fillColor:[240,248,255]},
-    columnStyles:{8:{cellWidth:40,overflow:'linebreak'},5:{cellWidth:30},6:{cellWidth:45,overflow:'linebreak'}},
-    margin:{top:38,bottom:26,left:10,right:10},
-    didDrawPage:(d)=>{addHeader(doc);addFooter(doc,d.pageNumber,1);},
-    // Drive link as hyperlink
-    didParseCell:(d)=>{if(d.column.index===8&&d.section==='body'){d.cell.styles.textColor=[26,111,181];}}
-  });
-  // Update total page count
-  const tp=doc.internal.getNumberOfPages();
-  for(let p=1;p<=tp;p++){doc.setPage(p);addFooter(doc,p,tp);}
-  doc.save(`LectureSheet_${monthLabel.replace(' ','_')}.pdf`);
-  showToast('Monthly PDF downloaded!','success');
-}
-
-// ════════════════════════════════════════════
-//  PDF – BILL
-// ════════════════════════════════════════════
-function exportBillPDF(){
-  const mf=document.getElementById('billMonthFilter').value;
-  let lecs=DB.lectures;
-  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
-  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All';
-  const byFac={};
-  lecs.forEach(l=>{if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};byFac[l.facultyId].count++;});
-  const rate=750;
-  const rows=Object.values(byFac);
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:'mm',format:'a4'});
-  const pageW=doc.internal.pageSize.getWidth();
-  const pageH=doc.internal.pageSize.getHeight();
-  // Header
-  doc.setFillColor(26,111,181);doc.rect(0,0,pageW,28,'F');
-  doc.setFillColor(0,180,216);doc.rect(0,28,pageW,4,'F');
-  doc.setTextColor(255,255,255);
-  doc.setFont('helvetica','bold');doc.setFontSize(14);
-  doc.text('R.N.G.PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pageW/2,11,{align:'center'});
-  doc.setFontSize(10);doc.text('Faculty Payment Bill – '+monthLabel,pageW/2,19,{align:'center'});
-  doc.setFontSize(8.5);doc.text('Department: Information Technology (IT) | Program: BTech Working Professional',pageW/2,25,{align:'center'});
-  // Date
-  doc.setFillColor(240,248,255);doc.rect(0,32,pageW,10,'F');
+// ══════════════════════════════════
+//  PDF HELPERS
+// ══════════════════════════════════
+function billHeader(doc,pw,title,monthLabel){
+  doc.setFillColor(26,111,181);doc.rect(0,0,pw,30,'F');
+  doc.setFillColor(0,180,216);doc.rect(0,30,pw,4,'F');
+  doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
+  doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,11,{align:'center'});
+  doc.setFontSize(10);doc.text(title,pw/2,19,{align:'center'});
+  doc.setFontSize(8);doc.text('Department: Information Technology (IT)  |  Program: BTech Working Professional (IT)',pw/2,25,{align:'center'});
+  doc.setFillColor(240,248,255);doc.rect(0,34,pw,11,'F');
   doc.setTextColor(26,111,181);doc.setFontSize(8.5);doc.setFont('helvetica','normal');
-  doc.text('Bill Date: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'}),pageW-14,38,{align:'right'});
-  doc.text('Batch: 2025',14,38);
-  // Table
-  let total=0;
+  doc.text('Month: '+monthLabel,14,40);doc.text('Batch: 2025',pw/2,40,{align:'center'});
+  doc.text('Date: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'}),pw-14,40,{align:'right'});
+}
+function billFooter(doc,pw,ph){
+  const fh=42,fy=ph-fh;
+  doc.setFillColor(255,255,255);doc.rect(0,fy,pw,fh,'F');
+  doc.setDrawColor(200,220,240);doc.line(0,fy,pw,fy);
+  const cw=pw/3;
+  [['Prepared by','Ms. R.S.Patel','Asst.Prof IT Dept, RNGPIT Bardoli'],
+   ['Verified by','Mr. V.C.Joshi','Head, IT Dept, RNGPIT Bardoli'],
+   ['Approved by','Dr. L.B.Chaudhari','Director, RNGPIT Bardoli']].forEach(([t,n,r],ci)=>{
+    const x=cw*ci+14;
+    doc.setTextColor(70,70,100);doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.text(t+':',x,fy+8);
+    doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text(n,x,fy+14);
+    doc.setTextColor(130,130,160);doc.setFontSize(6.5);doc.text(r,x,fy+20);
+    doc.setDrawColor(120,130,160);doc.line(x,fy+36,x+cw-22,fy+36);
+    doc.setTextColor(160,160,180);doc.setFontSize(6);doc.text('Signature',x,fy+41);
+  });
+}
+
+// ══════════════════════════════════
+//  PDF — BILL SUMMARY
+// ══════════════════════════════════
+function fmtMoney(n){
+  // jsPDF helvetica cannot render ₹ — use Rs. prefix instead
+  return 'Rs. '+Number(n).toLocaleString('en-IN');
+}
+function exportBillPDF(){
+  const mf=(document.getElementById('billMonthFilter')||{}).value||'';
+  let lecs=DB.lectures;if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  if(!lecs.length){showToast('No lectures found','error');return;}
+  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
+  const byFac={};
+  lecs.forEach(l=>{
+    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};
+    byFac[l.facultyId].count++;
+  });
+  const rate=750, rows=Object.values(byFac);
+  let grand=0;
+  rows.forEach(r=>{grand+=r.count*rate;});
+
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+
+  billHeader(doc,pw,'Faculty Lecture Payment Bill',monthLabel);
+
+  // Table — all amounts as plain ASCII (Rs. prefix)
   doc.autoTable({
-    startY:44,
-    head:[['Sr.','Faculty Name','Total Lectures','Amount (₹)','Signature']],
-    body:rows.map((r,i)=>{const a=r.count*rate;total+=a;return[i+1,r.name,r.count,'₹'+a.toLocaleString('en-IN'),''];}).concat([['','','Total Lectures: '+lecs.length,'Grand Total: ₹'+total.toLocaleString('en-IN'),'']]),
-    styles:{fontSize:9,cellPadding:4},
-    headStyles:{fillColor:[26,111,181],textColor:255,fontStyle:'bold'},
+    startY:47,
+    head:[['Sr.','Faculty Name','Total Lectures','Amount (Rs.)','Signature']],
+    body:rows.map((r,i)=>{
+      const a=r.count*rate;
+      return[i+1, r.name, r.count, fmtMoney(a), ''];
+    }),
+    styles:{fontSize:9,cellPadding:4.5,valign:'middle',lineColor:[200,220,240],lineWidth:0.25},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:9},
     alternateRowStyles:{fillColor:[240,248,255]},
-    columnStyles:{4:{cellWidth:40},0:{cellWidth:12}},
-    foot:[],
-    margin:{left:14,right:14},
+    columnStyles:{
+      0:{cellWidth:14, halign:'center'},
+      1:{cellWidth:72},
+      2:{cellWidth:28, halign:'center'},
+      3:{cellWidth:42, halign:'center'},
+      4:{cellWidth:34},
+    },
+    margin:{left:10,right:10},
   });
-  // Footer – WHITE background for signing
-  doc.setFillColor(255,255,255);doc.rect(0,pageH-40,pageW,40,'F');
-  doc.setDrawColor(200,220,240);doc.line(0,pageH-40,pageW,pageH-40);
-  doc.setTextColor(50,50,80);doc.setFontSize(8);doc.setFont('helvetica','normal');
-  const col=pageW/3;
-  const labels=[['Prepared by:','Ms. R.S.Patel','Asst.Prof IT Dept, RNGPIT Bardoli'],['Verified by:','Mr. V.C.Joshi','Head, IT Dept, RNGPIT Bardoli'],['Approved by:','Dr. L.B.Chaudhari','Director, RNGPIT Bardoli']];
-  labels.forEach(([title,name,role],ci)=>{
-    const x=col*ci+14;
-    doc.text(title,x,pageH-34);doc.text(name,x,pageH-29);doc.text(role,x,pageH-24);
-    doc.setDrawColor(130,130,160);doc.line(x,pageH-8,x+50,pageH-8);
-    doc.setTextColor(160,160,180);doc.setFontSize(6.5);doc.text('Signature',x,pageH-5);
-    doc.setTextColor(50,50,80);doc.setFontSize(8);
-  });
-  doc.save(`Bill_${monthLabel.replace(' ','_')}.pdf`);
+
+  // Grand total banner — centered amounts
+  const fy=doc.lastAutoTable.finalY+4;
+  doc.setFillColor(26,111,181);
+  doc.rect(10,fy,pw-20,11,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(9.5);
+  doc.text('Total Lectures: '+lecs.length, pw/2-20, fy+7.2);
+  doc.text('Grand Total: '+fmtMoney(grand), pw/2+20, fy+7.2);
+
+  billFooter(doc,pw,ph);
+  doc.save('Bill_'+monthLabel.replace(' ','_')+'.pdf');
   showToast('Bill PDF downloaded!','success');
 }
 
-// ════════════════════════════════════════════
-//  UTILS
-// ════════════════════════════════════════════
-function closeModal(id){document.getElementById(id).classList.remove('show');}
-function formatDate(d){if(!d)return '';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
-function formatTime(t){if(!t)return '';const [h,m]=t.split(':');const hh=parseInt(h);return `${hh%12||12}:${m} ${hh>=12?'PM':'AM'}`;}
+// ══════════════════════════════════
+//  PDF — PER FACULTY SHEET
+// ══════════════════════════════════
+function exportPerFacultyPDF(){
+  const mf =(document.getElementById('perFacMonthFilter')||{}).value||'';
+  const fid=(document.getElementById('perFacSelect')     ||{}).value||'';
+  let lecs=DB.lectures;
+  if(mf) lecs=lecs.filter(l=>l.date.startsWith(mf));
+  if(fid)lecs=lecs.filter(l=>l.facultyId===fid);
+  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!lecs.length){showToast('No lectures found for selection','error');return;}
+  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
+  const facName=fid?(DB.faculties.find(f=>f.id===fid)||{name:'All Faculty'}).name:'All Faculty';
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
 
-function showToast(msg,type='success'){
-  const el=document.createElement('div');
-  el.className=`toast ${type}`;
-  const icons={'success':'✅','error':'❌','warning':'⚠️'};
-  el.innerHTML=`${icons[type]||'ℹ️'} ${msg}`;
-  document.getElementById('toastContainer').appendChild(el);
-  setTimeout(()=>el.remove(),3500);
+  function addHeader(){
+    doc.setFillColor(26,111,181);doc.rect(0,0,pw,26,'F');
+    doc.setFillColor(0,180,216);doc.rect(0,26,pw,4,'F');
+    doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
+    doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,10,{align:'center'});
+    doc.setFontSize(9);
+    doc.text('Faculty Lecture Detail Sheet – '+monthLabel,pw/2,17,{align:'center'});
+    doc.setFontSize(7.5);doc.text('Faculty: '+facName,pw/2,23,{align:'center'});
+    doc.setFillColor(240,248,255);doc.rect(0,30,pw,10,'F');
+    doc.setTextColor(26,111,181);doc.setFontSize(8);doc.setFont('helvetica','normal');
+    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pw/2,36,{align:'center'});
+  }
+  function addLsFooter(pn,tp){
+    const fh=22,fy=ph-fh;
+    doc.setFillColor(240,248,255);doc.rect(0,fy,pw,fh,'F');
+    doc.setDrawColor(26,111,181);doc.line(0,fy,pw,fy);
+    const cw=pw/3;
+    doc.setTextColor(60,60,90);doc.setFontSize(7);doc.setFont('helvetica','normal');
+    doc.text('Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',cw*0+8,fy+5);
+    doc.text('Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',    cw*1+8,fy+5);
+    doc.text('Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',     cw*2+8,fy+5);
+    [cw*0+55,cw*1+55,cw*2+55].forEach(x=>{doc.setDrawColor(160,160,190);doc.line(x,fy+19,x-44,fy+19);});
+    doc.setTextColor(160,160,180);doc.setFontSize(6);
+    doc.text(`Page ${pn} of ${tp}`,pw-10,fy+19,{align:'right'});
+  }
+
+  addHeader();
+  doc.autoTable({
+    startY:42,
+    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link','Signature']],
+    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join(', '),l.students??'—',l.driveLink||'—','']),
+    styles:{fontSize:7,cellPadding:2.8,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:7},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    columnStyles:{
+      0:{cellWidth:8, halign:'center'},
+      1:{cellWidth:21},
+      2:{cellWidth:16},
+      3:{cellWidth:13},
+      4:{cellWidth:32},
+      5:{cellWidth:28},
+      6:{cellWidth:52,overflow:'linebreak'},
+      7:{cellWidth:16,halign:'center'},
+      8:{cellWidth:38,overflow:'linebreak',textColor:[26,111,181]},
+      9:{cellWidth:32},
+    },
+    margin:{top:42,bottom:26,left:8,right:8},
+    didDrawPage:(d)=>{addHeader();addLsFooter(d.pageNumber,1);},
+  });
+  const tp=doc.internal.getNumberOfPages();
+  for(let p=1;p<=tp;p++){doc.setPage(p);addLsFooter(p,tp);}
+  doc.save(`FacultySheet_${facName.replace(/\s/g,'_')}_${monthLabel.replace(' ','_')}.pdf`);
+  showToast('Per-Faculty PDF downloaded!','success');
 }
 
-// Close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');});
-});
+// ══════════════════════════════════
+//  PDF — MONTHLY LECTURE SHEET
+// ══════════════════════════════════
+function exportMonthlyPDF(){
+  const mf=(document.getElementById('lecMonthFilter')||{}).value||'';
+  let lecs=getVisibleLectures();
+  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!lecs.length){showToast('No lectures for selected period','error');return;}
+  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+  function addHeader(){
+    doc.setFillColor(26,111,181);doc.rect(0,0,pw,22,'F');
+    doc.setFillColor(0,180,216);doc.rect(0,22,pw,4,'F');
+    doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
+    doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,10,{align:'center'});
+    doc.setFontSize(9);doc.text('Daily Lecture Sheet – '+monthLabel,pw/2,17,{align:'center'});
+    doc.setFillColor(240,248,255);doc.rect(0,26,pw,10,'F');
+    doc.setTextColor(26,111,181);doc.setFontSize(8);doc.setFont('helvetica','normal');
+    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pw/2,32,{align:'center'});
+  }
+  function addFooter(pn,tp){
+    doc.setFillColor(240,248,255);doc.rect(0,ph-22,pw,22,'F');
+    doc.setDrawColor(26,111,181);doc.line(0,ph-22,pw,ph-22);
+    const cw=pw/3;
+    doc.setTextColor(60,60,90);doc.setFontSize(7);doc.setFont('helvetica','normal');
+    doc.text('Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',cw*0+8,ph-18);
+    doc.text('Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',    cw*1+8,ph-18);
+    doc.text('Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',     cw*2+8,ph-18);
+    [cw*0+55,cw*1+55,cw*2+55].forEach(x=>{doc.setDrawColor(160,160,190);doc.line(x,ph-4,x-44,ph-4);});
+    doc.setTextColor(160,160,180);doc.setFontSize(6.5);doc.text(`Page ${pn} of ${tp}`,pw-12,ph-4,{align:'right'});
+  }
+  addHeader();
+  doc.autoTable({
+    startY:37,
+    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link']],
+    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join(', '),l.students??'—',l.driveLink||'—']),
+    styles:{fontSize:7.5,cellPadding:3,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:7.5},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    columnStyles:{0:{cellWidth:8,halign:'center'},1:{cellWidth:22},2:{cellWidth:18},3:{cellWidth:14},4:{cellWidth:35},5:{cellWidth:30},6:{cellWidth:52,overflow:'linebreak'},7:{cellWidth:16,halign:'center'},8:{cellWidth:45,overflow:'linebreak',textColor:[26,111,181]}},
+    margin:{top:37,bottom:26,left:8,right:8},
+    didDrawPage:(d)=>{addHeader();addFooter(d.pageNumber,1);},
+  });
+  const tp=doc.internal.getNumberOfPages();
+  for(let p=1;p<=tp;p++){doc.setPage(p);addFooter(p,tp);}
+  doc.save(`LectureSheet_${monthLabel.replace(' ','_')}.pdf`);showToast('Monthly PDF downloaded!','success');
+}
 
-// Auto-login if session
+// ══════════════════════════════════
+//  UTILS
+// ══════════════════════════════════
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
+function formatDate(d){if(!d)return'';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function formatTime(t){if(!t)return'';const[h,m]=t.split(':');const hh=parseInt(h);return`${hh%12||12}:${m} ${hh>=12?'PM':'AM'}`;}
+function showToast(msg,type='success'){
+  const el=document.createElement('div');el.className=`toast ${type}`;
+  el.innerHTML={'success':'✅','error':'❌','warning':'⚠️'}[type]+' '+msg;
+  document.getElementById('toastContainer').appendChild(el);setTimeout(()=>el.remove(),3500);
+}
+
+// ══════════════════════════════════
+//  IT BACKGROUND — CIRCUIT BOARD + FLOATING CHARACTERS
+// ══════════════════════════════════
+function buildITBackground(){
+  const W=window.innerWidth, H=window.innerHeight;
+  const svg=document.getElementById('circuitSvg');
+  const NS='http://www.w3.org/2000/svg';
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+
+  const C_LINE  ='rgba(0,180,216,0.13)';
+  const C_FLOW  ='rgba(0,220,255,0.55)';
+  const C_NODE  ='rgba(0,200,240,0.7)';
+  const C_CHIP  ='rgba(0,150,200,0.18)';
+  const C_CHIPBR='rgba(0,180,216,0.28)';
+
+  function el(tag,attrs){
+    const e=document.createElementNS(NS,tag);
+    Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));
+    return e;
+  }
+
+  // ── Grid of trace nodes ──
+  const cols=Math.ceil(W/80)+1, rows=Math.ceil(H/80)+1;
+  const nodes=[];
+  for(let r=0;r<rows;r++)
+    for(let c=0;c<cols;c++)
+      nodes.push({x:c*80+(Math.random()-0.5)*24, y:r*80+(Math.random()-0.5)*24, used:false});
+
+  // ── Draw traces (horizontal + vertical L-shaped paths) ──
+  const traceCount=Math.min(70, Math.floor(W*H/14000));
+  const usedPairs=new Set();
+  for(let i=0;i<traceCount*3;i++){
+    const a=nodes[Math.floor(Math.random()*nodes.length)];
+    const b=nodes[Math.floor(Math.random()*nodes.length)];
+    if(a===b)continue;
+    const key=`${nodes.indexOf(a)}-${nodes.indexOf(b)}`;
+    if(usedPairs.has(key))continue;
+    usedPairs.add(key);
+    // L-shaped trace: go horizontal then vertical
+    const mid= Math.random()<0.5
+      ? `L${b.x},${a.y}`   // H then V
+      : `L${a.x},${b.y}`;  // V then H
+    const path=el('path',{
+      d:`M${a.x},${a.y} ${mid} L${b.x},${b.y}`,
+      stroke:C_LINE, fill:'none',
+      'stroke-width':'1',
+      'stroke-linecap':'square',
+    });
+    svg.appendChild(path);
+
+    // Occasionally add a flowing animated dot along the trace
+    if(Math.random()<0.28){
+      const totalLen=Math.abs(b.x-a.x)+Math.abs(b.y-a.y);
+      const dot=el('circle',{
+        r:'2.5', fill:C_FLOW,
+        opacity:'0',
+      });
+      svg.appendChild(dot);
+      const dur=(1.5+Math.random()*3).toFixed(2);
+      const anim=document.createElementNS(NS,'animateMotion');
+      anim.setAttribute('dur',`${dur}s`);
+      anim.setAttribute('repeatCount','indefinite');
+      anim.setAttribute('begin',`${(Math.random()*4).toFixed(2)}s`);
+      const mp=document.createElementNS(NS,'mpath');
+      // Give path an id so mpath can reference it
+      const pid='tp'+(Math.random()*1e9|0);
+      path.setAttribute('id',pid);
+      mp.setAttributeNS('http://www.w3.org/1999/xlink','href','#'+pid);
+      anim.appendChild(mp);
+      const animOp=document.createElementNS(NS,'animate');
+      animOp.setAttribute('attributeName','opacity');
+      animOp.setAttribute('values','0;1;1;0');
+      animOp.setAttribute('keyTimes','0;0.1;0.9;1');
+      animOp.setAttribute('dur',`${dur}s`);
+      animOp.setAttribute('repeatCount','indefinite');
+      animOp.setAttribute('begin',`${(Math.random()*4).toFixed(2)}s`);
+      dot.appendChild(anim);
+      dot.appendChild(animOp);
+    }
+  }
+
+  // ── Junction dots at node intersections ──
+  const dotNodes=nodes.filter(()=>Math.random()<0.35);
+  dotNodes.forEach(n=>{
+    const c=el('circle',{cx:n.x,cy:n.y,r:'2.5',fill:C_NODE,opacity:'0.7'});
+    // Subtle pulse on some
+    if(Math.random()<0.4){
+      const ap=document.createElementNS(NS,'animate');
+      ap.setAttribute('attributeName','r');
+      ap.setAttribute('values','2;4;2');
+      ap.setAttribute('dur',`${(2+Math.random()*3).toFixed(1)}s`);
+      ap.setAttribute('repeatCount','indefinite');
+      ap.setAttribute('begin',`${(Math.random()*3).toFixed(1)}s`);
+      c.appendChild(ap);
+    }
+    svg.appendChild(c);
+  });
+
+  // ── IC Chips (rectangles with pin stubs) ──
+  const chipCount=Math.floor(W*H/80000)+4;
+  for(let i=0;i<chipCount;i++){
+    const cx=80+Math.random()*(W-160);
+    const cy=80+Math.random()*(H-160);
+    const cw=50+Math.random()*30, ch=30+Math.random()*20;
+    // Chip body
+    svg.appendChild(el('rect',{
+      x:cx-cw/2, y:cy-ch/2, width:cw, height:ch,
+      rx:'3', ry:'3',
+      fill:C_CHIP, stroke:C_CHIPBR, 'stroke-width':'1',
+    }));
+    // Notch (semicircle on top edge)
+    svg.appendChild(el('path',{
+      d:`M${cx-5},${cy-ch/2} a5,5 0 0,1 10,0`,
+      fill:'none', stroke:C_CHIPBR, 'stroke-width':'1',
+    }));
+    // Pin stubs left & right
+    const pins=Math.floor(2+Math.random()*3);
+    for(let p=0;p<pins;p++){
+      const py=cy-ch/2+8+(p*(ch-8)/(pins));
+      // left pins
+      svg.appendChild(el('line',{x1:cx-cw/2-8,y1:py,x2:cx-cw/2,y2:py,stroke:C_LINE,'stroke-width':'1.2'}));
+      // right pins
+      svg.appendChild(el('line',{x1:cx+cw/2,y1:py,x2:cx+cw/2+8,y2:py,stroke:C_LINE,'stroke-width':'1.2'}));
+    }
+    // Label inside chip
+    const t=el('text',{
+      x:cx, y:cy+3,
+      'text-anchor':'middle',
+      'font-family':'monospace','font-size':'6.5',
+      fill:'rgba(0,200,240,0.45)',
+    });
+    const labels=['CPU','ALU','RAM','ROM','I/O','BUS','DMA','MCU','GPU','SPI','UART','PCB'];
+    t.textContent=labels[Math.floor(Math.random()*labels.length)];
+    svg.appendChild(t);
+  }
+
+  // ── Corner bracket decorations ──
+  const brackets=[
+    [18,18,'M18,42 L18,18 L42,18'],
+    [W-18,18,`M${W-18},42 L${W-18},18 L${W-42},18`],
+    [18,H-18,`M18,${H-42} L18,${H-18} L42,${H-18}`],
+    [W-18,H-18,`M${W-18},${H-42} L${W-18},${H-18} L${W-42},${H-18}`],
+  ];
+  brackets.forEach(([,,d])=>{
+    svg.appendChild(el('path',{d,fill:'none',stroke:'rgba(0,180,216,0.35)','stroke-width':'2','stroke-linecap':'square'}));
+  });
+
+  // ── Floating IT text characters ──
+  const itChars=[
+    '01001000','10110101','<html>','</div>','{ }','()=>','#!/bin',
+    'SELECT *','#include','def main','01010111','while(1)',
+    'int x=0;','printf()','return;','</>','[ ]','&&','||',
+    '0xFF','0b1010','NaN','null','true','false','void',
+    'class{}','@param','import','export','async','await',
+    '::1','127.0.0','255.255','GET /','POST /','HTTP/2',
+    'TCP','UDP','OSI','DNS','SMTP','SSH','SSL','API',
+    '\\n','\\t','&&','!=','===','>>','<<','~^',
+  ];
+
+  const bg=document.getElementById('itBg');
+  const charCount=40;
+  for(let i=0;i<charCount;i++){
+    const span=document.createElement('div');
+    span.className='it-char';
+    span.textContent=itChars[i%itChars.length];
+    // Scatter across full screen; avoid the dead centre where login card sits
+    let lx,ty;
+    do{
+      lx=Math.random()*92;
+      ty=Math.random()*92;
+    }while(lx>28&&lx<72&&ty>15&&ty<85); // avoid card area roughly
+    span.style.left=lx+'%';
+    span.style.top=ty+'%';
+    const dur=6+Math.random()*10;
+    span.style.animationDuration=dur+'s';
+    span.style.animationDelay=(Math.random()*dur)+'s';
+    span.style.fontSize=(11+Math.random()*5)+'px';
+    // Random cyan-to-teal shade
+    const alpha=(0.12+Math.random()*0.16).toFixed(2);
+    const hue=Math.random()<0.5?'0,200,255':(Math.random()<0.5?'0,255,180':'100,220,255');
+    span.style.color=`rgba(${hue},${alpha})`;
+    bg.appendChild(span);
+  }
+
+  // ── 12 Professional IT icon badges — scattered across full screen ──
+  const badges=[
+    // [label, emoji, icon-bg, left%, top%, delay, duration]
+    ['HTML',         '🌐', 'rgba(228,77,38,0.85)',    '3%',   '5%',  '0s',   '4.2s'],
+    ['CSS',          '🎨', 'rgba(38,77,228,0.85)',    '78%',  '8%',  '1.0s', '3.8s'],
+    ['JavaScript',   '⚡', 'rgba(200,165,0,0.85)',    '6%',   '38%', '2.0s', '4.6s'],
+    ['Python',       '🐍', 'rgba(53,114,165,0.85)',   '80%',  '32%', '0.5s', '3.5s'],
+    ['AI / ML',      '🤖', 'rgba(124,58,237,0.85)',   '2%',   '68%', '1.5s', '5.0s'],
+    ['Git',          '🔀', 'rgba(180,60,40,0.85)',    '75%',  '62%', '2.5s', '4.0s'],
+    ['React',        '⚛️', 'rgba(0,168,204,0.85)',    '14%',  '18%', '0.8s', '3.6s'],
+    ['Docker',       '🐳', 'rgba(0,96,168,0.85)',     '68%',  '80%', '1.8s', '4.8s'],
+    ['Data Science', '📊', 'rgba(16,148,130,0.85)',   '82%',  '48%', '2.8s', '4.2s'],
+    ['Cybersecurity','🔒', 'rgba(220,38,38,0.85)',    '5%',   '82%', '0.3s', '3.9s'],
+    ['Linux',        '🐧', 'rgba(30,100,50,0.85)',    '20%',  '88%', '1.3s', '4.4s'],
+    ['VS Code',      '💻', 'rgba(0,90,160,0.85)',     '76%',  '18%', '2.3s', '3.7s'],
+  ];
+
+  badges.forEach(([name,ico,icoBg,left,top,delay,dur])=>{
+    const badge=document.createElement('div');
+    badge.className='it-icon-badge';
+    badge.style.left=left;
+    badge.style.top=top;
+    badge.style.animationDuration=dur;
+    badge.style.animationDelay=delay;
+    badge.innerHTML=`
+      <div class="ib-icon" style="background:${icoBg};">${ico}</div>
+      <span class="ib-name">${name}</span>`;
+    bg.appendChild(badge);
+  });
+}
+
+// ══════════════════════════════════
+//  AUTO-LOGIN
+// ══════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
+  buildITBackground();
+  document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
   const saved=sessionStorage.getItem('ls_user');
   if(saved){currentUser=JSON.parse(saved);document.getElementById('loginPage').style.display='none';document.getElementById('appShell').style.display='block';initApp();}
-  // Set today's date display
-  document.getElementById('todayDate') && (document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}));
 });
 </script>
 </body>
