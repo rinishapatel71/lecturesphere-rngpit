@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LectureSphere – RNGPIT Working Professional Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<style>
+  :root {
+    --primary: #1a6fb5;
+    --primary-light: #2d8de0;
+    --primary-dark: #0f4c80;
+    --accent: #00b4d8;
+    --accent2: #48cae4;
+    --bg: #e8f4fd;
+    --bg2: #d0eaf8;
+    --card: #ffffff;
+    --text: #1a2a3a;
+    --text2: #4a6080;
+    --border: #b8d8f0;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --shadow: 0 4px 24px rgba(26,111,181,0.12);
+    --shadow2: 0 8px 40px rgba(26,111,181,0.18);
+    --radius: 16px;
+    --radius2: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(24px);} to { opacity:1; transform:translateY(0);} }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+  @keyframes slideIn { from{transform:translateX(-100%)} to{transform:translateX(0)} }
+  @keyframes ripple { to{transform:scale(4);opacity:0} }
+  @keyframes gradMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+  /* ── LOGIN PAGE ── */
+  #loginPage {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f4c80 0%, #1a6fb5 35%, #2d8de0 65%, #00b4d8 100%);
+    background-size: 300% 300%;
+    animation: gradMove 8s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #loginPage::before {
+    content:'';
+    position:absolute;
+    top:-120px;left:-120px;width:400px;height:400px;
+    background:rgba(255,255,255,0.06);
+    border-radius:50%;
+  }
+  #loginPage::after {
+    content:'';
+    position:absolute;
+    bottom:-80px;right:-80px;width:300px;height:300px;
+    background:rgba(255,255,255,0.05);
+    border-radius:50%;
+  }
+  .login-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    padding: 48px 40px 40px;
+    width: 420px;
+    max-width: 95vw;
+    animation: fadeInUp 0.6s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .login-logo {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .login-logo .logo-icon {
+    width: 72px;height:72px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px rgba(26,111,181,0.3);
+    animation: float 3s ease-in-out infinite;
+  }
+  .login-logo h1 { font-size: 1.6rem; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; }
+  .login-logo p { font-size: 0.78rem; color: var(--text2); margin-top: 2px; }
+  .login-tabs { display:flex; gap:4px; background:var(--bg2); border-radius:10px; padding:4px; margin-bottom:24px; }
+  .login-tab { flex:1; text-align:center; padding:8px; border-radius:8px; cursor:pointer; font-size:0.82rem; font-weight:600; color:var(--text2); transition:all .2s; }
+  .login-tab.active { background:white; color:var(--primary); box-shadow:0 2px 8px rgba(26,111,181,0.15); }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:0.78rem; font-weight:600; color:var(--text2); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .form-group input, .form-group select {
+    width:100%; padding:12px 16px;
+    border:2px solid var(--border);
+    border-radius:10px;
+    font-family:'Poppins',sans-serif;
+    font-size:0.88rem;
+    color:var(--text);
+    outline:none;
+    transition:all .2s;
+    background:white;
+  }
+  .form-group input:focus, .form-group select:focus { border-color:var(--primary); box-shadow:0 0 0 4px rgba(26,111,181,0.1); }
+  .btn {
+    padding:12px 24px; border:none; border-radius:10px; font-family:'Poppins',sans-serif;
+    font-size:0.88rem; font-weight:600; cursor:pointer; transition:all .2s;
+    display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+  }
+  .btn-primary { background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; box-shadow:0 4px 16px rgba(26,111,181,0.3); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(26,111,181,0.4); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-full { width:100%; justify-content:center; }
+  .btn-sm { padding:7px 14px; font-size:0.78rem; border-radius:8px; }
+  .btn-outline { background:transparent; border:2px solid var(--primary); color:var(--primary); }
+  .btn-outline:hover { background:var(--primary); color:white; }
+  .btn-danger { background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; }
+  .btn-success { background:linear-gradient(135deg,#27ae60,#229954); color:white; }
+  .btn-warning { background:linear-gradient(135deg,#f39c12,#d68910); color:white; }
+  .btn-info { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
+  .forgot-link { text-align:right; margin-top:-8px; margin-bottom:16px; }
+  .forgot-link a { font-size:0.78rem; color:var(--primary); text-decoration:none; font-weight:500; }
+  .forgot-link a:hover { text-decoration:underline; }
+
+  /* ── APP SHELL ── */
+  #appShell { display:none; min-height:100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px; min-height:100vh;
+    background: linear-gradient(175deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+    position: fixed; top:0; left:0; z-index:100;
+    display:flex; flex-direction:column;
+    box-shadow: 4px 0 24px rgba(15,76,128,0.25);
+    transition: transform .3s;
+  }
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar-logo .logo-row { display:flex; align-items:center; gap:12px; }
+  .sidebar-logo .s-icon {
+    width:44px;height:44px;
+    background:rgba(255,255,255,0.2);
+    border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+  }
+  .sidebar-logo h2 { font-size:1.05rem; font-weight:800; color:white; }
+  .sidebar-logo span { font-size:0.68rem; color:rgba(255,255,255,0.65); }
+  .sidebar-user {
+    padding:16px 20px;
+    background:rgba(255,255,255,0.07);
+    margin:12px;border-radius:12px;
+  }
+  .sidebar-user .u-name { font-size:0.88rem; font-weight:700; color:white; }
+  .sidebar-user .u-role { font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:2px; }
+  .sidebar-nav { flex:1; padding:8px 12px; overflow-y:auto; }
+  .nav-section { font-size:0.65rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; font-weight:600; padding:12px 8px 6px; }
+  .nav-item {
+    display:flex;align-items:center;gap:12px;
+    padding:11px 14px; border-radius:10px;
+    color:rgba(255,255,255,0.78); font-size:0.85rem; font-weight:500;
+    cursor:pointer; transition:all .2s; margin-bottom:2px;
+  }
+  .nav-item:hover { background:rgba(255,255,255,0.12); color:white; }
+  .nav-item.active { background:rgba(255,255,255,0.2); color:white; font-weight:600; box-shadow:0 2px 12px rgba(0,0,0,0.15); }
+  .nav-item .ni { font-size:18px; width:22px; text-align:center; }
+  .sidebar-footer { padding:16px; border-top:1px solid rgba(255,255,255,0.1); }
+  .sidebar-footer .btn { background:rgba(255,255,255,0.1); color:white; width:100%; justify-content:center; border:1px solid rgba(255,255,255,0.2); font-size:0.82rem; }
+  .sidebar-footer .btn:hover { background:rgba(255,255,255,0.2); }
+
+  /* ── MAIN ── */
+  .main-content { margin-left:260px; min-height:100vh; padding:0; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background:white; padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 2px 12px rgba(26,111,181,0.08);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar h3 { font-size:1.15rem; font-weight:700; color:var(--primary-dark); }
+  .topbar .tb-right { display:flex;align-items:center;gap:12px; }
+  .topbar .badge { background:var(--accent); color:white; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:700; }
+
+  /* ── PAGES ── */
+  .page { display:none; padding:24px 28px; animation:fadeInUp .35s ease; }
+  .page.active { display:block; }
+
+  /* ── STATS CARDS ── */
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; margin-bottom:24px; }
+  .stat-card {
+    background:white;border-radius:var(--radius);padding:22px 24px;
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:16px;
+    transition:transform .2s,box-shadow .2s;
+    border-left:4px solid transparent;
+    position:relative;overflow:hidden;
+  }
+  .stat-card::after { content:''; position:absolute;top:-30px;right:-30px;width:80px;height:80px;background:currentColor;opacity:0.05;border-radius:50%; }
+  .stat-card:hover { transform:translateY(-3px);box-shadow:var(--shadow2); }
+  .stat-card.blue { border-left-color:var(--primary); }
+  .stat-card.cyan { border-left-color:var(--accent); }
+  .stat-card.green { border-left-color:var(--success); }
+  .stat-card.orange { border-left-color:var(--warning); }
+  .stat-icon { font-size:28px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center; }
+  .stat-card.blue .stat-icon { background:rgba(26,111,181,0.1);color:var(--primary); }
+  .stat-card.cyan .stat-icon { background:rgba(0,180,216,0.1);color:var(--accent); }
+  .stat-card.green .stat-icon { background:rgba(39,174,96,0.1);color:var(--success); }
+  .stat-card.orange .stat-icon { background:rgba(243,156,18,0.1);color:var(--warning); }
+  .stat-val { font-size:1.6rem;font-weight:800;color:var(--text); }
+  .stat-label { font-size:0.75rem;color:var(--text2);margin-top:2px; }
+
+  /* ── CARD ── */
+  .card { background:white;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden; }
+  .card-header { padding:18px 24px;border-bottom:1px solid var(--bg2);display:flex;align-items:center;justify-content:space-between; }
+  .card-header h4 { font-size:0.95rem;font-weight:700;color:var(--primary-dark); }
+  .card-body { padding:20px 24px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%;border-collapse:collapse;font-size:0.82rem; }
+  th { background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:12px 14px;text-align:left;font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px; }
+  th:first-child { border-radius:0; }
+  td { padding:11px 14px;border-bottom:1px solid var(--bg2);color:var(--text);vertical-align:middle; }
+  tr:hover td { background:var(--bg); }
+  tr:last-child td { border-bottom:none; }
+
+  /* ── FORM MODAL ── */
+  .modal-overlay {
+    display:none;position:fixed;inset:0;z-index:200;
+    background:rgba(15,76,128,0.45);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;
+  }
+  .modal-overlay.show { display:flex; }
+  .modal {
+    background:white;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.2);
+    padding:32px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;
+    animation:fadeInUp .3s ease;position:relative;
+  }
+  .modal-sm { width:420px; }
+  .modal h3 { font-size:1.1rem;font-weight:800;color:var(--primary-dark);margin-bottom:20px; }
+  .modal-close { position:absolute;top:16px;right:16px;width:32px;height:32px;background:var(--bg2);border-radius:50%;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--text2); }
+  .modal-close:hover { background:var(--danger);color:white; }
+  .form-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+  .form-row.three { grid-template-columns:1fr 1fr 1fr; }
+  .form-full { grid-column:1/-1; }
+  .chip { display:inline-flex;align-items:center;gap:4px;background:rgba(26,111,181,0.1);color:var(--primary);padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;margin:2px; }
+  .chip .x { cursor:pointer;opacity:0.6;margin-left:2px; }
+  .chip .x:hover { opacity:1; }
+  .topics-box { border:2px solid var(--border);border-radius:10px;padding:10px;min-height:60px;cursor:text; }
+  .topics-chips { display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px; }
+  .topic-select-list { max-height:150px;overflow-y:auto;border:2px solid var(--border);border-radius:10px;margin-top:6px; }
+  .topic-item { padding:8px 12px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid var(--bg2);transition:background .15s; }
+  .topic-item:hover { background:var(--bg); }
+  .topic-item.selected { background:rgba(26,111,181,0.1);color:var(--primary);font-weight:600; }
+
+  /* ── TOAST ── */
+  #toastContainer { position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px; }
+  .toast {
+    background:white;border-radius:12px;padding:14px 18px;box-shadow:0 6px 24px rgba(0,0,0,0.15);
+    display:flex;align-items:center;gap:10px;font-size:0.82rem;font-weight:600;
+    animation:fadeInUp .3s ease;min-width:280px;border-left:4px solid var(--primary);
+  }
+  .toast.success { border-left-color:var(--success); }
+  .toast.error { border-left-color:var(--danger); }
+  .toast.warning { border-left-color:var(--warning); }
+
+  /* ── SEARCH BAR ── */
+  .search-bar { display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px; }
+  .search-input { flex:1;min-width:200px;padding:10px 16px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.83rem;outline:none;transition:all .2s; }
+  .search-input:focus { border-color:var(--primary); }
+
+  /* ── PILL BADGE ── */
+  .pill { display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:700; }
+  .pill-blue { background:rgba(26,111,181,0.12);color:var(--primary); }
+  .pill-green { background:rgba(39,174,96,0.12);color:var(--success); }
+  .pill-orange { background:rgba(243,156,18,0.12);color:var(--warning); }
+  .pill-red { background:rgba(231,76,60,0.12);color:var(--danger); }
+
+  /* ── TABS ── */
+  .tabs { display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content; }
+  .tab { padding:8px 18px;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--text2);transition:all .2s; }
+  .tab.active { background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15); }
+
+  /* BG decoration */
+  .page-bg-deco { position:fixed;bottom:0;right:0;width:340px;opacity:0.04;z-index:0;pointer-events:none; }
+  .content-z { position:relative;z-index:1; }
+
+  /* ── SYLLABUS TAGS ── */
+  .unit-label { font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin:10px 0 4px; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px){
+    .sidebar{transform:translateX(-100%);}
+    .sidebar.open{transform:translateX(0);}
+    .main-content{margin-left:0;}
+    .form-row{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .modal{padding:22px 16px;}
+    .topbar{padding:12px 16px;}
+    .page{padding:16px;}
+  }
+  .hamburger{display:none;background:var(--primary);color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:18px;}
+  @media(max-width:768px){.hamburger{display:block;}}
+
+  /* SWAP badge */
+  .swap-badge { background:linear-gradient(135deg,#9b59b6,#8e44ad);color:white;padding:3px 8px;border-radius:6px;font-size:0.68rem;font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOGIN PAGE ═══════════════════ -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon">🎓</div>
+      <h1>LectureSphere</h1>
+      <p>RNGPIT Working Professional Portal</p>
+    </div>
+
+    <div id="loginFormSection">
+      <div class="login-tabs">
+        <div class="login-tab active" onclick="setLoginTab('faculty')">Faculty</div>
+        <div class="login-tab" onclick="setLoginTab('admin')">Admin</div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="your.email@rngpit.ac.in">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <div class="forgot-link"><a href="#" onclick="showForgotPassword()">Forgot Password?</a></div>
+      <button class="btn btn-primary btn-full" onclick="handleLogin()">🔐 Sign In</button>
+    </div>
+
+    <div id="forgotSection" style="display:none;">
+      <h3 style="font-size:1rem;margin-bottom:16px;color:var(--primary-dark);">Reset Password</h3>
+      <div class="form-group">
+        <label>Reset via</label>
+        <select id="resetVia">
+          <option value="email">Email OTP</option>
+          <option value="phone">Phone Number OTP</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Email / Phone</label>
+        <input type="text" id="resetContact" placeholder="Enter email or phone number">
+      </div>
+      <div id="otpSection" style="display:none;">
+        <div class="form-group">
+          <label>Enter OTP (Demo: 1234)</label>
+          <input type="text" id="otpInput" placeholder="6-digit OTP">
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="newPassword" placeholder="New password">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="btn btn-outline" onclick="showLoginForm()">← Back</button>
+        <button class="btn btn-primary" id="otpBtn" onclick="handleOTP()">Send OTP</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ APP SHELL ═══════════════════ -->
+<div id="appShell">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-row">
+        <div class="s-icon">🎓</div>
+        <div>
+          <h2>LectureSphere</h2>
+          <span>RNGPIT Portal</span>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="u-name" id="sidebarUserName">Loading...</div>
+      <div class="u-role" id="sidebarUserRole">Faculty</div>
+    </div>
+    <div class="sidebar-nav" id="sidebarNav">
+      <!-- Injected by JS -->
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn" onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <h3 id="pageTitle">Dashboard</h3>
+      </div>
+      <div class="tb-right">
+        <span id="todayDate" class="pill pill-blue"></span>
+        <span id="topbarBadge" class="badge" style="display:none;"></span>
+      </div>
+    </div>
+
+    <!-- ── PAGES ── -->
+    <div style="position:relative;">
+    <svg class="page-bg-deco" viewBox="0 0 340 340"><circle cx="170" cy="170" r="160" fill="var(--primary)"/><circle cx="80" cy="80" r="60" fill="var(--accent)"/></svg>
+
+    <!-- DASHBOARD -->
+    <div class="page content-z" id="page-dashboard">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="card" id="recentCard">
+        <div class="card-header">
+          <h4>📋 Recent Lectures</h4>
+          <button class="btn btn-primary btn-sm" onclick="openPage('lectures')">View All</button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap"><table id="recentLecturesTable"><thead><tr><th>Date</th><th>Faculty</th><th>Subject</th><th>Topics</th><th>Students</th></tr></thead><tbody id="recentLecTbody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LECTURES -->
+    <div class="page content-z" id="page-lectures">
+      <div class="card">
+        <div class="card-header">
+          <h4>📚 Lecture Records</h4>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-success btn-sm" onclick="openAddLectureModal()">➕ Add Lecture</button>
+            <button class="btn btn-info btn-sm" onclick="exportMonthlyPDF()">📄 Monthly PDF</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="search-bar">
+            <input class="search-input" id="lecSearch" placeholder="🔍 Search by faculty, subject..." oninput="renderLectureTable()">
+            <select class="search-input" style="flex:0.5;" id="lecMonthFilter" onchange="renderLectureTable()">
+              <option value="">All Months</option>
+            </select>
+            <select class="search-input" style="flex:0.5;" id="lecFacultyFilter" onchange="renderLectureTable()">
+              <option value="">All Faculty</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics Covered</th><th>Students</th><th>Drive Link</th><th>Actions</th></tr></thead>
+              <tbody id="lectureTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLS (Admin only) -->
+    <div class="page content-z" id="page-bills">
+      <div class="card">
+        <div class="card-header">
+          <h4>💰 Bills Summary</h4>
+          <div style="display:flex;gap:8px;">
+            <select class="search-input" style="width:auto;" id="billMonthFilter" onchange="renderBillTable()">
+              <option value="">Select Month</option>
+            </select>
+            <button class="btn btn-info btn-sm" onclick="exportBillPDF()">📄 Export Bill PDF</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Faculty Name</th><th>Month</th><th>Total Lectures</th><th>Amount (₹)</th><th>Signature</th></tr></thead>
+              <tbody id="billTbody"></tbody>
+            </table>
+          </div>
+          <div id="billTotal" style="text-align:right;margin-top:12px;font-weight:700;color:var(--primary-dark);font-size:1rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FACULTIES (Admin) -->
+    <div class="page content-z" id="page-faculties">
+      <div class="card">
+        <div class="card-header">
+          <h4>👥 Faculty Management</h4>
+          <button class="btn btn-success btn-sm" onclick="openAddFacultyModal()">➕ Add Faculty</button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Subjects</th><th>Total Lec.</th><th>Actions</th></tr></thead>
+              <tbody id="facultyTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYLLABUS (Admin) -->
+    <div class="page content-z" id="page-syllabus">
+      <div class="card">
+        <div class="card-header">
+          <h4>📖 Syllabus Management</h4>
+          <button class="btn btn-success btn-sm" onclick="openAddSubjectModal()">➕ Add Subject</button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Subject</th><th>Code</th><th>Units / Topics</th><th>Actions</th></tr></thead>
+              <tbody id="syllabusTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWAP LECTURES -->
+    <div class="page content-z" id="page-swap">
+      <div class="card">
+        <div class="card-header">
+          <h4>🔄 Lecture Swap Requests</h4>
+          <button class="btn btn-primary btn-sm" onclick="openSwapModal()">➕ New Swap Request</button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Original Faculty</th><th>Taking Faculty</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="swapTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="page content-z" id="page-profile">
+      <div class="card">
+        <div class="card-header"><h4>👤 My Profile</h4></div>
+        <div class="card-body" id="profileBody"></div>
+      </div>
+    </div>
+
+    </div><!-- end position relative -->
+  </div>
+</div>
+
+<!-- ── MODALS ── -->
+<!-- Add/Edit Lecture Modal -->
+<div class="modal-overlay" id="lectureModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('lectureModal')">✕</button>
+    <h3 id="lecModalTitle">➕ Add Lecture</h3>
+    <input type="hidden" id="lecEditId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date *</label>
+        <input type="date" id="lecDate" required>
+      </div>
+      <div class="form-group">
+        <label>Day *</label>
+        <select id="lecDay" required>
+          <option value="">Select Day</option>
+          <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+          <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Time *</label>
+        <input type="time" id="lecTime" required>
+      </div>
+      <div class="form-group">
+        <label>Faculty *</label>
+        <select id="lecFaculty" required onchange="loadSubjectsForFaculty()">
+          <option value="">Select Faculty</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Subject *</label>
+        <select id="lecSubject" required onchange="loadTopicsForSubject()">
+          <option value="">Select Subject</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Students Present *</label>
+        <input type="number" id="lecStudents" placeholder="e.g. 30" min="0" required>
+      </div>
+    </div>
+    <div class="form-group form-full">
+      <label>Topics Covered (from Syllabus) *</label>
+      <div class="topics-box" id="topicsBox">
+        <div class="topics-chips" id="selectedTopicsChips"></div>
+        <small style="color:var(--text2)">Select topics below after choosing subject</small>
+      </div>
+      <div class="topic-select-list" id="topicSelectList"></div>
+    </div>
+    <div class="form-group form-full">
+      <label>Google Drive Link *</label>
+      <input type="url" id="lecDriveLink" placeholder="https://drive.google.com/..." required>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+      <button class="btn btn-outline" onclick="closeModal('lectureModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLecture()">💾 Save Lecture</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Faculty Modal -->
+<div class="modal-overlay" id="facultyModal">
+  <div class="modal modal-sm">
+    <button class="modal-close" onclick="closeModal('facultyModal')">✕</button>
+    <h3 id="facModalTitle">➕ Add Faculty</h3>
+    <input type="hidden" id="facEditId">
+    <div class="form-group"><label>Full Name *</label><input type="text" id="facName" placeholder="Dr. / Ms. / Mr. Full Name" required></div>
+    <div class="form-group"><label>Email Address *</label><input type="email" id="facEmail" placeholder="faculty@rngpit.ac.in" required></div>
+    <div class="form-group"><label>Phone Number *</label><input type="tel" id="facPhone" placeholder="10-digit phone" required></div>
+    <div class="form-group"><label>Password *</label><input type="password" id="facPassword" placeholder="Initial password" required></div>
+    <div class="form-group">
+      <label>Assigned Subjects</label>
+      <select id="facSubjectAssign" multiple style="height:90px;">
+      </select>
+      <small style="color:var(--text2);font-size:0.72rem;">Hold Ctrl/Cmd to select multiple</small>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('facultyModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFaculty()">💾 Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Subject Modal -->
+<div class="modal-overlay" id="subjectModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('subjectModal')">✕</button>
+    <h3 id="subModalTitle">📖 Add Subject & Syllabus</h3>
+    <input type="hidden" id="subEditId">
+    <div class="form-row">
+      <div class="form-group"><label>Subject Name *</label><input type="text" id="subName" placeholder="e.g. Data Structures" required></div>
+      <div class="form-group"><label>Subject Code</label><input type="text" id="subCode" placeholder="e.g. IT301"></div>
+    </div>
+    <div class="form-group form-full">
+      <label>Syllabus Topics (one per line, use "Unit X:" prefix for units)</label>
+      <textarea id="subTopics" style="width:100%;height:200px;padding:12px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.83rem;outline:none;resize:vertical;" placeholder="Unit 1: Introduction&#10;Arrays&#10;Linked Lists&#10;Unit 2: Trees&#10;Binary Trees&#10;BST"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('subjectModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSubject()">💾 Save Subject</button>
+    </div>
+  </div>
+</div>
+
+<!-- Swap Modal -->
+<div class="modal-overlay" id="swapModal">
+  <div class="modal modal-sm">
+    <button class="modal-close" onclick="closeModal('swapModal')">✕</button>
+    <h3>🔄 Request Lecture Swap</h3>
+    <div class="form-group"><label>Lecture to Swap</label>
+      <select id="swapLecId"><option value="">Select your lecture...</option></select>
+    </div>
+    <div class="form-group"><label>Taking Faculty *</label>
+      <select id="swapToFaculty"><option value="">Select faculty to take lecture...</option></select>
+    </div>
+    <div class="form-group"><label>Reason</label>
+      <input type="text" id="swapReason" placeholder="Optional reason...">
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('swapModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitSwap()">📤 Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Password Modal (Admin) -->
+<div class="modal-overlay" id="resetPwdModal">
+  <div class="modal modal-sm">
+    <button class="modal-close" onclick="closeModal('resetPwdModal')">✕</button>
+    <h3>🔑 Reset Faculty Password</h3>
+    <input type="hidden" id="resetFacId">
+    <div class="form-group"><label>New Password</label><input type="password" id="newFacPwd" placeholder="Enter new password"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('resetPwdModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="doResetPassword()">🔄 Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer"></div>
+
+<script>
+// ════════════════════════════════════════════
+//  STATE / DATA
+// ════════════════════════════════════════════
+let currentUser = null; // { id, name, email, role }
+let loginTab = 'faculty';
+let otpSent = false;
+
+// Persistent state
+const DB = {
+  get faculties() { return JSON.parse(localStorage.getItem('ls_faculties') || '[]'); },
+  set faculties(v) { localStorage.setItem('ls_faculties', JSON.stringify(v)); },
+  get lectures() { return JSON.parse(localStorage.getItem('ls_lectures') || '[]'); },
+  set lectures(v) { localStorage.setItem('ls_lectures', JSON.stringify(v)); },
+  get subjects() { return JSON.parse(localStorage.getItem('ls_subjects') || '[]'); },
+  set subjects(v) { localStorage.setItem('ls_subjects', JSON.stringify(v)); },
+  get swaps() { return JSON.parse(localStorage.getItem('ls_swaps') || '[]'); },
+  set swaps(v) { localStorage.setItem('ls_swaps', JSON.stringify(v)); },
+};
+
+// ── SEED DATA ──
+function seedData() {
+  if (DB.faculties.length === 0) {
+    DB.faculties = [
+      { id:'f1', name:'Dr. Amit Shah', email:'amit.shah@rngpit.ac.in', phone:'9876543210', password:'faculty123', subjects:['s1','s2'], role:'faculty' },
+      { id:'f2', name:'Ms. Priya Mehta', email:'priya.mehta@rngpit.ac.in', phone:'9876543211', password:'faculty123', subjects:['s2','s3'], role:'faculty' },
+      { id:'f3', name:'Mr. Raj Patel', email:'raj.patel@rngpit.ac.in', phone:'9876543212', password:'faculty123', subjects:['s1','s3'], role:'faculty' },
+    ];
+  }
+  if (DB.subjects.length === 0) {
+    DB.subjects = [
+      { id:'s1', name:'Data Structures', code:'IT301', topics:'Unit 1: Introduction\nArrays\nLinked Lists\nUnit 2: Trees\nBinary Trees\nBST\nAVL Trees\nUnit 3: Graphs\nBFS\nDFS\nShortest Path' },
+      { id:'s2', name:'Database Management', code:'IT302', topics:'Unit 1: Introduction\nER Model\nRelational Model\nUnit 2: SQL\nDDL Commands\nDML Commands\nJoins\nUnit 3: Normalization\n1NF 2NF 3NF\nBCNF' },
+      { id:'s3', name:'Computer Networks', code:'IT303', topics:'Unit 1: OSI Model\nPhysical Layer\nData Link Layer\nNetwork Layer\nUnit 2: TCP/IP\nIPv4 Addressing\nSubnetting\nUnit 3: Application Layer\nHTTP HTTPS\nDNS\nFTP' },
+    ];
+  }
+  if (DB.lectures.length === 0) {
+    const today = new Date();
+    const m = today.getMonth();
+    const y = today.getFullYear();
+    const sample = [
+      { id:'l1', date:`${y}-${String(m+1).padStart(2,'0')}-05`, day:'Monday', time:'10:00', facultyId:'f1', facultyName:'Dr. Amit Shah', subjectId:'s1', subjectName:'Data Structures', topics:['Arrays','Linked Lists'], students:28, driveLink:'https://drive.google.com/file/sample1', swappedFrom:null },
+      { id:'l2', date:`${y}-${String(m+1).padStart(2,'0')}-06`, day:'Tuesday', time:'11:00', facultyId:'f2', facultyName:'Ms. Priya Mehta', subjectId:'s2', subjectName:'Database Management', topics:['ER Model','Relational Model'], students:30, driveLink:'https://drive.google.com/file/sample2', swappedFrom:null },
+      { id:'l3', date:`${y}-${String(m+1).padStart(2,'0')}-07`, day:'Wednesday', time:'09:00', facultyId:'f3', facultyName:'Mr. Raj Patel', subjectId:'s3', subjectName:'Computer Networks', topics:['OSI Model','Physical Layer'], students:25, driveLink:'https://drive.google.com/file/sample3', swappedFrom:null },
+    ];
+    DB.lectures = sample;
+  }
+}
+seedData();
+
+const ADMIN = { id:'admin', name:'Ms. R.S.Patel', email:'admin@rngpit.ac.in', password:'admin@2025', role:'admin' };
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// ════════════════════════════════════════════
+//  LOGIN
+// ════════════════════════════════════════════
+function setLoginTab(tab) {
+  loginTab = tab;
+  document.querySelectorAll('.login-tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&tab==='faculty')||(i===1&&tab==='admin')));
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pwd = document.getElementById('loginPassword').value;
+  if(!email||!pwd){showToast('Please fill all fields','error');return;}
+  // Admin check
+  if(loginTab==='admin') {
+    if(email===ADMIN.email && pwd===ADMIN.password){ loginAs({...ADMIN}); return; }
+    showToast('Invalid admin credentials','error'); return;
+  }
+  // Faculty check
+  const fac = DB.faculties.find(f=>f.email===email && f.password===pwd);
+  if(fac){ loginAs({...fac}); return; }
+  showToast('Invalid credentials','error');
+}
+
+function loginAs(user) {
+  currentUser = user;
+  sessionStorage.setItem('ls_user', JSON.stringify(user));
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('appShell').style.display='block';
+  initApp();
+  showToast(`Welcome back, ${user.name.split(' ')[0]}! 👋`,'success');
+}
+
+function logout() {
+  currentUser = null;
+  sessionStorage.removeItem('ls_user');
+  document.getElementById('appShell').style.display='none';
+  document.getElementById('loginPage').style.display='flex';
+  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPassword').value='';
+}
+
+// OTP / Forgot
+function showForgotPassword(){document.getElementById('loginFormSection').style.display='none';document.getElementById('forgotSection').style.display='block';}
+function showLoginForm(){document.getElementById('loginFormSection').style.display='block';document.getElementById('forgotSection').style.display='none';otpSent=false;document.getElementById('otpSection').style.display='none';document.getElementById('otpBtn').textContent='Send OTP';}
+function handleOTP(){
+  if(!otpSent){
+    const c=document.getElementById('resetContact').value;
+    if(!c){showToast('Enter email or phone','error');return;}
+    otpSent=true;
+    document.getElementById('otpSection').style.display='block';
+    document.getElementById('otpBtn').textContent='Verify & Reset';
+    showToast('OTP sent! (Demo OTP: 1234)','success');
+  } else {
+    const otp=document.getElementById('otpInput').value;
+    const np=document.getElementById('newPassword').value;
+    if(otp!=='1234'){showToast('Invalid OTP','error');return;}
+    if(!np){showToast('Enter new password','error');return;}
+    // Update password
+    const contact=document.getElementById('resetContact').value;
+    let faculties=DB.faculties;
+    const fi=faculties.findIndex(f=>f.email===contact||f.phone===contact);
+    if(fi>=0){faculties[fi].password=np;DB.faculties=faculties;}
+    showToast('Password reset successful!','success');
+    showLoginForm();
+  }
+}
+
+// ════════════════════════════════════════════
+//  APP INIT
+// ════════════════════════════════════════════
+function initApp() {
+  const u = currentUser;
+  document.getElementById('sidebarUserName').textContent = u.name;
+  document.getElementById('sidebarUserRole').textContent = u.role==='admin'?'Administrator':'Faculty · IT Dept';
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  buildSidebar();
+  populateFilters();
+  openPage('dashboard');
+}
+
+function buildSidebar() {
+  const isAdmin = currentUser.role==='admin';
+  const items = [
+    {section:'Main'},
+    {id:'dashboard',icon:'🏠',label:'Dashboard'},
+    {id:'lectures',icon:'📚',label:'Lectures'},
+    ...(isAdmin?[{id:'bills',icon:'💰',label:'Bills & Payments'}]:[]),
+    {section:'Management'},
+    ...(isAdmin?[{id:'faculties',icon:'👥',label:'Faculty Management'}]:[]),
+    ...(isAdmin?[{id:'syllabus',icon:'📖',label:'Syllabus Upload'}]:[]),
+    {id:'swap',icon:'🔄',label:'Swap Lectures'},
+    {section:'Account'},
+    {id:'profile',icon:'👤',label:'My Profile'},
+  ];
+  let html='';
+  items.forEach(item=>{
+    if(item.section){ html+=`<div class="nav-section">${item.section}</div>`; return; }
+    html+=`<div class="nav-item" id="nav-${item.id}" onclick="openPage('${item.id}')"><span class="ni">${item.icon}</span>${item.label}</div>`;
+  });
+  document.getElementById('sidebarNav').innerHTML=html;
+}
+
+function openPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const page=document.getElementById('page-'+id);
+  if(page)page.classList.add('active');
+  const nav=document.getElementById('nav-'+id);
+  if(nav)nav.classList.add('active');
+  const titles={'dashboard':'Dashboard','lectures':'Lecture Records','bills':'Bills & Payments','faculties':'Faculty Management','syllabus':'Syllabus Management','swap':'Lecture Swaps','profile':'My Profile'};
+  document.getElementById('pageTitle').textContent=titles[id]||id;
+  // Render
+  if(id==='dashboard')renderDashboard();
+  if(id==='lectures')renderLectureTable();
+  if(id==='bills')renderBillTable();
+  if(id==='faculties')renderFacultyTable();
+  if(id==='syllabus')renderSyllabusTable();
+  if(id==='swap')renderSwapTable();
+  if(id==='profile')renderProfile();
+  // Mobile close
+  if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+
+// ════════════════════════════════════════════
+//  DASHBOARD
+// ════════════════════════════════════════════
+function renderDashboard() {
+  const lectures = getVisibleLectures();
+  const thisMonth = new Date().getMonth();
+  const thisYear = new Date().getFullYear();
+  const monthLecs = lectures.filter(l=>{ const d=new Date(l.date);return d.getMonth()===thisMonth&&d.getFullYear()===thisYear; });
+  const totalStudents = lectures.reduce((s,l)=>s+(parseInt(l.students)||0),0);
+  const isAdmin = currentUser.role==='admin';
+  const facCount = DB.faculties.length;
+  const stats = [
+    {icon:'📚',label:'Total Lectures',val:lectures.length,cls:'blue'},
+    {icon:'📅',label:'This Month',val:monthLecs.length,cls:'cyan'},
+    {icon:'👨‍🎓',label:'Total Students',val:totalStudents,cls:'green'},
+    ...(isAdmin?[{icon:'👥',label:'Faculties',val:facCount,cls:'orange'}]:[]),
+  ];
+  document.getElementById('statsGrid').innerHTML=stats.map(s=>`
+    <div class="stat-card ${s.cls}">
+      <div class="stat-icon">${s.icon}</div>
+      <div><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div></div>
+    </div>`).join('');
+  // Recent 5
+  const recent=[...lectures].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
+  document.getElementById('recentLecTbody').innerHTML=recent.map(l=>`
+    <tr><td>${formatDate(l.date)}</td><td>${l.facultyName}</td><td>${l.subjectName}</td>
+    <td>${(l.topics||[]).slice(0,2).join(', ')}${l.topics.length>2?'…':''}</td><td>${l.students}</td></tr>`).join('');
+}
+
+// ════════════════════════════════════════════
+//  LECTURES
+// ════════════════════════════════════════════
+function getVisibleLectures() {
+  if(currentUser.role==='admin')return DB.lectures;
+  return DB.lectures.filter(l=>l.facultyId===currentUser.id);
+}
+
+function populateFilters() {
+  const lectures=DB.lectures;
+  const months=[...new Set(lectures.map(l=>l.date.substring(0,7)))].sort().reverse();
+  ['lecMonthFilter','billMonthFilter'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const cur=el.value;
+    el.innerHTML='<option value="">All Months</option>'+months.map(m=>{const [y,mo]=m.split('-');return`<option value="${m}">${MONTHS[parseInt(mo)-1]} ${y}</option>`;}).join('');
+    if(cur)el.value=cur;
+  });
+  const facs=DB.faculties;
+  const ff=document.getElementById('lecFacultyFilter');
+  if(ff) ff.innerHTML='<option value="">All Faculty</option>'+facs.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+}
+
+function renderLectureTable() {
+  let lecs=getVisibleLectures();
+  const q=(document.getElementById('lecSearch')||{}).value?.toLowerCase()||'';
+  const mf=(document.getElementById('lecMonthFilter')||{}).value||'';
+  const ff=(document.getElementById('lecFacultyFilter')||{}).value||'';
+  if(q)lecs=lecs.filter(l=>l.facultyName.toLowerCase().includes(q)||l.subjectName.toLowerCase().includes(q)||(l.topics||[]).join(' ').toLowerCase().includes(q));
+  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  if(ff)lecs=lecs.filter(l=>l.facultyId===ff);
+  lecs=[...lecs].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const isAdmin=currentUser.role==='admin';
+  document.getElementById('lectureTbody').innerHTML=lecs.map(l=>`
+    <tr>
+      <td>${formatDate(l.date)}</td><td>${l.day}</td><td>${formatTime(l.time)}</td>
+      <td>${l.facultyName}${l.swappedFrom?` <span class="swap-badge">SWAP</span>`:''}</td>
+      <td>${l.subjectName}</td>
+      <td style="max-width:200px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
+      <td><span class="pill pill-blue">${l.students}</span></td>
+      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 Link</a></td>
+      <td>
+        <div style="display:flex;gap:4px;">
+          ${canEditLecture(l)?`<button class="btn btn-primary btn-sm" onclick="openEditLectureModal('${l.id}')">✏️</button>`:''}
+          ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteLecture('${l.id}')">🗑️</button>`:''}
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function canEditLecture(l){return currentUser.role==='admin'||l.facultyId===currentUser.id;}
+
+function openAddLectureModal() {
+  document.getElementById('lecEditId').value='';
+  document.getElementById('lecModalTitle').textContent='➕ Add Lecture';
+  document.getElementById('lecDate').value=new Date().toISOString().split('T')[0];
+  autofillDay();
+  document.getElementById('lecDay').value='';
+  document.getElementById('lecTime').value='';
+  document.getElementById('lecStudents').value='';
+  document.getElementById('lecDriveLink').value='';
+  document.getElementById('selectedTopicsChips').innerHTML='';
+  document.getElementById('topicSelectList').innerHTML='';
+  // Faculty dropdown
+  const facSel=document.getElementById('lecFaculty');
+  const faculties=currentUser.role==='admin'?DB.faculties:[DB.faculties.find(f=>f.id===currentUser.id)].filter(Boolean);
+  facSel.innerHTML='<option value="">Select Faculty</option>'+faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  if(currentUser.role==='faculty'){ facSel.value=currentUser.id; loadSubjectsForFaculty(); facSel.disabled=true; }
+  else { facSel.disabled=false; }
+  document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';
+  document.getElementById('lectureModal').classList.add('show');
+}
+
+function openEditLectureModal(id) {
+  const l=DB.lectures.find(x=>x.id===id);
+  if(!l)return;
+  document.getElementById('lecEditId').value=id;
+  document.getElementById('lecModalTitle').textContent='✏️ Edit Lecture';
+  document.getElementById('lecDate').value=l.date;
+  document.getElementById('lecDay').value=l.day;
+  document.getElementById('lecTime').value=l.time;
+  document.getElementById('lecStudents').value=l.students;
+  document.getElementById('lecDriveLink').value=l.driveLink||'';
+  const facSel=document.getElementById('lecFaculty');
+  const faculties=currentUser.role==='admin'?DB.faculties:[DB.faculties.find(f=>f.id===currentUser.id)].filter(Boolean);
+  facSel.innerHTML='<option value="">Select Faculty</option>'+faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  facSel.value=l.facultyId;
+  facSel.disabled=currentUser.role==='faculty';
+  loadSubjectsForFaculty();
+  setTimeout(()=>{
+    document.getElementById('lecSubject').value=l.subjectId;
+    loadTopicsForSubject();
+    setTimeout(()=>{
+      selectedTopics=l.topics?[...l.topics]:[];
+      renderSelectedTopics();
+      refreshTopicList();
+    },50);
+  },50);
+  document.getElementById('lectureModal').classList.add('show');
+}
+
+let selectedTopics=[];
+function loadSubjectsForFaculty(){
+  const fid=document.getElementById('lecFaculty').value;
+  if(!fid){document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>';return;}
+  const fac=DB.faculties.find(f=>f.id===fid);
+  const subs=DB.subjects.filter(s=>!fac||(fac.subjects||[]).includes(s.id));
+  document.getElementById('lecSubject').innerHTML='<option value="">Select Subject</option>'+subs.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  selectedTopics=[];renderSelectedTopics();
+}
+function loadTopicsForSubject(){
+  const sid=document.getElementById('lecSubject').value;
+  selectedTopics=[];renderSelectedTopics();
+  refreshTopicList();
+}
+function getTopicsForSubject(sid){
+  const sub=DB.subjects.find(s=>s.id===sid);
+  if(!sub)return[];
+  return (sub.topics||'').split('\n').map(t=>t.trim()).filter(t=>t&&!t.startsWith('Unit'));
+}
+function refreshTopicList(){
+  const sid=document.getElementById('lecSubject').value;
+  const topics=getTopicsForSubject(sid);
+  document.getElementById('topicSelectList').innerHTML=topics.map(t=>`
+    <div class="topic-item ${selectedTopics.includes(t)?'selected':''}" onclick="toggleTopic('${t.replace(/'/g,"\\'")}')">
+      ${selectedTopics.includes(t)?'✅':''} ${t}
+    </div>`).join('');
+}
+function toggleTopic(t){
+  if(selectedTopics.includes(t))selectedTopics=selectedTopics.filter(x=>x!==t);
+  else selectedTopics.push(t);
+  renderSelectedTopics();refreshTopicList();
+}
+function renderSelectedTopics(){
+  document.getElementById('selectedTopicsChips').innerHTML=selectedTopics.map(t=>`
+    <span class="chip">${t}<span class="x" onclick="toggleTopic('${t.replace(/'/g,"\\'")}')">✕</span></span>`).join('');
+}
+
+function autofillDay(){
+  const d=document.getElementById('lecDate').value;
+  if(d){const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];document.getElementById('lecDay').value=days[new Date(d).getDay()];}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const ld=document.getElementById('lecDate');
+  if(ld)ld.addEventListener('change',autofillDay);
+});
+
+function saveLecture(){
+  const editId=document.getElementById('lecEditId').value;
+  const date=document.getElementById('lecDate').value;
+  const day=document.getElementById('lecDay').value;
+  const time=document.getElementById('lecTime').value;
+  const fid=document.getElementById('lecFaculty').value;
+  const sid=document.getElementById('lecSubject').value;
+  const students=document.getElementById('lecStudents').value;
+  const driveLink=document.getElementById('lecDriveLink').value;
+  if(!date||!day||!time||!fid||!sid||!students||!driveLink||selectedTopics.length===0){
+    showToast('Please fill all mandatory fields including topics and drive link','error');return;
+  }
+  const fac=DB.faculties.find(f=>f.id===fid);
+  const sub=DB.subjects.find(s=>s.id===sid);
+  const lectures=DB.lectures;
+  if(editId){
+    const i=lectures.findIndex(l=>l.id===editId);
+    if(i>=0){lectures[i]={...lectures[i],date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:parseInt(students),driveLink};}
+    showToast('Lecture updated!','success');
+  } else {
+    lectures.push({id:'l'+Date.now(),date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:parseInt(students),driveLink,swappedFrom:null});
+    showToast('Lecture added!','success');
+  }
+  DB.lectures=lectures;
+  closeModal('lectureModal');
+  renderLectureTable();
+  populateFilters();
+  renderDashboard();
+}
+
+function deleteLecture(id){
+  if(!confirm('Delete this lecture record?'))return;
+  DB.lectures=DB.lectures.filter(l=>l.id!==id);
+  renderLectureTable();populateFilters();renderDashboard();
+  showToast('Lecture deleted','warning');
+}
+
+// ════════════════════════════════════════════
+//  BILLS (Admin)
+// ════════════════════════════════════════════
+function renderBillTable(){
+  const mf=document.getElementById('billMonthFilter').value;
+  let lecs=DB.lectures;
+  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  const byFac={};
+  lecs.forEach(l=>{
+    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};
+    byFac[l.facultyId].count++;
+  });
+  const rate=750;
+  const rows=Object.values(byFac);
+  let total=0;
+  document.getElementById('billTbody').innerHTML=rows.map(r=>{
+    const amt=r.count*rate;total+=amt;
+    return`<tr><td><strong>${r.name}</strong></td><td>${mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All'}</td><td>${r.count}</td><td>₹${amt.toLocaleString('en-IN')}</td><td style="width:120px;border-bottom:1px solid #ccc;padding-bottom:8px;">&nbsp;</td></tr>`;
+  }).join('');
+  document.getElementById('billTotal').innerHTML=`Grand Total: <span style="color:var(--primary)">₹${total.toLocaleString('en-IN')}</span>`;
+}
+
+// ════════════════════════════════════════════
+//  FACULTY
+// ════════════════════════════════════════════
+function renderFacultyTable(){
+  const lecs=DB.lectures;
+  document.getElementById('facultyTbody').innerHTML=DB.faculties.map(f=>{
+    const cnt=lecs.filter(l=>l.facultyId===f.id).length;
+    const subs=DB.subjects.filter(s=>(f.subjects||[]).includes(s.id)).map(s=>s.name).join(', ');
+    return`<tr>
+      <td><strong>${f.name}</strong></td><td>${f.email}</td><td>${f.phone}</td>
+      <td>${subs||'—'}</td><td><span class="pill pill-blue">${cnt}</span></td>
+      <td><div style="display:flex;gap:4px;">
+        <button class="btn btn-primary btn-sm" onclick="openEditFaculty('${f.id}')">✏️</button>
+        <button class="btn btn-warning btn-sm" onclick="openResetPwd('${f.id}')">🔑</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFaculty('${f.id}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openAddFacultyModal(){
+  document.getElementById('facEditId').value='';
+  document.getElementById('facModalTitle').textContent='➕ Add Faculty';
+  ['facName','facEmail','facPhone','facPassword'].forEach(id=>document.getElementById(id).value='');
+  const sel=document.getElementById('facSubjectAssign');
+  sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  document.getElementById('facultyModal').classList.add('show');
+}
+
+function openEditFaculty(id){
+  const f=DB.faculties.find(x=>x.id===id);if(!f)return;
+  document.getElementById('facEditId').value=id;
+  document.getElementById('facModalTitle').textContent='✏️ Edit Faculty';
+  document.getElementById('facName').value=f.name;
+  document.getElementById('facEmail').value=f.email;
+  document.getElementById('facPhone').value=f.phone;
+  document.getElementById('facPassword').value=f.password;
+  const sel=document.getElementById('facSubjectAssign');
+  sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}" ${(f.subjects||[]).includes(s.id)?'selected':''}>${s.name}</option>`).join('');
+  document.getElementById('facultyModal').classList.add('show');
+}
+
+function saveFaculty(){
+  const editId=document.getElementById('facEditId').value;
+  const name=document.getElementById('facName').value.trim();
+  const email=document.getElementById('facEmail').value.trim();
+  const phone=document.getElementById('facPhone').value.trim();
+  const password=document.getElementById('facPassword').value;
+  const sel=document.getElementById('facSubjectAssign');
+  const subjects=[...sel.selectedOptions].map(o=>o.value);
+  if(!name||!email||!phone||!password){showToast('Fill all mandatory fields','error');return;}
+  let faculties=DB.faculties;
+  if(editId){
+    const i=faculties.findIndex(f=>f.id===editId);
+    if(i>=0)faculties[i]={...faculties[i],name,email,phone,password,subjects};
+    showToast('Faculty updated!','success');
+  } else {
+    if(faculties.find(f=>f.email===email)){showToast('Email already exists','error');return;}
+    faculties.push({id:'f'+Date.now(),name,email,phone,password,subjects,role:'faculty'});
+    showToast('Faculty added!','success');
+  }
+  DB.faculties=faculties;
+  closeModal('facultyModal');renderFacultyTable();
+}
+
+function deleteFaculty(id){
+  if(!confirm('Delete this faculty?'))return;
+  DB.faculties=DB.faculties.filter(f=>f.id!==id);
+  renderFacultyTable();showToast('Faculty removed','warning');
+}
+
+function openResetPwd(id){document.getElementById('resetFacId').value=id;document.getElementById('newFacPwd').value='';document.getElementById('resetPwdModal').classList.add('show');}
+function doResetPassword(){
+  const id=document.getElementById('resetFacId').value;
+  const np=document.getElementById('newFacPwd').value;
+  if(!np){showToast('Enter new password','error');return;}
+  let faculties=DB.faculties;
+  const i=faculties.findIndex(f=>f.id===id);
+  if(i>=0){faculties[i].password=np;DB.faculties=faculties;}
+  closeModal('resetPwdModal');showToast('Password reset!','success');
+}
+
+// ════════════════════════════════════════════
+//  SYLLABUS
+// ════════════════════════════════════════════
+function renderSyllabusTable(){
+  document.getElementById('syllabusTbody').innerHTML=DB.subjects.map(s=>`
+    <tr>
+      <td><strong>${s.name}</strong></td><td><span class="pill pill-blue">${s.code||'—'}</span></td>
+      <td style="max-width:300px;font-size:0.76rem;white-space:pre-wrap;">${s.topics||''}</td>
+      <td><div style="display:flex;gap:4px;">
+        <button class="btn btn-primary btn-sm" onclick="openEditSubject('${s.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">🗑️</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function openAddSubjectModal(){
+  document.getElementById('subEditId').value='';
+  document.getElementById('subModalTitle').textContent='📖 Add Subject & Syllabus';
+  document.getElementById('subName').value='';document.getElementById('subCode').value='';document.getElementById('subTopics').value='';
+  document.getElementById('subjectModal').classList.add('show');
+}
+function openEditSubject(id){
+  const s=DB.subjects.find(x=>x.id===id);if(!s)return;
+  document.getElementById('subEditId').value=id;
+  document.getElementById('subModalTitle').textContent='✏️ Edit Subject';
+  document.getElementById('subName').value=s.name;document.getElementById('subCode').value=s.code||'';document.getElementById('subTopics').value=s.topics||'';
+  document.getElementById('subjectModal').classList.add('show');
+}
+function saveSubject(){
+  const editId=document.getElementById('subEditId').value;
+  const name=document.getElementById('subName').value.trim();
+  const code=document.getElementById('subCode').value.trim();
+  const topics=document.getElementById('subTopics').value;
+  if(!name){showToast('Subject name required','error');return;}
+  let subjects=DB.subjects;
+  if(editId){
+    const i=subjects.findIndex(s=>s.id===editId);if(i>=0)subjects[i]={...subjects[i],name,code,topics};
+    showToast('Subject updated!','success');
+  } else {
+    subjects.push({id:'s'+Date.now(),name,code,topics});showToast('Subject added!','success');
+  }
+  DB.subjects=subjects;closeModal('subjectModal');renderSyllabusTable();
+  // Refresh faculty modal
+  const sel=document.getElementById('facSubjectAssign');
+  if(sel)sel.innerHTML=DB.subjects.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+}
+function deleteSubject(id){
+  if(!confirm('Delete this subject?'))return;
+  DB.subjects=DB.subjects.filter(s=>s.id!==id);
+  renderSyllabusTable();showToast('Subject deleted','warning');
+}
+
+// ════════════════════════════════════════════
+//  SWAP
+// ════════════════════════════════════════════
+function renderSwapTable(){
+  const swaps=DB.swaps;
+  const isAdmin=currentUser.role==='admin';
+  document.getElementById('swapTbody').innerHTML=swaps.map(sw=>`
+    <tr>
+      <td>${formatDate(sw.date)}</td>
+      <td>${sw.fromName}</td><td>${sw.toName}</td><td>${sw.subjectName}</td>
+      <td><span class="pill ${sw.status==='approved'?'pill-green':sw.status==='rejected'?'pill-red':'pill-orange'}">${sw.status.toUpperCase()}</span></td>
+      <td>
+        ${isAdmin&&sw.status==='pending'?`<div style="display:flex;gap:4px;"><button class="btn btn-success btn-sm" onclick="approveSwap('${sw.id}')">✅ Approve</button><button class="btn btn-danger btn-sm" onclick="rejectSwap('${sw.id}')">❌ Reject</button></div>`:''}
+        ${!isAdmin&&sw.fromId===currentUser.id&&sw.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelSwap('${sw.id}')">Cancel</button>`:''}
+      </td>
+    </tr>`).join('');
+}
+
+function openSwapModal(){
+  const myLecs=getVisibleLectures().filter(l=>l.facultyId===currentUser.id);
+  const sl=document.getElementById('swapLecId');
+  sl.innerHTML='<option value="">Select lecture...</option>'+myLecs.map(l=>`<option value="${l.id}">${formatDate(l.date)} — ${l.subjectName}</option>`).join('');
+  const tf=document.getElementById('swapToFaculty');
+  const others=DB.faculties.filter(f=>f.id!==currentUser.id);
+  tf.innerHTML='<option value="">Select faculty...</option>'+others.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  document.getElementById('swapReason').value='';
+  document.getElementById('swapModal').classList.add('show');
+}
+function submitSwap(){
+  const lid=document.getElementById('swapLecId').value;
+  const toId=document.getElementById('swapToFaculty').value;
+  const reason=document.getElementById('swapReason').value;
+  if(!lid||!toId){showToast('Select lecture and target faculty','error');return;}
+  const lec=DB.lectures.find(l=>l.id===lid);
+  const toFac=DB.faculties.find(f=>f.id===toId);
+  const swaps=DB.swaps;
+  swaps.push({id:'sw'+Date.now(),lectureId:lid,date:lec.date,fromId:currentUser.id,fromName:currentUser.name,toId,toName:toFac.name,subjectName:lec.subjectName,reason,status:'pending'});
+  DB.swaps=swaps;closeModal('swapModal');renderSwapTable();
+  showToast('Swap request submitted!','success');
+}
+function approveSwap(id){
+  const swaps=DB.swaps;const i=swaps.findIndex(s=>s.id===id);if(i<0)return;
+  swaps[i].status='approved';
+  // Update lecture
+  const lectures=DB.lectures;const li=lectures.findIndex(l=>l.id===swaps[i].lectureId);
+  if(li>=0){const toFac=DB.faculties.find(f=>f.id===swaps[i].toId);lectures[li].swappedFrom=lectures[li].facultyId;lectures[li].facultyId=swaps[i].toId;lectures[li].facultyName=toFac.name;DB.lectures=lectures;}
+  DB.swaps=swaps;renderSwapTable();renderLectureTable();
+  showToast('Swap approved!','success');
+}
+function rejectSwap(id){
+  const swaps=DB.swaps;const i=swaps.findIndex(s=>s.id===id);if(i>=0){swaps[i].status='rejected';DB.swaps=swaps;}
+  renderSwapTable();showToast('Swap rejected','warning');
+}
+function cancelSwap(id){
+  DB.swaps=DB.swaps.filter(s=>s.id!==id);renderSwapTable();showToast('Request cancelled','warning');
+}
+
+// ════════════════════════════════════════════
+//  PROFILE
+// ════════════════════════════════════════════
+function renderProfile(){
+  const u=currentUser;
+  const myLecs=getVisibleLectures();
+  document.getElementById('profileBody').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div>
+        <div style="width:80px;height:80px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:16px;">👤</div>
+        <h3 style="font-size:1.2rem;font-weight:800;color:var(--primary-dark);">${u.name}</h3>
+        <p style="color:var(--text2);margin:4px 0;">${u.email}</p>
+        <p style="color:var(--text2);">${u.phone||'—'}</p>
+        <span class="pill ${u.role==='admin'?'pill-orange':'pill-blue'}" style="margin-top:8px;display:inline-block;">${u.role==='admin'?'Administrator':'Faculty'}</span>
+      </div>
+      <div>
+        <div class="stat-card blue" style="margin-bottom:12px;"><div class="stat-icon">📚</div><div><div class="stat-val">${myLecs.length}</div><div class="stat-label">Total Lectures</div></div></div>
+        ${u.role!=='admin'?`<div class="stat-card cyan"><div class="stat-icon">📅</div><div><div class="stat-val">${myLecs.filter(l=>{const d=new Date(l.date);return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear();}).length}</div><div class="stat-label">This Month</div></div></div>`:''}
+      </div>
+    </div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--border);">
+    <h4 style="margin-bottom:12px;color:var(--primary-dark);">Change Password</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:600px;">
+      <div class="form-group"><label>Current Password</label><input type="password" id="curPwd" placeholder="Current password"></div>
+      <div class="form-group"><label>New Password</label><input type="password" id="profNewPwd" placeholder="New password"></div>
+      <div class="form-group" style="display:flex;align-items:flex-end;">
+        <button class="btn btn-primary" onclick="changeMyPassword()">🔄 Update</button>
+      </div>
+    </div>`;
+}
+function changeMyPassword(){
+  const cur=document.getElementById('curPwd').value;
+  const np=document.getElementById('profNewPwd').value;
+  if(!cur||!np){showToast('Fill both fields','error');return;}
+  if(currentUser.role==='admin'){if(cur!==ADMIN.password){showToast('Current password incorrect','error');return;}ADMIN.password=np;currentUser.password=np;showToast('Password updated!','success');return;}
+  let faculties=DB.faculties;const i=faculties.findIndex(f=>f.id===currentUser.id);
+  if(i<0)return;if(faculties[i].password!==cur){showToast('Current password incorrect','error');return;}
+  faculties[i].password=np;currentUser.password=np;DB.faculties=faculties;
+  showToast('Password updated!','success');
+}
+
+// ════════════════════════════════════════════
+//  PDF – MONTHLY LECTURES
+// ════════════════════════════════════════════
+function exportMonthlyPDF(){
+  const mf=document.getElementById('lecMonthFilter').value;
+  let lecs=getVisibleLectures();
+  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(lecs.length===0){showToast('No lectures for selected period','error');return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pageW=doc.internal.pageSize.getWidth();
+  const pageH=doc.internal.pageSize.getHeight();
+  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
+  function addHeader(doc){
+    // Header bg
+    doc.setFillColor(26,111,181);doc.rect(0,0,pageW,22,'F');
+    doc.setFillColor(0,180,216);doc.rect(0,22,pageW,5,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold');doc.setFontSize(13);
+    doc.text('R.N.G.PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pageW/2,10,{align:'center'});
+    doc.setFontSize(9);
+    doc.text('Daily Lecture Sheet – '+monthLabel,pageW/2,16,{align:'center'});
+    // Dept info line
+    doc.setFillColor(240,248,255);doc.rect(0,27,pageW,10,'F');
+    doc.setTextColor(26,111,181);doc.setFontSize(8.5);
+    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pageW/2,33,{align:'center'});
+  }
+  function addFooter(doc,pn,tp){
+    doc.setFillColor(240,248,255);doc.rect(0,pageH-22,pageW,22,'F');
+    doc.setDrawColor(26,111,181);doc.line(0,pageH-22,pageW,pageH-22);
+    doc.setTextColor(50,50,80);doc.setFontSize(7.5);doc.setFont('helvetica','normal');
+    const col=pageW/3;
+    doc.text('Prepared by:\nMs. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',col*0+8,pageH-18);
+    doc.text('Verified by:\nMr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',col*1+8,pageH-18);
+    doc.text('Approved by:\nDr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',col*2+8,pageH-18);
+    // Signature lines
+    [col*0+50,col*1+50,col*2+50].forEach(x=>{doc.setDrawColor(150,150,180);doc.line(x,pageH-5,x-40,pageH-5);});
+    doc.setTextColor(150,150,180);doc.setFontSize(6.5);
+    doc.text(`Page ${pn} of ${tp}`,pageW-14,pageH-4,{align:'right'});
+  }
+  addHeader(doc);
+  doc.autoTable({
+    startY:38,
+    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link']],
+    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join('\n'),l.students,l.driveLink]),
+    styles:{fontSize:7.5,cellPadding:3,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:8},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    columnStyles:{8:{cellWidth:40,overflow:'linebreak'},5:{cellWidth:30},6:{cellWidth:45,overflow:'linebreak'}},
+    margin:{top:38,bottom:26,left:10,right:10},
+    didDrawPage:(d)=>{addHeader(doc);addFooter(doc,d.pageNumber,1);},
+    // Drive link as hyperlink
+    didParseCell:(d)=>{if(d.column.index===8&&d.section==='body'){d.cell.styles.textColor=[26,111,181];}}
+  });
+  // Update total page count
+  const tp=doc.internal.getNumberOfPages();
+  for(let p=1;p<=tp;p++){doc.setPage(p);addFooter(doc,p,tp);}
+  doc.save(`LectureSheet_${monthLabel.replace(' ','_')}.pdf`);
+  showToast('Monthly PDF downloaded!','success');
+}
+
+// ════════════════════════════════════════════
+//  PDF – BILL
+// ════════════════════════════════════════════
+function exportBillPDF(){
+  const mf=document.getElementById('billMonthFilter').value;
+  let lecs=DB.lectures;
+  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All';
+  const byFac={};
+  lecs.forEach(l=>{if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};byFac[l.facultyId].count++;});
+  const rate=750;
+  const rows=Object.values(byFac);
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const pageW=doc.internal.pageSize.getWidth();
+  const pageH=doc.internal.pageSize.getHeight();
+  // Header
+  doc.setFillColor(26,111,181);doc.rect(0,0,pageW,28,'F');
+  doc.setFillColor(0,180,216);doc.rect(0,28,pageW,4,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');doc.setFontSize(14);
+  doc.text('R.N.G.PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pageW/2,11,{align:'center'});
+  doc.setFontSize(10);doc.text('Faculty Payment Bill – '+monthLabel,pageW/2,19,{align:'center'});
+  doc.setFontSize(8.5);doc.text('Department: Information Technology (IT) | Program: BTech Working Professional',pageW/2,25,{align:'center'});
+  // Date
+  doc.setFillColor(240,248,255);doc.rect(0,32,pageW,10,'F');
+  doc.setTextColor(26,111,181);doc.setFontSize(8.5);doc.setFont('helvetica','normal');
+  doc.text('Bill Date: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'}),pageW-14,38,{align:'right'});
+  doc.text('Batch: 2025',14,38);
+  // Table
+  let total=0;
+  doc.autoTable({
+    startY:44,
+    head:[['Sr.','Faculty Name','Total Lectures','Amount (₹)','Signature']],
+    body:rows.map((r,i)=>{const a=r.count*rate;total+=a;return[i+1,r.name,r.count,'₹'+a.toLocaleString('en-IN'),''];}).concat([['','','Total Lectures: '+lecs.length,'Grand Total: ₹'+total.toLocaleString('en-IN'),'']]),
+    styles:{fontSize:9,cellPadding:4},
+    headStyles:{fillColor:[26,111,181],textColor:255,fontStyle:'bold'},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    columnStyles:{4:{cellWidth:40},0:{cellWidth:12}},
+    foot:[],
+    margin:{left:14,right:14},
+  });
+  // Footer – WHITE background for signing
+  doc.setFillColor(255,255,255);doc.rect(0,pageH-40,pageW,40,'F');
+  doc.setDrawColor(200,220,240);doc.line(0,pageH-40,pageW,pageH-40);
+  doc.setTextColor(50,50,80);doc.setFontSize(8);doc.setFont('helvetica','normal');
+  const col=pageW/3;
+  const labels=[['Prepared by:','Ms. R.S.Patel','Asst.Prof IT Dept, RNGPIT Bardoli'],['Verified by:','Mr. V.C.Joshi','Head, IT Dept, RNGPIT Bardoli'],['Approved by:','Dr. L.B.Chaudhari','Director, RNGPIT Bardoli']];
+  labels.forEach(([title,name,role],ci)=>{
+    const x=col*ci+14;
+    doc.text(title,x,pageH-34);doc.text(name,x,pageH-29);doc.text(role,x,pageH-24);
+    doc.setDrawColor(130,130,160);doc.line(x,pageH-8,x+50,pageH-8);
+    doc.setTextColor(160,160,180);doc.setFontSize(6.5);doc.text('Signature',x,pageH-5);
+    doc.setTextColor(50,50,80);doc.setFontSize(8);
+  });
+  doc.save(`Bill_${monthLabel.replace(' ','_')}.pdf`);
+  showToast('Bill PDF downloaded!','success');
+}
+
+// ════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function formatDate(d){if(!d)return '';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function formatTime(t){if(!t)return '';const [h,m]=t.split(':');const hh=parseInt(h);return `${hh%12||12}:${m} ${hh>=12?'PM':'AM'}`;}
+
+function showToast(msg,type='success'){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  const icons={'success':'✅','error':'❌','warning':'⚠️'};
+  el.innerHTML=`${icons[type]||'ℹ️'} ${msg}`;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');});
+});
+
+// Auto-login if session
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=sessionStorage.getItem('ls_user');
+  if(saved){currentUser=JSON.parse(saved);document.getElementById('loginPage').style.display='none';document.getElementById('appShell').style.display='block';initApp();}
+  // Set today's date display
+  document.getElementById('todayDate') && (document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}));
+});
+</script>
+</body>
+</html>
