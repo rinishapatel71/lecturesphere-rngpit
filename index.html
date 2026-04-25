@@ -128,204 +128,237 @@
   .login-tab{flex:1;text-align:center;padding:8px;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--text2);transition:all .2s;}
   .login-tab.active{background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15);}
 
-  .form-group{margin-bottom:14px;}
-  .form-group label{display:block;font-size:0.74rem;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
-  .form-group input,.form-group select{
+  /* ══ LOGIN FORM ELEMENTS (scoped to login page only) ══ */
+  #loginPage .form-group{margin-bottom:14px;}
+  #loginPage .form-group label{display:block;font-size:0.74rem;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+  #loginPage .form-group input,#loginPage .form-group select{
     width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:10px;
     font-family:'Poppins',sans-serif;font-size:0.88rem;color:var(--text);outline:none;transition:all .2s;background:white;
   }
-  .form-group input:focus,.form-group select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,111,181,0.1);}
-  .form-group input:disabled,.form-group select:disabled{background:#f0f4f8;color:var(--text2);cursor:not-allowed;}
-  /* Password wrapper — no eye button */
-  .pw-wrap{position:relative;}
-  .pw-wrap input{padding-right:16px;}
+  #loginPage .form-group input:focus,#loginPage .form-group select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,111,181,0.1);}
+  #loginPage .form-group input:disabled,#loginPage .form-group select:disabled{background:#f0f4f8;color:var(--text2);cursor:not-allowed;}
+  #loginPage .pw-wrap{position:relative;}
+  #loginPage .pw-wrap input{padding-right:16px;}
+  #loginPage .btn{padding:11px 22px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;}
+  #loginPage .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;box-shadow:0 4px 16px rgba(26,111,181,0.3);}
+  #loginPage .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,111,181,0.4);}
+  #loginPage .btn-full{width:100%;justify-content:center;}
 
-  .btn{padding:11px 22px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;}
-  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;box-shadow:0 4px 16px rgba(26,111,181,0.3);}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,111,181,0.4);}
-  .btn-full{width:100%;justify-content:center;}
-  .btn-sm{padding:7px 14px;font-size:0.78rem;border-radius:8px;}
-  .btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary);}
-  .btn-outline:hover{background:var(--primary);color:white;}
-  .btn-danger {background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;}
-  .btn-success{background:linear-gradient(135deg,#27ae60,#229954);color:white;}
-  .btn-warning{background:linear-gradient(135deg,#f39c12,#d68910);color:white;}
-  .btn-info   {background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;}
-
-  /* First-login overlay */
-  #firstLoginOverlay{
-    display:none;position:fixed;inset:0;z-index:500;
-    background:rgba(10,42,74,0.75);backdrop-filter:blur(6px);
-    align-items:center;justify-content:center;
-  }
+  /* First-login overlay (shared, uses its own scoped card) */
+  #firstLoginOverlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,42,74,0.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
   #firstLoginOverlay.show{display:flex;}
-  .first-login-card{
-    background:white;border-radius:24px;padding:40px 36px;
-    width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,0.3);
-    animation:fadeInUp .3s ease;
-  }
+  #firstLoginOverlay .form-group{margin-bottom:14px;}
+  #firstLoginOverlay .form-group label{display:block;font-size:0.74rem;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+  #firstLoginOverlay .form-group input{width:100%;padding:11px 16px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;color:var(--text);outline:none;transition:all .2s;background:white;}
+  #firstLoginOverlay .form-group input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,111,181,0.1);}
+  #firstLoginOverlay .pw-wrap{position:relative;}
+  #firstLoginOverlay .pw-wrap input{padding-right:16px;}
+  #firstLoginOverlay .btn{padding:11px 22px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+  #firstLoginOverlay .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;box-shadow:0 4px 16px rgba(26,111,181,0.3);}
+  #firstLoginOverlay .btn-primary:hover{transform:translateY(-2px);}
+  #firstLoginOverlay .btn-full{width:100%;justify-content:center;}
+  .first-login-card{background:white;border-radius:24px;padding:40px 36px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:fadeInUp .3s ease;}
   .first-login-card h2{font-size:1.15rem;font-weight:800;color:var(--primary-dark);margin-bottom:6px;}
   .first-login-card p{font-size:0.82rem;color:var(--text2);margin-bottom:20px;}
 
-  /* ══ APP SHELL ══ */
-  #appShell{display:none;min-height:100vh;}
+  /* ══════════════════════════════════════════
+     POST-LOGIN — ALL SCOPED UNDER #appShell
+     ══════════════════════════════════════════ */
+  #appShell{display:none;min-height:100vh;background:#eef2f7;position:relative;overflow-x:hidden;}
+  #appShell::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 80% 60% at 10% 15%,rgba(26,111,181,0.08) 0%,transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 85%,rgba(0,180,216,0.07) 0%,transparent 55%),
+      linear-gradient(160deg,#eef2f7 0%,#e8f0fb 50%,#edf5fb 100%);}
+  #appShell::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(circle,rgba(26,111,181,0.07) 1px,transparent 1px);
+    background-size:26px 26px;}
+  #appBg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  #appBg .bg-orb{position:absolute;border-radius:50%;filter:blur(70px);animation:orbFloat ease-in-out infinite alternate;}
+  @keyframes orbFloat{0%{transform:translate(0,0) scale(1);}100%{transform:translate(28px,18px) scale(1.07);}}
+  #appShell .sidebar,#appShell .main-content{position:relative;z-index:1;}
 
-  /* ══ SIDEBAR ══ */
-  .sidebar{width:260px;min-height:100vh;background:linear-gradient(175deg,var(--primary-dark) 0%,var(--primary) 60%,var(--primary-light) 100%);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(15,76,128,0.25);transition:transform .3s;}
-  .sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.12);}
-  .sidebar-logo .logo-row{display:flex;align-items:center;gap:12px;}
-  .sidebar-logo .s-icon{width:42px;height:42px;background:rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
-  .sidebar-logo h2{font-size:1rem;font-weight:800;color:white;}
-  .sidebar-logo span{font-size:0.66rem;color:rgba(255,255,255,0.65);}
-  .sidebar-user{padding:14px 18px;background:rgba(255,255,255,0.07);margin:10px;border-radius:12px;}
-  .sidebar-user .u-name{font-size:0.86rem;font-weight:700;color:white;}
-  .sidebar-user .u-role{font-size:0.70rem;color:rgba(255,255,255,0.6);margin-top:2px;}
-  .sidebar-nav{flex:1;padding:6px 10px;overflow-y:auto;}
-  .nav-section{font-size:0.63rem;color:rgba(255,255,255,0.42);text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:10px 8px 5px;}
-  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;color:rgba(255,255,255,0.78);font-size:0.84rem;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:2px;}
-  .nav-item:hover{background:rgba(255,255,255,0.12);color:white;}
-  .nav-item.active{background:rgba(255,255,255,0.2);color:white;font-weight:600;}
-  .nav-item .ni{font-size:17px;width:22px;text-align:center;}
-  .sidebar-footer{padding:14px;border-top:1px solid rgba(255,255,255,0.1);}
-  .sidebar-footer .btn{background:rgba(255,255,255,0.1);color:white;width:100%;justify-content:center;border:1px solid rgba(255,255,255,0.2);font-size:0.82rem;}
+  #appShell .sidebar{width:268px;min-height:100vh;background:linear-gradient(180deg,#0d1b2e 0%,#122540 55%,#0d1b2e 100%);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;box-shadow:4px 0 32px rgba(0,0,0,0.28);transition:transform .3s cubic-bezier(.4,0,.2,1);}
+  #appShell .sidebar-logo{padding:24px 22px 20px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  #appShell .sidebar-logo .logo-row{display:flex;align-items:center;gap:13px;}
+  #appShell .sidebar-logo .s-icon{width:44px;height:44px;background:linear-gradient(135deg,#1a6fb5,#00b4d8);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 14px rgba(26,111,181,0.45);flex-shrink:0;}
+  #appShell .sidebar-logo h2{font-size:1.05rem;font-weight:800;color:white;letter-spacing:-0.3px;}
+  #appShell .sidebar-logo span{font-size:0.65rem;color:rgba(255,255,255,0.4);}
+  #appShell .sidebar-user{margin:14px 12px 8px;padding:13px 15px;background:linear-gradient(135deg,rgba(26,111,181,0.2),rgba(0,180,216,0.1));border-radius:12px;border:1px solid rgba(26,111,181,0.25);position:relative;overflow:hidden;}
+  #appShell .sidebar-user::before{content:'';position:absolute;top:-20px;right:-20px;width:60px;height:60px;border-radius:50%;background:rgba(0,180,216,0.12);}
+  #appShell .u-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1a6fb5,#00b4d8);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;margin-bottom:9px;box-shadow:0 3px 10px rgba(26,111,181,0.4);}
+  #appShell .u-name{font-size:0.85rem;font-weight:700;color:white;line-height:1.2;}
+  #appShell .u-role{font-size:0.67rem;color:rgba(255,255,255,0.5);margin-top:4px;display:inline-flex;align-items:center;gap:5px;}
+  #appShell .u-role::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 6px #22c55e;}
+  #appShell .sidebar-nav{flex:1;padding:6px 10px 10px;overflow-y:auto;scrollbar-width:none;}
+  #appShell .sidebar-nav::-webkit-scrollbar{display:none;}
+  #appShell .nav-section{font-size:0.60rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;padding:14px 10px 6px;}
+  #appShell .nav-item{display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:10px;color:rgba(255,255,255,0.6);font-size:0.83rem;font-weight:500;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);margin-bottom:2px;position:relative;}
+  #appShell .nav-item:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.95);transform:translateX(3px);}
+  #appShell .nav-item.active{background:linear-gradient(90deg,rgba(26,111,181,0.38),rgba(0,180,216,0.16));color:white;font-weight:600;border-left:3px solid #00b4d8;padding-left:10px;}
+  #appShell .nav-item.active::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:#00b4d8;}
+  #appShell .nav-item .ni{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+  #appShell .sidebar-footer{padding:14px 12px;border-top:1px solid rgba(255,255,255,0.06);}
+  #appShell .sidebar-footer .btn{background:rgba(239,68,68,0.13);color:rgba(255,255,255,0.75);width:100%;justify-content:center;border:1px solid rgba(239,68,68,0.25);font-size:0.82rem;border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;transition:all .2s;}
+  #appShell .sidebar-footer .btn:hover{background:rgba(239,68,68,0.28);color:white;}
 
-  /* ══ MAIN ══ */
-  .main-content{margin-left:260px;min-height:100vh;}
-  .topbar{background:white;padding:15px 26px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(26,111,181,0.08);position:sticky;top:0;z-index:50;}
-  .topbar h3{font-size:1.1rem;font-weight:700;color:var(--primary-dark);}
-  .topbar .tb-right{display:flex;align-items:center;gap:12px;}
-  .badge{background:var(--accent);color:white;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;}
+  #appShell .main-content{margin-left:268px;min-height:100vh;}
+  #appShell .topbar{background:rgba(255,255,255,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 0 rgba(0,0,0,0.07),0 4px 18px rgba(26,111,181,0.06);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.55);}
+  #appShell .topbar h3{font-size:1.12rem;font-weight:800;color:#0d1b2e;letter-spacing:-0.3px;}
+  #appShell .topbar .tb-right{display:flex;align-items:center;gap:12px;}
+  #appShell .badge{background:linear-gradient(135deg,#1a6fb5,#00b4d8);color:white;padding:4px 14px;border-radius:20px;font-size:0.71rem;font-weight:700;box-shadow:0 2px 10px rgba(26,111,181,0.3);}
+  #appShell .hamburger{display:none;background:linear-gradient(135deg,#1a6fb5,#2d8de0);color:white;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:17px;}
+  #appShell .page{display:none;padding:24px 28px;animation:fadeInUp .3s ease;}
+  #appShell .page.active{display:block;}
 
-  /* ══ PAGES ══ */
-  .page{display:none;padding:22px 26px;animation:fadeInUp .35s ease;}
-  .page.active{display:block;}
+  #appShell .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-bottom:24px;}
+  #appShell .stat-card{background:rgba(255,255,255,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:18px;padding:22px 24px;box-shadow:0 2px 16px rgba(0,0,0,0.07),inset 0 1px 0 rgba(255,255,255,0.8);display:flex;align-items:center;gap:16px;transition:all .25s cubic-bezier(.4,0,.2,1);border:1px solid rgba(255,255,255,0.72);position:relative;overflow:hidden;cursor:default;}
+  #appShell .stat-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(0,0,0,0.13);}
+  #appShell .stat-card.blue  {border-top:3px solid #1a6fb5;}
+  #appShell .stat-card.cyan  {border-top:3px solid #00b4d8;}
+  #appShell .stat-card.green {border-top:3px solid #22c55e;}
+  #appShell .stat-card.orange{border-top:3px solid #f59e0b;}
+  #appShell .stat-icon{font-size:24px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  #appShell .stat-card.blue   .stat-icon{background:rgba(26,111,181,0.1);color:#1a6fb5;}
+  #appShell .stat-card.cyan   .stat-icon{background:rgba(0,180,216,0.1);color:#00b4d8;}
+  #appShell .stat-card.green  .stat-icon{background:rgba(34,197,94,0.1);color:#16a34a;}
+  #appShell .stat-card.orange .stat-icon{background:rgba(245,158,11,0.1);color:#d97706;}
+  #appShell .stat-val{font-size:1.75rem;font-weight:800;color:#0d1b2e;line-height:1;letter-spacing:-1.5px;}
+  #appShell .stat-label{font-size:0.72rem;color:#64748b;margin-top:3px;font-weight:500;}
 
-  /* ══ STATS ══ */
-  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px;}
-  .stat-card{background:white;border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;transition:transform .2s,box-shadow .2s;border-left:4px solid transparent;position:relative;overflow:hidden;}
-  .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);}
-  .stat-card.blue  {border-left-color:var(--primary);}
-  .stat-card.cyan  {border-left-color:var(--accent);}
-  .stat-card.green {border-left-color:var(--success);}
-  .stat-card.orange{border-left-color:var(--warning);}
-  .stat-icon{font-size:26px;width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;}
-  .stat-card.blue  .stat-icon{background:rgba(26,111,181,0.1);color:var(--primary);}
-  .stat-card.cyan  .stat-icon{background:rgba(0,180,216,0.1);color:var(--accent);}
-  .stat-card.green .stat-icon{background:rgba(39,174,96,0.1);color:var(--success);}
-  .stat-card.orange.stat-icon{background:rgba(243,156,18,0.1);color:var(--warning);}
-  .stat-val  {font-size:1.55rem;font-weight:800;color:var(--text);}
-  .stat-label{font-size:0.73rem;color:var(--text2);margin-top:2px;}
+  #appShell .card{background:rgba(255,255,255,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.07),inset 0 1px 0 rgba(255,255,255,0.75);margin-bottom:22px;overflow:hidden;border:1px solid rgba(255,255,255,0.72);transition:box-shadow .2s,transform .2s;}
+  #appShell .card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.11);transform:translateY(-1px);}
+  #appShell .card-header{padding:17px 22px;border-bottom:1px solid rgba(241,245,249,0.9);display:flex;align-items:center;justify-content:space-between;background:rgba(248,250,252,0.5);}
+  #appShell .card-header h4{font-size:0.95rem;font-weight:700;color:#0d1b2e;}
+  #appShell .card-body{padding:18px 22px;}
 
-  /* ══ CARD ══ */
-  .card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;}
-  .card-header{padding:16px 22px;border-bottom:1px solid var(--bg2);display:flex;align-items:center;justify-content:space-between;}
-  .card-header h4{font-size:0.93rem;font-weight:700;color:var(--primary-dark);}
-  .card-body{padding:18px 22px;}
+  #appShell .table-wrap{overflow-x:auto;border-radius:12px;}
+  #appShell table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+  #appShell th{background:linear-gradient(135deg,#0d1b2e,#1a3050);color:rgba(255,255,255,0.92);padding:12px 14px;text-align:left;font-weight:600;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.6px;}
+  #appShell th:first-child{border-radius:10px 0 0 0;}
+  #appShell th:last-child{border-radius:0 10px 0 0;}
+  #appShell td{padding:11px 14px;border-bottom:1px solid rgba(241,245,249,0.8);color:#334155;vertical-align:middle;}
+  #appShell tbody tr{transition:all .15s;}
+  #appShell tbody tr:hover td{background:rgba(240,247,255,0.85);color:#0d1b2e;}
+  #appShell tbody tr:hover td:first-child{border-left:3px solid #00b4d8;padding-left:11px;}
+  #appShell tr:last-child td{border-bottom:none;}
 
-  /* ══ TABLE ══ */
-  .table-wrap{overflow-x:auto;}
-  table{width:100%;border-collapse:collapse;font-size:0.81rem;}
-  th{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:11px 13px;text-align:left;font-weight:600;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.5px;}
-  td{padding:10px 13px;border-bottom:1px solid var(--bg2);color:var(--text);vertical-align:middle;}
-  tr:hover td{background:var(--bg);}
-  tr:last-child td{border-bottom:none;}
+  #appShell .btn{padding:9px 18px;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.84rem;font-weight:600;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);display:inline-flex;align-items:center;gap:7px;}
+  #appShell .btn:active{transform:scale(0.97);}
+  #appShell .btn-primary{background:linear-gradient(135deg,#1a6fb5,#2d8de0);color:white;box-shadow:0 3px 12px rgba(26,111,181,0.38);}
+  #appShell .btn-primary:hover{box-shadow:0 6px 20px rgba(26,111,181,0.52);transform:translateY(-1px);}
+  #appShell .btn-full{width:100%;justify-content:center;}
+  #appShell .btn-sm{padding:6px 13px;font-size:0.77rem;border-radius:8px;}
+  #appShell .btn-outline{background:white;border:1.5px solid #e2e8f0;color:#475569;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+  #appShell .btn-outline:hover{border-color:#1a6fb5;color:#1a6fb5;background:#f0f7ff;}
+  #appShell .btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:white;box-shadow:0 3px 10px rgba(239,68,68,0.32);}
+  #appShell .btn-danger:hover{box-shadow:0 5px 16px rgba(239,68,68,0.48);transform:translateY(-1px);}
+  #appShell .btn-success{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;box-shadow:0 3px 10px rgba(34,197,94,0.32);}
+  #appShell .btn-success:hover{box-shadow:0 5px 16px rgba(34,197,94,0.48);transform:translateY(-1px);}
+  #appShell .btn-warning{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;box-shadow:0 3px 10px rgba(245,158,11,0.32);}
+  #appShell .btn-warning:hover{box-shadow:0 5px 16px rgba(245,158,11,0.48);transform:translateY(-1px);}
+  #appShell .btn-info{background:linear-gradient(135deg,#00b4d8,#48cae4);color:white;box-shadow:0 3px 10px rgba(0,180,216,0.32);}
+  #appShell .btn-info:hover{box-shadow:0 5px 16px rgba(0,180,216,0.48);transform:translateY(-1px);}
+  #appShell .btn-xlsx{background:linear-gradient(135deg,#16a34a,#15803d);color:white;box-shadow:0 3px 10px rgba(22,163,74,0.32);}
+  #appShell .btn-xlsx:hover{box-shadow:0 5px 16px rgba(22,163,74,0.48);transform:translateY(-1px);}
 
-  /* ══ MODAL ══ */
-  .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,76,128,0.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
-  .modal-overlay.show{display:flex;}
-  .modal{background:white;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.2);padding:30px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;animation:fadeInUp .3s ease;position:relative;}
-  .modal-sm{width:420px;}
-  .modal h3{font-size:1.05rem;font-weight:800;color:var(--primary-dark);margin-bottom:18px;}
-  .modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;background:var(--bg2);border-radius:50%;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text2);}
-  .modal-close:hover{background:var(--danger);color:white;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .form-full{grid-column:1/-1;}
+  #appShell .form-group{margin-bottom:14px;}
+  #appShell .form-group label{display:block;font-size:0.72rem;font-weight:700;color:#64748b;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.6px;}
+  #appShell .form-group input,#appShell .form-group select,#appShell .form-group textarea{width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.87rem;color:#0d1b2e;outline:none;transition:all .2s;background:white;}
+  #appShell .form-group input:focus,#appShell .form-group select:focus,#appShell .form-group textarea:focus{border-color:#1a6fb5;box-shadow:0 0 0 3px rgba(26,111,181,0.1);}
+  #appShell .form-group input:disabled,#appShell .form-group select:disabled{background:#f8fafc;color:#94a3b8;cursor:not-allowed;}
+  #appShell .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  #appShell .form-full{grid-column:1/-1;}
+  #appShell .pw-wrap{position:relative;}
+  #appShell .pw-wrap input{padding-right:14px;}
 
-  /* ══ CHIPS / TOPICS ══ */
-  .chip{display:inline-flex;align-items:center;gap:5px;background:rgba(26,111,181,0.1);color:var(--primary);padding:4px 11px;border-radius:20px;font-size:0.73rem;font-weight:600;margin:2px;border:1px solid rgba(26,111,181,0.2);}
-  .chip .x{cursor:pointer;opacity:0.5;margin-left:3px;font-size:0.65rem;transition:opacity .15s;}
-  .chip .x:hover{opacity:1;}
-  .topics-box{border:2px solid var(--border);border-radius:10px;padding:10px 12px;min-height:52px;background:#fafcff;}
-  .topics-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
-  .topic-select-list{max-height:190px;overflow-y:auto;border:2px solid var(--border);border-radius:10px;margin-top:6px;background:white;}
-  .topic-unit-hdr{
-    padding:7px 14px;
-    background:linear-gradient(90deg,rgba(26,111,181,0.07),rgba(26,111,181,0.03));
-    font-size:0.68rem;font-weight:700;color:var(--primary);
-    text-transform:uppercase;letter-spacing:0.8px;
-    position:sticky;top:0;z-index:1;
-    border-bottom:1px solid rgba(26,111,181,0.1);
-    border-left:3px solid var(--primary);
-  }
-  .topic-item{
-    padding:9px 14px;cursor:pointer;font-size:0.82rem;
-    border-bottom:1px solid var(--bg2);
-    transition:background .12s;user-select:none;
-    display:flex;align-items:center;gap:10px;
-    color:var(--text);
-  }
-  .topic-item:last-child{border-bottom:none;}
-  .topic-item:hover{background:var(--bg);}
-  .topic-item.selected{background:rgba(26,111,181,0.05);color:var(--primary-dark);}
-  /* Clean CSS checkbox — no emoji */
-  .topic-item .chk{
-    width:17px;height:17px;border-radius:4px;
-    border:2px solid #c0d4e8;
-    display:inline-flex;align-items:center;justify-content:center;
-    flex-shrink:0;transition:all .15s;background:white;
-    position:relative;
-  }
-  .topic-item.selected .chk{
-    background:var(--primary);border-color:var(--primary);
-  }
-  /* CSS-only checkmark via pseudo-element */
-  .topic-item.selected .chk::after{
-    content:'';
-    width:5px;height:9px;
-    border:2px solid white;
-    border-top:none;border-left:none;
-    transform:rotate(45deg) translateY(-1px);
-    display:block;
-  }
+  #appShell .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(13,27,46,0.6);backdrop-filter:blur(10px);align-items:center;justify-content:center;}
+  #appShell .modal-overlay.show{display:flex;}
+  #appShell .modal{background:white;border-radius:24px;box-shadow:0 32px 80px rgba(0,0,0,0.24);padding:32px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto;animation:fadeInUp .28s cubic-bezier(.4,0,.2,1);position:relative;border:1px solid rgba(0,0,0,0.05);}
+  #appShell .modal-sm{width:440px;}
+  #appShell .modal h3{font-size:1.1rem;font-weight:800;color:#0d1b2e;margin-bottom:20px;letter-spacing:-0.3px;}
+  #appShell .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:#f1f5f9;border-radius:8px;border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#64748b;transition:all .15s;}
+  #appShell .modal-close:hover{background:#fee2e2;color:#ef4444;}
 
-  /* ══ TOAST ══ */
-  #toastContainer{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
-  .toast{background:white;border-radius:12px;padding:13px 17px;box-shadow:0 6px 24px rgba(0,0,0,0.15);display:flex;align-items:center;gap:10px;font-size:0.81rem;font-weight:600;animation:fadeInUp .3s ease;min-width:260px;border-left:4px solid var(--primary);}
-  .toast.success{border-left-color:var(--success);}
-  .toast.error  {border-left-color:var(--danger);}
-  .toast.warning{border-left-color:var(--warning);}
+  #appShell .chip{display:inline-flex;align-items:center;gap:5px;background:rgba(26,111,181,0.08);color:#1a6fb5;padding:4px 11px;border-radius:20px;font-size:0.72rem;font-weight:600;margin:2px;border:1px solid rgba(26,111,181,0.15);}
+  #appShell .chip .x{cursor:pointer;opacity:0.5;margin-left:2px;font-size:0.65rem;transition:opacity .15s;}
+  #appShell .chip .x:hover{opacity:1;color:#ef4444;}
+  #appShell .topics-box{border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 12px;min-height:52px;background:#fafcff;}
+  #appShell .topics-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
+  #appShell .topic-select-list{max-height:190px;overflow-y:auto;border:1.5px solid #e2e8f0;border-radius:12px;margin-top:6px;background:white;}
+  #appShell .topic-unit-hdr{padding:7px 14px;background:linear-gradient(90deg,rgba(26,111,181,0.06),transparent);font-size:0.67rem;font-weight:700;color:#1a6fb5;text-transform:uppercase;letter-spacing:0.8px;position:sticky;top:0;z-index:1;border-bottom:1px solid rgba(26,111,181,0.08);border-left:3px solid #1a6fb5;}
+  #appShell .topic-item{padding:9px 14px;cursor:pointer;font-size:0.82rem;border-bottom:1px solid #f8fafc;transition:all .12s;user-select:none;display:flex;align-items:center;gap:10px;color:#334155;}
+  #appShell .topic-item:last-child{border-bottom:none;}
+  #appShell .topic-item:hover{background:#f0f7ff;color:#1a6fb5;}
+  #appShell .topic-item.selected{background:rgba(26,111,181,0.05);font-weight:600;color:#0d1b2e;}
+  #appShell .topic-item .chk{width:17px;height:17px;border-radius:4px;border:1.5px solid #cbd5e1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;background:white;position:relative;}
+  #appShell .topic-item.selected .chk{background:#1a6fb5;border-color:#1a6fb5;}
+  #appShell .topic-item.selected .chk::after{content:'';width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);display:block;}
 
-  /* ══ SEARCH ══ */
-  .search-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
-  .search-input{flex:1;min-width:180px;padding:9px 15px;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.82rem;outline:none;transition:all .2s;}
-  .search-input:focus{border-color:var(--primary);}
-
-  /* ══ PILLS ══ */
-  .pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.69rem;font-weight:700;}
-  .pill-blue  {background:rgba(26,111,181,0.12);color:var(--primary);}
-  .pill-green {background:rgba(39,174,96,0.12);color:var(--success);}
-  .pill-orange{background:rgba(243,156,18,0.12);color:var(--warning);}
-  .pill-red   {background:rgba(231,76,60,0.12);color:var(--danger);}
-
-  .swap-badge{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:white;padding:2px 7px;border-radius:6px;font-size:0.66rem;font-weight:700;}
-
-  /* ══ BILLS TAB ══ */
-  .tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:18px;width:fit-content;}
-  .tab{padding:8px 18px;border-radius:8px;cursor:pointer;font-size:0.81rem;font-weight:600;color:var(--text2);transition:all .2s;}
-  .tab.active{background:white;color:var(--primary);box-shadow:0 2px 8px rgba(26,111,181,0.15);}
-
-  /* ══ RESPONSIVE ══ */
-  .hamburger{display:none;background:var(--primary);color:white;border:none;padding:7px 11px;border-radius:8px;cursor:pointer;font-size:17px;}
+  #appShell .search-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  #appShell .search-input{flex:1;min-width:180px;padding:9px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:'Poppins',sans-serif;font-size:0.82rem;outline:none;transition:all .2s;background:white;color:#334155;}
+  #appShell .search-input:focus{border-color:#1a6fb5;box-shadow:0 0 0 3px rgba(26,111,181,0.09);}
+  #appShell .pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;}
+  #appShell .pill-blue{background:rgba(26,111,181,0.1);color:#1a6fb5;}
+  #appShell .pill-green{background:rgba(34,197,94,0.1);color:#15803d;}
+  #appShell .pill-orange{background:rgba(245,158,11,0.1);color:#b45309;}
+  #appShell .pill-red{background:rgba(239,68,68,0.1);color:#dc2626;}
+  #appShell .swap-badge{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;padding:2px 8px;border-radius:6px;font-size:0.65rem;font-weight:700;}
+  #appShell .tabs{display:flex;background:#f1f5f9;border-radius:12px;padding:4px;margin-bottom:20px;width:fit-content;border:1px solid #e2e8f0;}
+  #appShell .tab{padding:8px 20px;border-radius:9px;cursor:pointer;font-size:0.81rem;font-weight:600;color:#64748b;transition:all .2s;}
+  #appShell .tab:hover:not(.active){background:rgba(255,255,255,0.65);color:#334155;}
+  #appShell .tab.active{background:white;color:#1a6fb5;box-shadow:0 2px 10px rgba(0,0,0,0.09);font-weight:700;}
+  #appShell .v-valid{display:inline-flex;align-items:center;gap:4px;background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;border:1px solid #bbf7d0;}
+  #appShell .v-invalid{display:inline-flex;align-items:center;gap:4px;background:#fee2e2;color:#dc2626;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;border:1px solid #fecaca;}
+  #appShell .v-unknown{display:inline-flex;align-items:center;gap:4px;background:#fef9c3;color:#92400e;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;border:1px solid #fde68a;}
+  #appShell .v-pending{display:inline-flex;align-items:center;gap:4px;background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;}
+  #appShell .dur-result{margin-top:6px;padding:9px 13px;border-radius:9px;font-size:0.78rem;font-weight:600;display:none;}
+  #appShell .dur-result.valid{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;}
+  #appShell .dur-result.invalid{background:#fee2e2;color:#dc2626;border:1px solid #fecaca;}
+  #appShell .dur-result.unknown{background:#fef9c3;color:#92400e;border:1px solid #fde68a;}
+  #appShell .dur-result.checking{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+  .dur-spinner{display:inline-block;width:10px;height:10px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;margin-right:4px;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #appShell .active-filter-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(26,111,181,0.1);color:#1a6fb5;padding:4px 12px;border-radius:20px;font-size:0.74rem;font-weight:700;border:1px solid rgba(26,111,181,0.2);}
+  #appShell .active-filter-chip .clr{cursor:pointer;opacity:0.6;font-size:0.7rem;transition:opacity .15s;}
+  #appShell .active-filter-chip .clr:hover{opacity:1;color:#ef4444;}
+  #appShell .filter-modal{width:640px;max-height:90vh;}
+  #appShell .filter-type-tabs{display:flex;background:#f1f5f9;border-radius:12px;padding:4px;margin-bottom:18px;border:1px solid #e2e8f0;}
+  #appShell .ft-tab{flex:1;padding:9px 4px;text-align:center;font-size:0.74rem;font-weight:600;cursor:pointer;color:#64748b;background:transparent;border:none;border-radius:9px;transition:all .18s;font-family:'Poppins',sans-serif;line-height:1.3;}
+  #appShell .ft-tab:hover:not(.active){background:rgba(255,255,255,0.7);color:#334155;}
+  #appShell .ft-tab.active{background:white;color:#1a6fb5;box-shadow:0 2px 10px rgba(0,0,0,0.1);font-weight:700;}
+  #appShell .filter-section{background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid #f1f5f9;}
+  #appShell .filter-section h5{font-size:0.70rem;font-weight:700;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:6px;}
+  #appShell .year-nav{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+  #appShell .year-nav-label{flex:1;text-align:center;font-size:0.85rem;font-weight:700;color:#0d1b2e;}
+  #appShell .year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-height:165px;overflow-y:auto;}
+  #appShell .year-btn{padding:8px 4px;border:1.5px solid #e2e8f0;border-radius:8px;background:white;font-size:0.75rem;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;font-family:'Poppins',sans-serif;color:#334155;}
+  #appShell .year-btn:hover{border-color:#1a6fb5;color:#1a6fb5;background:#f0f7ff;}
+  #appShell .year-btn.selected{background:linear-gradient(135deg,#1a6fb5,#2d8de0);color:white;border-color:#1a6fb5;box-shadow:0 3px 10px rgba(26,111,181,0.35);}
+  #appShell .year-btn.current-year{border-color:#00b4d8;color:#00b4d8;}
+  #appShell .year-btn.current-year.selected{color:white;}
+  #appShell .month-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px;}
+  #appShell .month-btn{padding:9px 4px;border:1.5px solid #e2e8f0;border-radius:9px;background:white;font-size:0.78rem;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;font-family:'Poppins',sans-serif;color:#334155;}
+  #appShell .month-btn:hover{border-color:#1a6fb5;color:#1a6fb5;background:#f0f7ff;}
+  #appShell .month-btn.selected{background:linear-gradient(135deg,#1a6fb5,#2d8de0);color:white;border-color:#1a6fb5;box-shadow:0 3px 10px rgba(26,111,181,0.3);}
+  #appShell .month-btn.current-month{border-color:#00b4d8;}
+  #appShell .filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  #appShell .filter-row .form-group{margin-bottom:0;flex:1;min-width:140px;}
+  #filterPreview{padding:11px 15px;background:linear-gradient(90deg,#f0f7ff,#f8faff);border-radius:10px;font-size:0.81rem;color:#334155;border:1px solid #dbeafe;margin-bottom:14px;min-height:40px;display:flex;align-items:center;gap:8px;}
+  #toastContainer{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+  .toast{background:white;border-radius:14px;padding:13px 18px;box-shadow:0 8px 30px rgba(0,0,0,0.14);display:flex;align-items:center;gap:10px;font-size:0.81rem;font-weight:600;animation:fadeInUp .25s ease;min-width:260px;border-left:4px solid #1a6fb5;}
+  .toast.success{border-left-color:#22c55e;}
+  .toast.error{border-left-color:#ef4444;}
+  .toast.warning{border-left-color:#f59e0b;}
   @media(max-width:768px){
-    .sidebar{transform:translateX(-100%);}
-    .sidebar.open{transform:translateX(0);}
-    .main-content{margin-left:0;}
-    .form-row{grid-template-columns:1fr;}
-    .stats-grid{grid-template-columns:1fr 1fr;}
-    .modal{padding:20px 14px;}
-    .topbar{padding:11px 14px;}
-    .page{padding:14px;}
-    .hamburger{display:block;}
+    #appShell .sidebar{transform:translateX(-100%);}
+    #appShell .sidebar.open{transform:translateX(0);}
+    #appShell .main-content{margin-left:0;}
+    #appShell .form-row{grid-template-columns:1fr;}
+    #appShell .stats-grid{grid-template-columns:1fr 1fr;}
+    #appShell .modal{padding:20px 16px;}
+    #appShell .topbar{padding:12px 16px;}
+    #appShell .page{padding:14px 16px;}
+    #appShell .hamburger{display:block !important;}
   }
 </style>
 </head>
@@ -388,6 +421,13 @@
 
 <!-- ═══════ APP SHELL ═══════ -->
 <div id="appShell">
+  <!-- Animated background orbs -->
+  <div id="appBg">
+    <div class="bg-orb" style="width:500px;height:500px;background:rgba(26,111,181,0.12);top:-100px;left:100px;animation-duration:12s;"></div>
+    <div class="bg-orb" style="width:400px;height:400px;background:rgba(0,180,216,0.10);bottom:50px;right:50px;animation-duration:15s;animation-delay:-5s;"></div>
+    <div class="bg-orb" style="width:300px;height:300px;background:rgba(99,102,241,0.08);top:40%;left:35%;animation-duration:18s;animation-delay:-8s;"></div>
+    <div class="bg-orb" style="width:350px;height:350px;background:rgba(16,185,129,0.07);bottom:20%;left:10%;animation-duration:14s;animation-delay:-3s;"></div>
+  </div>
   <div class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="logo-row">
@@ -396,6 +436,7 @@
       </div>
     </div>
     <div class="sidebar-user">
+      <div class="u-avatar" id="sidebarAvatar">👤</div>
       <div class="u-name" id="sidebarUserName"></div>
       <div class="u-role" id="sidebarUserRole"></div>
     </div>
@@ -426,20 +467,22 @@
       <div class="card">
         <div class="card-header">
           <h4>📚 Lecture Records</h4>
-          <div style="display:flex;gap:8px;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-success btn-sm" onclick="openAddLectureModal()">➕ Add Lecture</button>
-            <button class="btn btn-info btn-sm"    onclick="exportMonthlyPDF()">📄 Monthly PDF</button>
+            <button class="btn btn-outline btn-sm"  onclick="openAdvancedFilter('lectures')">🗓 Filter</button>
+            <button class="btn btn-warning btn-sm"  onclick="exportMonthlyXLSX()">📊 XLSX</button>
+            <button class="btn btn-info btn-sm"     onclick="exportMonthlyPDF()">📄 PDF</button>
           </div>
         </div>
         <div class="card-body">
           <div class="search-bar">
             <input class="search-input" id="lecSearch" placeholder="🔍 Search faculty, subject..." oninput="renderLectureTable()">
-            <select class="search-input" style="flex:0.5;" id="lecMonthFilter"   onchange="renderLectureTable()"><option value="">All Months</option></select>
-            <select class="search-input" style="flex:0.5;" id="lecFacultyFilter" onchange="renderLectureTable()"><option value="">All Faculty</option></select>
+            <select class="search-input" style="flex:0.4;" id="lecFacultyFilter" onchange="renderLectureTable()"><option value="">All Faculty</option></select>
+            <span id="lecFilterChip" style="display:none;"></span>
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics</th><th>Students</th><th>Drive</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Batch</th><th>Topics</th><th>Students</th><th>Duration</th><th>Status</th><th>Drive</th><th>Actions</th></tr></thead>
               <tbody id="lectureTbody"></tbody>
             </table>
           </div>
@@ -461,14 +504,30 @@
           <div class="card-header">
             <h4>💰 Bills Summary</h4>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <select class="search-input" style="width:auto;" id="billMonthFilter" onchange="renderBillTable()"><option value="">All Months</option></select>
-              <button class="btn btn-info btn-sm" onclick="exportBillPDF()">📄 Export Bill PDF</button>
+              <select class="search-input" style="width:auto;min-width:220px;" id="billBatchFilter" onchange="renderBillTable()">
+                <option value="">🎓 All Batches</option>
+              </select>
+              <span id="billFilterLabel" style="display:none;"></span>
+              <button class="btn btn-outline btn-sm" onclick="openAdvancedFilter('bills')">🗓 Filter</button>
+              <button class="btn btn-warning btn-sm" onclick="exportBillXLSX()">📊 Bill XLSX</button>
+              <button class="btn btn-info btn-sm"    onclick="exportBillPDF()">📄 Bill PDF</button>
             </div>
           </div>
           <div class="card-body">
+            <!-- Monthly Sheet download row -->
+            <div style="background:linear-gradient(90deg,rgba(26,111,181,0.05),rgba(0,180,216,0.04));border:1px solid rgba(26,111,181,0.12);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <div>
+                <div style="font-size:0.83rem;font-weight:700;color:#0d1b2e;">📋 Monthly Lecture Sheet — All Faculties</div>
+                <div style="font-size:0.72rem;color:#64748b;margin-top:2px;">Download complete lecture records for the selected batch &amp; filter period</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-warning btn-sm" onclick="exportMonthlyXLSX()">📊 Monthly XLSX</button>
+                <button class="btn btn-info btn-sm"    onclick="exportMonthlyPDF()">📄 Monthly PDF</button>
+              </div>
+            </div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Sr.</th><th>Faculty Name</th><th>Month</th><th>Total Lectures</th><th>Amount (₹)</th><th>Signature</th></tr></thead>
+                <thead><tr><th>Sr.</th><th>Faculty Name</th><th>Valid Lectures</th><th>Total Duration</th><th>Amount (Rs.)</th><th>Signature</th></tr></thead>
                 <tbody id="billTbody"></tbody>
                 <tfoot id="billTfoot"></tfoot>
               </table>
@@ -483,15 +542,20 @@
           <div class="card-header">
             <h4>👤 Per Faculty Lecture Sheet</h4>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <select class="search-input" style="width:auto;" id="perFacMonthFilter" onchange="renderPerFacultyTable()"><option value="">All Months</option></select>
-              <select class="search-input" style="width:auto;" id="perFacSelect"      onchange="renderPerFacultyTable()"><option value="">Select Faculty</option></select>
-              <button class="btn btn-info btn-sm" onclick="exportPerFacultyPDF()">📄 Export PDF</button>
+              <select class="search-input" style="width:auto;min-width:220px;" id="perFacBatchFilter" onchange="renderPerFacultyTable()">
+                <option value="">🎓 All Batches</option>
+              </select>
+              <select class="search-input" style="width:auto;" id="perFacSelect" onchange="renderPerFacultyTable()"><option value="">All Faculty</option></select>
+              <span id="perFacFilterLabel" style="display:none;"></span>
+              <button class="btn btn-outline btn-sm" onclick="openAdvancedFilter('perFac')">🗓 Filter</button>
+              <button class="btn btn-warning btn-sm" onclick="exportPerFacultyXLSX()">📊 XLSX</button>
+              <button class="btn btn-info btn-sm"    onclick="exportPerFacultyPDF()">📄 PDF</button>
             </div>
           </div>
           <div class="card-body">
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics Covered</th><th>Students</th><th>Drive Link</th><th>Signature</th></tr></thead>
+                <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Faculty</th><th>Subject</th><th>Topics Covered</th><th>Students</th><th>Duration</th><th>Status</th><th>Drive Link</th><th>Signature</th></tr></thead>
                 <tbody id="perFacTbody"></tbody>
               </table>
             </div>
@@ -503,11 +567,19 @@
     <!-- FACULTIES (Admin) -->
     <div class="page" id="page-faculties">
       <div class="card">
-        <div class="card-header"><h4>👥 Faculty Management</h4><button class="btn btn-success btn-sm" onclick="openAddFacultyModal()">➕ Add Faculty</button></div>
+        <div class="card-header">
+          <h4>👥 Faculty Management</h4>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <select class="search-input" style="width:auto;min-width:200px;" id="facBatchFilter" onchange="renderFacultyTable()">
+              <option value="">🎓 All Batches</option>
+            </select>
+            <button class="btn btn-success btn-sm" onclick="openAddFacultyModal()">➕ Add Faculty</button>
+          </div>
+        </div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Subjects</th><th>Total Lec.</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Subjects</th><th>Batches</th><th>Total Lec.</th><th>Actions</th></tr></thead>
               <tbody id="facultyTbody"></tbody>
             </table>
           </div>
@@ -524,6 +596,27 @@
             <table>
               <thead><tr><th>Subject</th><th>Code</th><th>Topics Preview</th><th>Actions</th></tr></thead>
               <tbody id="syllabusTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH MANAGEMENT (Admin only) -->
+    <div class="page" id="page-batches">
+      <div class="card">
+        <div class="card-header">
+          <h4>🎓 Batch Management</h4>
+          <button class="btn btn-success btn-sm" onclick="openAddBatchModal()">➕ Add Batch</button>
+        </div>
+        <div class="card-body">
+          <div style="background:linear-gradient(90deg,rgba(26,111,181,0.05),rgba(0,180,216,0.04));border:1px solid rgba(26,111,181,0.12);border-radius:10px;padding:11px 15px;margin-bottom:14px;font-size:0.80rem;color:#475569;">
+            ℹ️ Each batch represents a year's intake of Working Professional students. Faculty lecture records can be tagged to a specific batch for easy filtering and reporting.
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Batch Name</th><th>Program</th><th>Department</th><th>Year</th><th>Status</th><th>Lectures</th><th>Actions</th></tr></thead>
+              <tbody id="batchTbody"></tbody>
             </table>
           </div>
         </div>
@@ -553,7 +646,6 @@
       </div>
     </div>
   </div>
-</div>
 
 <!-- ══ MODALS ══ -->
 <!-- Lecture Modal -->
@@ -582,8 +674,17 @@
         <select id="lecSubject" onchange="onSubjectChange()"><option value="">Select Subject</option></select>
       </div>
       <div class="form-group">
+        <label>Batch *</label>
+        <select id="lecBatch"><option value="">Select Batch</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
         <label id="studentsLabel">Students Present *</label>
         <input type="number" id="lecStudents" placeholder="Enter count" min="0">
+      </div>
+      <div class="form-group" style="display:flex;align-items:flex-end;">
+        <!-- spacer -->
       </div>
     </div>
     <div class="form-group form-full">
@@ -596,8 +697,23 @@
       </div>
     </div>
     <div class="form-group form-full">
-      <label>Google Drive Link *</label>
-      <input type="url" id="lecDriveLink" placeholder="https://drive.google.com/...">
+      <label>Google Drive / Zoom / Meet Link *</label>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="url" id="lecDriveLink" placeholder="https://drive.google.com/... or zoom/meet link" style="flex:1;" oninput="onLinkInput()">
+        <button type="button" class="btn btn-outline btn-sm" onclick="analyzeLink()" id="analyzeLinkBtn" style="white-space:nowrap;flex-shrink:0;">🔍 Check</button>
+      </div>
+      <div class="dur-result" id="durResult"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Duration (minutes)</label>
+        <input type="number" id="lecDuration" placeholder="e.g. 65" min="1" oninput="onManualDuration()">
+        <small style="color:var(--text2);font-size:0.71rem;">Auto-filled if detectable. Min 55 min for valid lecture.</small>
+      </div>
+      <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end;">
+        <label style="opacity:0;">Status</label>
+        <div id="lecStatusBadge" style="padding:11px 0;"></div>
+      </div>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
       <button class="btn btn-outline" onclick="closeModal('lectureModal')">Cancel</button>
@@ -617,17 +733,52 @@
     <div class="form-group"><label>Phone Number *</label><input type="tel" id="facPhone" placeholder="10-digit phone"></div>
     <div class="form-group">
       <label>Temporary Password (given to faculty) *</label>
-      <div class="pw-wrap"><input type="password" id="facPassword" placeholder="Set initial password"></div>
-      <small style="color:var(--text2);font-size:0.72rem;">Faculty will be asked to set a new password on first login</small>
+      <div class="pw-wrap" style="display:flex;gap:8px;align-items:center;">
+        <input type="password" id="facPassword" placeholder="Set initial password" style="flex:1;">
+        <button type="button" onclick="togglePwd('facPassword',this)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:10px;background:white;cursor:pointer;font-size:14px;color:#64748b;transition:all .15s;flex-shrink:0;" title="Show/hide password">👁</button>
+      </div>
+      <small style="color:#64748b;font-size:0.72rem;margin-top:4px;display:block;">Faculty will be asked to set a new password on first login</small>
     </div>
     <div class="form-group">
       <label>Assigned Subjects</label>
       <select id="facSubjectAssign" multiple style="height:100px;"></select>
-      <small style="color:var(--text2);font-size:0.72rem;">Hold Ctrl/Cmd to select multiple</small>
+      <small style="color:#64748b;font-size:0.72rem;">Hold Ctrl/Cmd to select multiple</small>
+    </div>
+    <div class="form-group">
+      <label>Assigned Batches</label>
+      <select id="facBatchAssign" multiple style="height:90px;"></select>
+      <small style="color:#64748b;font-size:0.72rem;">Select which batches this faculty teaches (hold Ctrl/Cmd)</small>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal('facultyModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveFaculty()">💾 Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Batch Modal -->
+<div class="modal-overlay" id="batchModal">
+  <div class="modal modal-sm">
+    <button class="modal-close" onclick="closeModal('batchModal')">✕</button>
+    <h3 id="batchModalTitle">🎓 Add Batch</h3>
+    <input type="hidden" id="batchEditId">
+    <div class="form-group"><label>Batch Name *</label><input type="text" id="batchName" placeholder="e.g. BTech WP (IT) — Batch 2026"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Program *</label><input type="text" id="batchProgram" placeholder="BTech Working Professional" value="BTech Working Professional"></div>
+      <div class="form-group"><label>Department *</label><input type="text" id="batchDept" placeholder="IT" value="IT"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Batch Year *</label><input type="number" id="batchYear" placeholder="2026" min="2000" max="2100"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="batchStatus">
+          <option value="true">✅ Active</option>
+          <option value="false">⏸ Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:4px;">
+      <button class="btn btn-outline" onclick="closeModal('batchModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBatch()">💾 Save Batch</button>
     </div>
   </div>
 </div>
@@ -675,7 +826,12 @@
     <h3>🔑 Reset Faculty Password</h3>
     <input type="hidden" id="resetFacId">
     <p style="font-size:0.82rem;color:var(--text2);margin-bottom:16px;">This sets a new temporary password. Faculty will be asked to create a new password on next login.</p>
-    <div class="form-group"><label>New Temporary Password</label><input type="password" id="newFacPwd" placeholder="Enter new temp password"></div>
+    <div class="form-group"><label>New Temporary Password</label>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="password" id="newFacPwd" placeholder="Enter new temp password" style="flex:1;">
+        <button type="button" onclick="togglePwd('newFacPwd',this)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:10px;background:white;cursor:pointer;font-size:14px;color:#64748b;flex-shrink:0;">👁</button>
+      </div>
+    </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="btn btn-outline" onclick="closeModal('resetPwdModal')">Cancel</button>
       <button class="btn btn-danger"  onclick="doResetPassword()">🔄 Reset Password</button>
@@ -683,7 +839,85 @@
   </div>
 </div>
 
+<!-- Advanced Filter Modal -->
+<div class="modal-overlay" id="advFilterModal">
+  <div class="modal filter-modal">
+    <button class="modal-close" onclick="closeModal('advFilterModal')">✕</button>
+    <h3 id="advFilterTitle" style="margin-bottom:16px;">🗓 Advanced Date Filter</h3>
+
+    <!-- Filter type tabs -->
+    <div class="filter-type-tabs">
+      <button class="ft-tab active" id="ftab-month"    onclick="setFilterType('month')">📅 Single Month</button>
+      <button class="ft-tab"        id="ftab-multi"    onclick="setFilterType('multi')">📆 Multi-Month</button>
+      <button class="ft-tab"        id="ftab-year"     onclick="setFilterType('year')">📊 Full Year</button>
+      <button class="ft-tab"        id="ftab-date"     onclick="setFilterType('date')">🗒 Specific Date</button>
+      <button class="ft-tab"        id="ftab-range"    onclick="setFilterType('range')">📏 Date Range</button>
+    </div>
+
+    <!-- SECTION: Year picker (shown for month/multi/year modes) -->
+    <div class="filter-section" id="fsYear">
+      <h5>📌 Select Year <small style="font-weight:400;color:#94a3b8;text-transform:none;letter-spacing:0;">(2000 – 2100)</small></h5>
+      <!-- Year nav + grid -->
+      <div class="year-nav">
+        <button class="btn btn-outline btn-sm" onclick="shiftYearPage(-1)">‹</button>
+        <span class="year-nav-label" id="yearPageLabel"></span>
+        <button class="btn btn-outline btn-sm" onclick="shiftYearPage(1)">›</button>
+      </div>
+      <div class="year-grid" id="yearGrid"></div>
+    </div>
+
+    <!-- SECTION: Month grid (shown for month/multi modes) -->
+    <div class="filter-section" id="fsMonth">
+      <h5 id="fsMonthTitle">📅 Select Month</h5>
+      <div class="month-grid" id="monthGrid"></div>
+    </div>
+
+    <!-- SECTION: Specific date (date mode only) -->
+    <div class="filter-section" id="fsDate" style="display:none;">
+      <h5>🗒 Specific Date</h5>
+      <div class="filter-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="filterSpecificDate" style="font-size:0.9rem;" onchange="onSpecificDateChange()">
+        </div>
+        <div style="padding:16px 0 0 8px;font-size:0.8rem;color:var(--text2);flex:1;" id="specificDateInfo"></div>
+      </div>
+    </div>
+
+    <!-- SECTION: Range (range mode only) -->
+    <div class="filter-section" id="fsRange" style="display:none;">
+      <h5>📏 Custom Date Range</h5>
+      <div class="filter-row">
+        <div class="form-group"><label>From Date</label><input type="date" id="filterFromDate"></div>
+        <div class="form-group"><label>To Date</label><input type="date" id="filterToDate"></div>
+      </div>
+      <div id="rangeInfo" style="margin-top:8px;font-size:0.78rem;color:var(--text2);"></div>
+    </div>
+
+    <!-- Hidden status inputs (kept for JS compatibility, UI removed) -->
+    <div style="display:none;">
+      <input type="checkbox" id="fStatusAll" checked>
+      <input type="checkbox" id="fStatusValid" checked>
+      <input type="checkbox" id="fStatusInvalid" checked>
+      <input type="checkbox" id="fStatusUnknown" checked>
+    </div>
+
+    <!-- Preview of current selection -->
+    <div id="filterPreview" style="padding:10px 14px;background:rgba(26,111,181,0.05);border-radius:8px;font-size:0.8rem;color:var(--primary-dark);border:1px solid rgba(26,111,181,0.12);margin-bottom:12px;min-height:36px;display:flex;align-items:center;gap:8px;">
+      <span style="opacity:0.5;">No filter selected yet</span>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="clearAdvFilter()">🗑 Clear</button>
+      <button class="btn btn-primary" onclick="applyAdvFilter()">✔ Apply Filter</button>
+    </div>
+  </div>
+</div>
 <div id="toastContainer"></div>
+</div><!-- /appShell -->
+
+<!-- SheetJS for XLSX export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
 // ══════════════════════════════════
@@ -698,13 +932,30 @@ const DB={
   set subjects(v){localStorage.setItem('ls_subjects', JSON.stringify(v));},
   get swaps()    {return JSON.parse(localStorage.getItem('ls_swaps')    ||'[]');},
   set swaps(v)   {localStorage.setItem('ls_swaps',    JSON.stringify(v));},
+  get batches()  {return JSON.parse(localStorage.getItem('ls_batches')  ||'[]');},
+  set batches(v) {localStorage.setItem('ls_batches',  JSON.stringify(v));},
 };
 const ADMIN ={id:'admin',name:'Ms. R.S.Patel',email:'admin@rngpit.ac.in',password:'admin@2025',role:'admin'};
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MIN_DURATION=55;
+const CURRENT_YEAR=new Date().getFullYear();
+const CURRENT_MONTH=new Date().getMonth()+1;
 let currentUser=null, loginTab='faculty', selectedTopics=[], pendingFirstLoginUser=null;
+
+// Advanced filter state
+let advFilter={context:'lectures',type:'month',year:CURRENT_YEAR,months:[],specificDate:'',fromDate:'',toDate:'',status:{valid:true,invalid:true,unknown:true}};
+let yearPageStart=Math.floor(CURRENT_YEAR/10)*10;
 
 // ── Seed ──
 function seedData(){
+  if(!DB.batches.length){
+    DB.batches=[
+      {id:'b1',name:'BTech WP (IT) — Batch 2023',program:'BTech Working Professional',dept:'IT',year:'2023',active:true},
+      {id:'b2',name:'BTech WP (IT) — Batch 2024',program:'BTech Working Professional',dept:'IT',year:'2024',active:true},
+      {id:'b3',name:'BTech WP (IT) — Batch 2025',program:'BTech Working Professional',dept:'IT',year:'2025',active:true},
+    ];
+  }
   if(!DB.faculties.length){
     DB.faculties=[
       {id:'f1',name:'Dr. Amit Shah',  email:'amit.shah@rngpit.ac.in', phone:'9876543210',password:'faculty123',subjects:['s1','s2'],role:'faculty',mustChangePassword:false},
@@ -722,9 +973,9 @@ function seedData(){
   if(!DB.lectures.length){
     const t=new Date(),m=t.getMonth()+1,y=t.getFullYear(),mp=String(m).padStart(2,'0');
     DB.lectures=[
-      {id:'l1',date:`${y}-${mp}-05`,day:'Monday',   time:'10:00',facultyId:'f1',facultyName:'Dr. Amit Shah',  subjectId:'s1',subjectName:'Data Structures',    topics:['Arrays','Linked Lists'],students:28,driveLink:'https://drive.google.com/file/sample1',swappedFrom:null},
-      {id:'l2',date:`${y}-${mp}-06`,day:'Tuesday',  time:'11:00',facultyId:'f2',facultyName:'Ms. Priya Mehta',subjectId:'s2',subjectName:'Database Management',topics:['ER Model','Relational Model'],students:30,driveLink:'https://drive.google.com/file/sample2',swappedFrom:null},
-      {id:'l3',date:`${y}-${mp}-07`,day:'Wednesday',time:'09:00',facultyId:'f3',facultyName:'Mr. Raj Patel',  subjectId:'s3',subjectName:'Computer Networks',  topics:['OSI Model','Physical Layer'],students:25,driveLink:'https://drive.google.com/file/sample3',swappedFrom:null},
+      {id:'l1',date:`${y}-${mp}-05`,day:'Monday',   time:'10:00',facultyId:'f1',facultyName:'Dr. Amit Shah',  subjectId:'s1',subjectName:'Data Structures',    topics:['Arrays','Linked Lists'],students:28,driveLink:'https://drive.google.com/file/sample1',swappedFrom:null,duration:65,validationStatus:'valid'},
+      {id:'l2',date:`${y}-${mp}-06`,day:'Tuesday',  time:'11:00',facultyId:'f2',facultyName:'Ms. Priya Mehta',subjectId:'s2',subjectName:'Database Management',topics:['ER Model','Relational Model'],students:30,driveLink:'https://drive.google.com/file/sample2',swappedFrom:null,duration:70,validationStatus:'valid'},
+      {id:'l3',date:`${y}-${mp}-07`,day:'Wednesday',time:'09:00',facultyId:'f3',facultyName:'Mr. Raj Patel',  subjectId:'s3',subjectName:'Computer Networks',  topics:['OSI Model','Physical Layer'],students:25,driveLink:'https://drive.google.com/file/sample3',swappedFrom:null,duration:null,validationStatus:'unknown'},
     ];
   }
 }
@@ -800,6 +1051,9 @@ function initApp(){
   document.getElementById('sidebarUserName').textContent=currentUser.name;
   document.getElementById('sidebarUserRole').textContent=currentUser.role==='admin'?'Administrator':'Faculty · IT Dept';
   document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  // Set avatar initial
+  const av=document.getElementById('sidebarAvatar');
+  if(av){const parts=currentUser.name.split(' ');av.textContent=parts.map(p=>p[0]).join('').substring(0,2).toUpperCase();}
   buildSidebar();populateFilters();openPage('dashboard');
 }
 function buildSidebar(){
@@ -812,6 +1066,7 @@ function buildSidebar(){
     {section:'Management'},
     ...(isAdmin?[{id:'faculties',icon:'👥',label:'Faculty Management'}]:[]),
     ...(isAdmin?[{id:'syllabus', icon:'📖',label:'Syllabus Upload'}]:[]),
+    ...(isAdmin?[{id:'batches',  icon:'🎓',label:'Batch Management'}]:[]),
     {id:'swap',icon:'🔄',label:'Swap Lectures'},
     {section:'Account'},
     {id:'profile',icon:'👤',label:'My Profile'},
@@ -826,13 +1081,14 @@ function openPage(id){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');
   const nv=document.getElementById('nav-'+id);if(nv)nv.classList.add('active');
-  const titles={dashboard:'Dashboard',lectures:'Lecture Records',bills:'Bills & Payments',faculties:'Faculty Management',syllabus:'Syllabus Management',swap:'Lecture Swaps',profile:'My Profile'};
+  const titles={dashboard:'Dashboard',lectures:'Lecture Records',bills:'Bills & Payments',faculties:'Faculty Management',syllabus:'Syllabus Management',batches:'Batch Management',swap:'Lecture Swaps',profile:'My Profile'};
   document.getElementById('pageTitle').textContent=titles[id]||id;
   if(id==='dashboard')renderDashboard();
   if(id==='lectures') renderLectureTable();
   if(id==='bills')    {renderBillTable();renderPerFacultyTable();}
   if(id==='faculties')renderFacultyTable();
   if(id==='syllabus') renderSyllabusTable();
+  if(id==='batches')  renderBatchTable();
   if(id==='swap')     renderSwapTable();
   if(id==='profile')  renderProfile();
   if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
@@ -865,39 +1121,63 @@ function getVisibleLectures(){
   return DB.lectures.filter(l=>l.facultyId===currentUser.id);
 }
 function populateFilters(){
-  const months=[...new Set(DB.lectures.map(l=>l.date.substring(0,7)))].sort().reverse();
-  const mOpts='<option value="">All Months</option>'+months.map(m=>{const[y,mo]=m.split('-');return`<option value="${m}">${MONTHS[parseInt(mo)-1]} ${y}</option>`;}).join('');
-  ['lecMonthFilter','billMonthFilter','perFacMonthFilter'].forEach(id=>{const el=document.getElementById(id);if(el){const cur=el.value;el.innerHTML=mOpts;if(cur)el.value=cur;}});
+  // Faculty filter in lecture table
   const ff=document.getElementById('lecFacultyFilter');
   if(ff)ff.innerHTML='<option value="">All Faculty</option>'+DB.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
   const pf=document.getElementById('perFacSelect');
-  if(pf)pf.innerHTML='<option value="">Select Faculty</option>'+DB.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  if(pf)pf.innerHTML='<option value="">All Faculty</option>'+DB.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  // Batch dropdowns — all pages
+  const batchOpts='<option value="">🎓 All Batches</option>'+DB.batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  ['billBatchFilter','perFacBatchFilter','facBatchFilter'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.innerHTML=batchOpts;
+  });
+  // Lecture modal batch dropdown (active only)
+  populateBatchDropdown();
 }
 function renderLectureTable(){
-  let lecs=getVisibleLectures();
-  const q =(document.getElementById('lecSearch')       ||{}).value?.toLowerCase()||'';
-  const mf=(document.getElementById('lecMonthFilter')  ||{}).value||'';
-  const ff=(document.getElementById('lecFacultyFilter')||{}).value||'';
-  if(q) lecs=lecs.filter(l=>l.facultyName.toLowerCase().includes(q)||l.subjectName.toLowerCase().includes(q)||(l.topics||[]).join(' ').toLowerCase().includes(q));
-  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
-  if(ff)lecs=lecs.filter(l=>l.facultyId===ff);
-  lecs=[...lecs].sort((a,b)=>new Date(b.date)-new Date(a.date));
-  const isAdmin=currentUser.role==='admin';
-  document.getElementById('lectureTbody').innerHTML=lecs.map(l=>`
-    <tr>
+  let lecs = getVisibleLectures();
+  const q  = (document.getElementById('lecSearch')       ||{}).value?.toLowerCase()||'';
+  const ff = (document.getElementById('lecFacultyFilter')||{}).value||'';
+  if(q)  lecs = lecs.filter(l=>l.facultyName.toLowerCase().includes(q)||l.subjectName.toLowerCase().includes(q)||(l.topics||[]).join(' ').toLowerCase().includes(q));
+  if(ff) lecs = lecs.filter(l=>l.facultyId===ff);
+  // Apply active filter whenever a date filter has been set
+  const hasFilter = advFilter.months.length>0 || advFilter.type==='year' || advFilter.type==='date' || advFilter.type==='range' || (advFilter.type==='multi'&&advFilter.months.length>0);
+  if(hasFilter){
+    lecs = applyAdvFilterToLecs(lecs);
+  }
+  lecs = [...lecs].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const isAdmin = currentUser.role==='admin';
+  const filterDesc = describeFilter(advFilter);
+  document.getElementById('lectureTbody').innerHTML = lecs.length===0
+    ? `<tr><td colspan="12" style="text-align:center;padding:24px;color:#64748b;">No lectures found${filterDesc!=='All data'?' for: <strong>'+filterDesc+'</strong>':''}</td></tr>`
+    : lecs.map(l=>{
+    const bName=(DB.batches.find(b=>b.id===l.batchId)||{name:'—'}).name.replace('BTech Working Professional — ','').replace('BTech WP (IT) — ','');
+    return`
+    <tr style="${l.validationStatus==='invalid'?'opacity:0.65;':''}">
       <td>${formatDate(l.date)}</td><td>${l.day}</td><td>${formatTime(l.time)}</td>
       <td>${l.facultyName}${l.swappedFrom?` <span class="swap-badge">SWAP</span>`:''}</td>
       <td>${l.subjectName}</td>
-      <td style="max-width:180px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
-      <td><span class="pill pill-blue">${l.students??'—'}</span></td>
-      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 View</a></td>
+      <td><span class="chip" style="font-size:0.68rem;">${bName}</span></td>
+      <td style="max-width:140px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
+      <td style="text-align:center;"><span class="pill pill-blue">${l.students??'—'}</span></td>
+      <td style="text-align:center;">${l.duration!=null?`<strong>${l.duration}</strong> min`:'—'}</td>
+      <td>${validityBadge(l.validationStatus)}</td>
+      <td><a href="${l.driveLink}" target="_blank" style="color:#1a6fb5;font-size:0.78rem;">🔗 View</a></td>
       <td><div style="display:flex;gap:4px;">
         ${canEdit(l)?`<button class="btn btn-primary btn-sm" onclick="openEditLectureModal('${l.id}')">✏️</button>`:''}
         ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteLecture('${l.id}')">🗑️</button>`:''}
       </div></td>
-    </tr>`).join('');
+    </tr>`;}).join('');
 }
 function canEdit(l){return currentUser.role==='admin'||l.facultyId===currentUser.id;}
+
+// Returns a coloured validity badge span
+function validityBadge(status){
+  if(status==='valid')  return `<span class="v-valid">✔ Valid</span>`;
+  if(status==='invalid')return `<span class="v-invalid">✖ Invalid</span>`;
+  return `<span class="v-unknown">? Unknown</span>`;
+}
 
 // ══════════════════════════════════
 //  LECTURE MODAL
@@ -910,10 +1190,13 @@ function openAddLectureModal(){
   autofillDay();
   document.getElementById('lecTime').value='';
   document.getElementById('lecDriveLink').value='';
+  document.getElementById('lecDuration').value='';
+  resetDurUI();
   setupFacultyDropdown(null);
   setupStudentsField(null);
+  populateBatchDropdown();
   renderSelectedTopics();
-  document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:var(--text2);font-size:0.8rem;text-align:center;">Select a subject first</div>';
+  document.getElementById('topicSelectList').innerHTML='<div style="padding:10px;color:#64748b;font-size:0.8rem;text-align:center;">Select a subject first</div>';
   document.getElementById('lectureModal').classList.add('show');
 }
 function openEditLectureModal(id){
@@ -925,9 +1208,14 @@ function openEditLectureModal(id){
   document.getElementById('lecDay').value=l.day;
   document.getElementById('lecTime').value=l.time;
   document.getElementById('lecDriveLink').value=l.driveLink||'';
+  document.getElementById('lecDuration').value=l.duration!=null?l.duration:'';
+  resetDurUI();
+  if(l.validationStatus) showStatusBadge(l.validationStatus, l.duration);
   setupFacultyDropdown(l.facultyId);
   setupStudentsField(l.students);
   loadSubjectsForFaculty(l.facultyId,l.subjectId);
+  populateBatchDropdown();
+  if(l.batchId){const bs=document.getElementById('lecBatch');if(bs)bs.value=l.batchId;}
   document.getElementById('lectureModal').classList.add('show');
 }
 function setupFacultyDropdown(selFacId){
@@ -1023,40 +1311,250 @@ function removeTopicChip(t){
   const sid=document.getElementById('lecSubject').value;
   if(sid)loadTopicsForSubject(sid);
 }
+// ══════════════════════════════════
+//  LINK ANALYSIS ENGINE
+// ══════════════════════════════════
+
+// Called on every keystroke in the link field — reset status indicator
+function onLinkInput(){
+  const link=document.getElementById('lecDriveLink').value.trim();
+  if(!link){resetDurUI();return;}
+  // If duration already manually entered, just recompute status
+  const durVal=document.getElementById('lecDuration').value;
+  if(durVal) onManualDuration();
+}
+
+// Triggered by 🔍 Check button
+async function analyzeLink(){
+  const link=document.getElementById('lecDriveLink').value.trim();
+  if(!link){showToast('Enter a link first','error');return;}
+  showDurResult('checking','<span class="dur-spinner"></span> Analyzing link...');
+  document.getElementById('analyzeLinkBtn').disabled=true;
+
+  try {
+    const duration=await extractDurationFromLink(link);
+    document.getElementById('analyzeLinkBtn').disabled=false;
+    if(duration!=null){
+      document.getElementById('lecDuration').value=duration;
+      const status=computeStatus(duration);
+      if(status==='valid'){
+        showDurResult('valid','✔ Duration: '+duration+' min — Valid Lecture (≥55 min)');
+      } else {
+        showDurResult('invalid','✖ Duration: '+duration+' min — Invalid Lecture (<55 min). Will NOT be billed.');
+      }
+      showStatusBadge(status,duration);
+    } else {
+      showDurResult('unknown','⚠ Duration could not be auto-detected. Please enter manually.');
+      showStatusBadge('unknown',null);
+    }
+  } catch(e){
+    document.getElementById('analyzeLinkBtn').disabled=false;
+    showDurResult('unknown','⚠ Could not read link metadata. Enter duration manually.');
+    showStatusBadge('unknown',null);
+  }
+}
+
+// Called when user types in the duration field directly
+function onManualDuration(){
+  const durVal=document.getElementById('lecDuration').value;
+  if(!durVal){resetDurUI();return;}
+  const dur=parseInt(durVal);
+  const status=computeStatus(dur);
+  if(status==='valid'){
+    showDurResult('valid','✔ '+dur+' min — Valid Lecture (≥55 min)');
+  } else {
+    showDurResult('invalid','✖ '+dur+' min — Invalid Lecture (<55 min). Will NOT be billed.');
+  }
+  showStatusBadge(status,dur);
+}
+
+// Core link analysis — tries multiple strategies
+async function extractDurationFromLink(url){
+  // Strategy 1: Google Drive video file → try oEmbed / public metadata
+  if(url.includes('drive.google.com')){
+    return await tryGoogleDriveDuration(url);
+  }
+  // Strategy 2: YouTube link
+  if(url.includes('youtube.com')||url.includes('youtu.be')){
+    return await tryYouTubeDuration(url);
+  }
+  // Strategy 3: Zoom cloud recording → parse URL pattern
+  if(url.includes('zoom.us')){
+    return tryZoomDuration(url);
+  }
+  // Strategy 4: Google Meet → duration unknowable without auth; return null
+  if(url.includes('meet.google.com')){
+    return null; // live meeting link — cannot determine duration
+  }
+  // Strategy 5: URL query params — some platforms embed duration
+  return tryURLParamDuration(url);
+}
+
+// Google Drive: use Claude AI via Anthropic API to intelligently estimate
+async function tryGoogleDriveDuration(url){
+  // Extract file ID from various Drive URL formats
+  const patterns=[
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /id=([a-zA-Z0-9_-]+)/,
+    /\/d\/([a-zA-Z0-9_-]+)/
+  ];
+  let fileId=null;
+  for(const p of patterns){const m=url.match(p);if(m){fileId=m[1];break;}}
+  if(!fileId) return null;
+
+  // Try fetching the Drive file metadata page (public files only)
+  try{
+    const resp=await fetch(`https://drive.google.com/file/d/${fileId}/view`,{mode:'no-cors'});
+    // no-cors won't give us content but also won't throw — we can't parse it
+    // Fall back to AI analysis
+  }catch(e){}
+
+  // Use Claude AI to analyse the URL and make an intelligent guess
+  return await askClaudeForDuration(url);
+}
+
+async function tryYouTubeDuration(url){
+  // Extract video ID
+  const m=url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if(!m) return null;
+  // YouTube oEmbed gives title but not duration without API key
+  // Use AI fallback
+  return await askClaudeForDuration(url);
+}
+
+function tryZoomDuration(url){
+  // Zoom cloud recordings sometimes encode duration in path: /rec/play/{id}
+  // We cannot reliably extract duration without OAuth — return null
+  return null;
+}
+
+function tryURLParamDuration(url){
+  try{
+    const u=new URL(url);
+    // Some platforms use ?duration=xx or &len=xx
+    const candidates=['duration','dur','length','len','minutes','mins','time'];
+    for(const c of candidates){
+      const v=u.searchParams.get(c);
+      if(v&&!isNaN(parseInt(v))) return parseInt(v);
+    }
+  }catch(e){}
+  return null;
+}
+
+// Ask Claude AI to analyse link and estimate duration
+async function askClaudeForDuration(url){
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:100,
+        messages:[{
+          role:'user',
+          content:`This is a lecture recording link: ${url}
+Analyze the URL and respond with ONLY a JSON object in this exact format (no other text):
+{"duration_minutes": <number or null>, "confidence": "high|medium|low|none", "note": "<brief reason>"}
+If you cannot determine the duration, use null.`
+        }]
+      })
+    });
+    const data=await resp.json();
+    const text=(data.content||[]).map(c=>c.text||'').join('');
+    const clean=text.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    if(parsed.duration_minutes&&!isNaN(parsed.duration_minutes)){
+      return parseInt(parsed.duration_minutes);
+    }
+  }catch(e){}
+  return null;
+}
+
+// UI helpers
+function resetDurUI(){
+  const r=document.getElementById('durResult');
+  r.style.display='none';r.className='dur-result';r.innerHTML='';
+  document.getElementById('lecStatusBadge').innerHTML='';
+}
+function showDurResult(type,html){
+  const r=document.getElementById('durResult');
+  r.style.display='block';
+  r.className='dur-result '+type;
+  r.innerHTML=html;
+}
+function showStatusBadge(status,duration){
+  const b=document.getElementById('lecStatusBadge');
+  if(!b)return;
+  if(status==='valid')   b.innerHTML=`<span class="v-valid" style="font-size:0.82rem;padding:5px 12px;">✔ Valid Lecture</span>`;
+  else if(status==='invalid') b.innerHTML=`<span class="v-invalid" style="font-size:0.82rem;padding:5px 12px;">✖ Invalid — Not Billed</span>`;
+  else b.innerHTML=`<span class="v-unknown" style="font-size:0.82rem;padding:5px 12px;">? Unknown — Verify</span>`;
+}
 function autofillDay(){
   const d=document.getElementById('lecDate').value;
   if(d){const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];document.getElementById('lecDay').value=days[new Date(d+'T00:00:00').getDay()];}
 }
 function saveLecture(){
-  const editId=document.getElementById('lecEditId').value;
-  const date =document.getElementById('lecDate').value;
-  const day  =document.getElementById('lecDay').value;
-  const time =document.getElementById('lecTime').value;
-  const fid  =document.getElementById('lecFaculty').value||currentUser.id;
-  const sid  =document.getElementById('lecSubject').value;
+  const editId   =document.getElementById('lecEditId').value;
+  const date     =document.getElementById('lecDate').value;
+  const day      =document.getElementById('lecDay').value;
+  const time     =document.getElementById('lecTime').value;
+  const fid      =document.getElementById('lecFaculty').value||currentUser.id;
+  const sid      =document.getElementById('lecSubject').value;
+  const batchId  =document.getElementById('lecBatch').value;
   const driveLink=document.getElementById('lecDriveLink').value.trim();
   const studVal  =document.getElementById('lecStudents').value;
+  const durVal   =document.getElementById('lecDuration').value;
   const isAdmin  =currentUser.role==='admin';
-  if(!date||!day||!time||!fid||!sid||!driveLink||selectedTopics.length===0){showToast('Fill all fields and select at least one topic','error');return;}
-  // Only faculty is required to enter student count; admin cannot edit it
+
+  if(!date||!day||!time||!fid||!sid||!driveLink||selectedTopics.length===0){
+    showToast('Fill all fields and select at least one topic','error');return;
+  }
   if(!isAdmin&&!studVal){showToast('Please enter students present count','error');return;}
+
   const fac=DB.faculties.find(f=>f.id===fid);
   const sub=DB.subjects.find(s=>s.id===sid);
-  const students=studVal!==''?parseInt(studVal):null;
+  const students =studVal!==''?parseInt(studVal):null;
+  const duration =durVal!==''?parseInt(durVal):null;
+  const validationStatus=computeStatus(duration);
+
   const lecs=DB.lectures;
   if(editId){
     const i=lecs.findIndex(l=>l.id===editId);
     if(i>=0){
-      lecs[i]={...lecs[i],date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,driveLink};
-      // Only faculty updates the student count; preserve existing if admin edits
+      lecs[i]={...lecs[i],date,day,time,facultyId:fid,facultyName:fac.name,
+        subjectId:sid,subjectName:sub.name,topics:selectedTopics,driveLink,
+        duration,validationStatus,batchId:batchId||null};
       if(!isAdmin) lecs[i].students=students;
     }
     showToast('Lecture updated!','success');
   } else {
-    lecs.push({id:'l'+Date.now(),date,day,time,facultyId:fid,facultyName:fac.name,subjectId:sid,subjectName:sub.name,topics:selectedTopics,students:isAdmin?null:students,driveLink,swappedFrom:null});
-    showToast('Lecture added!','success');
+    // Duplicate check: same faculty + date + subject
+    const dup=lecs.find(l=>l.facultyId===fid&&l.date===date&&l.subjectId===sid);
+    if(dup){showToast('Duplicate entry: same faculty, date & subject already exists','error');return;}
+    lecs.push({
+      id:'l'+Date.now(),date,day,time,
+      facultyId:fid,facultyName:fac.name,
+      subjectId:sid,subjectName:sub.name,
+      topics:selectedTopics,
+      students:isAdmin?null:students,
+      driveLink,swappedFrom:null,
+      duration,validationStatus,
+      batchId:batchId||null
+    });
+    // Toast based on validity
+    if(validationStatus==='valid')   showToast('Lecture saved — ✔ Valid ('+duration+' min)','success');
+    else if(validationStatus==='invalid') showToast('Lecture saved — ✖ Invalid (<55 min). Excluded from billing.','warning');
+    else showToast('Lecture saved — duration unknown. Please verify manually.','warning');
   }
-  DB.lectures=lecs;closeModal('lectureModal');renderLectureTable();populateFilters();renderDashboard();
+  DB.lectures=lecs;
+  closeModal('lectureModal');
+  renderLectureTable();populateFilters();renderDashboard();
+}
+
+// Determine validity from duration
+function computeStatus(duration){
+  if(duration==null||isNaN(duration)) return 'unknown';
+  return duration>=MIN_DURATION?'valid':'invalid';
 }
 function deleteLecture(id){
   if(!confirm('Delete this lecture?'))return;
@@ -1075,89 +1573,134 @@ function switchBillTab(tab){
 }
 
 // ══════════════════════════════════
-//  BILLS SUMMARY
+// ══════════════════════════════════
+//  BILLS SUMMARY — only valid lectures billed
 // ══════════════════════════════════
 function renderBillTable(){
-  const mf=(document.getElementById('billMonthFilter')||{}).value||'';
-  let lecs=DB.lectures;
-  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
+  const batchId=(document.getElementById('billBatchFilter')||{}).value||'';
+  const batchName=batchId?(DB.batches.find(b=>b.id===batchId)||{name:'Unknown'}).name:'All Batches';
+  let lecs=DB.lectures.filter(l=>l.validationStatus==='valid');
+  if(batchId) lecs=lecs.filter(l=>l.batchId===batchId);
+  const hasFilter=advFilter.months.length>0||advFilter.type==='year'||advFilter.type==='date'||(advFilter.type==='range'&&advFilter.fromDate);
+  if(hasFilter) lecs=applyAdvFilterToLecs(lecs);
   const byFac={};
   lecs.forEach(l=>{
-    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};
+    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0,totalDur:0};
     byFac[l.facultyId].count++;
+    byFac[l.facultyId].totalDur+=(l.duration||0);
   });
-  const rate=750, rows=Object.values(byFac);
-  // Two-pass: build rows first, then sum total cleanly
-  let grandTotal=0;
-  rows.forEach(r=>{ grandTotal+=r.count*rate; });
+  const rate=750,rows=Object.values(byFac);
+  let grandTotal=0;rows.forEach(r=>{grandTotal+=r.count*rate;});
   let sr=1;
-  const monthStr=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All';
-  document.getElementById('billTbody').innerHTML=rows.map(r=>{
-    const amt=r.count*rate;
-    return`<tr>
-      <td>${sr++}</td>
-      <td><strong>${r.name}</strong></td>
-      <td>${monthStr}</td>
-      <td style="text-align:center;">${r.count}</td>
-      <td style="text-align:right;">&#8377;${amt.toLocaleString('en-IN')}</td>
-      <td style="width:120px;">&nbsp;</td>
-    </tr>`;
-  }).join('');
+  const filterDesc=describeFilter(advFilter);
+  const context=batchId?'Batch: '+batchName:'All Batches';
+  const periodStr=filterDesc!=='All data'?' · '+filterDesc:'';
+  document.getElementById('billTbody').innerHTML=rows.length===0
+    ?`<tr><td colspan="6" style="text-align:center;color:#64748b;padding:24px;">No valid lectures for <strong>${context}</strong>${periodStr}</td></tr>`
+    :rows.map(r=>{const amt=r.count*rate;return`<tr>
+        <td style="text-align:center;">${sr++}</td>
+        <td><strong>${r.name}</strong></td>
+        <td style="text-align:center;">${r.count}</td>
+        <td style="text-align:center;">${r.totalDur?r.totalDur+' min':'—'}</td>
+        <td style="text-align:center;">&#8377;${amt.toLocaleString('en-IN')}</td>
+        <td style="width:110px;">&nbsp;</td>
+      </tr>`;}).join('');
   document.getElementById('billTfoot').innerHTML=`
-    <tr style="background:rgba(26,111,181,0.08);font-weight:700;border-top:2px solid var(--primary);">
-      <td colspan="3" style="text-align:right;padding:12px 14px;color:var(--primary-dark);">Grand Total</td>
-      <td style="text-align:center;color:var(--primary-dark);">${lecs.length} lec.</td>
-      <td style="text-align:right;color:var(--primary-dark);font-size:1rem;">&#8377;${grandTotal.toLocaleString('en-IN')}</td>
+    <tr style="background:rgba(26,111,181,0.08);font-weight:700;border-top:2px solid #1a6fb5;">
+      <td colspan="2" style="text-align:right;padding:12px 14px;color:#0d1b2e;">Grand Total — ${context}${periodStr}</td>
+      <td style="text-align:center;color:#1a6fb5;">${lecs.length}</td>
+      <td></td>
+      <td style="text-align:center;color:#1a6fb5;font-size:1rem;">&#8377;${grandTotal.toLocaleString('en-IN')}</td>
       <td></td>
     </tr>`;
+  showActiveFilterChip('bills');
 }
 
 // ══════════════════════════════════
 //  PER FACULTY SHEET
 // ══════════════════════════════════
 function renderPerFacultyTable(){
-  const mf =(document.getElementById('perFacMonthFilter')||{}).value||'';
-  const fid=(document.getElementById('perFacSelect')     ||{}).value||'';
+  const batchId=(document.getElementById('perFacBatchFilter')||{}).value||'';
+  const fid=(document.getElementById('perFacSelect')||{}).value||'';
   let lecs=DB.lectures;
-  if(mf) lecs=lecs.filter(l=>l.date.startsWith(mf));
-  if(fid)lecs=lecs.filter(l=>l.facultyId===fid);
+  if(batchId) lecs=lecs.filter(l=>l.batchId===batchId);
+  if(fid) lecs=lecs.filter(l=>l.facultyId===fid);
+  const hasFilter=advFilter.months.length>0||advFilter.type==='year'||advFilter.type==='date'||(advFilter.type==='range'&&advFilter.fromDate);
+  if(hasFilter) lecs=applyAdvFilterToLecs(lecs);
   lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const validLecs=lecs.filter(l=>l.validationStatus==='valid');
+  const batchName=batchId?(DB.batches.find(b=>b.id===batchId)||{name:'Unknown'}).name:'';
   document.getElementById('perFacTbody').innerHTML=lecs.length===0
-    ?'<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:20px;">Select faculty and/or month above</td></tr>'
-    :lecs.map(l=>`<tr>
+    ?`<tr><td colspan="11" style="text-align:center;color:#64748b;padding:24px;">${
+        batchId?'No lectures for batch: <strong>'+batchName+'</strong>':
+        fid?'No lectures found for this faculty':'Select a batch and/or faculty above'
+      }</td></tr>`
+    :lecs.map(l=>`<tr style="${l.validationStatus==='invalid'?'opacity:0.55;background:#fff5f5;':''}">
       <td>${formatDate(l.date)}</td><td>${l.day}</td><td>${formatTime(l.time)}</td>
       <td>${l.facultyName}</td><td>${l.subjectName}</td>
-      <td style="max-width:160px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
-      <td>${l.students??'—'}</td>
-      <td><a href="${l.driveLink}" target="_blank" style="color:var(--primary);font-size:0.78rem;">🔗 View</a></td>
-      <td style="width:100px;">&nbsp;</td>
+      <td style="max-width:150px;white-space:normal;">${(l.topics||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</td>
+      <td style="text-align:center;">${l.students??'—'}</td>
+      <td style="text-align:center;">${l.duration!=null?`<strong>${l.duration}</strong> min`:'—'}</td>
+      <td>${validityBadge(l.validationStatus)}</td>
+      <td><a href="${l.driveLink}" target="_blank" style="color:#1a6fb5;font-size:0.78rem;">🔗 View</a></td>
+      <td style="width:90px;">&nbsp;</td>
     </tr>`).join('');
+  if(lecs.length>0){
+    const rate=750,amt=validLecs.length*rate;
+    let info=document.getElementById('perFacSummary');
+    if(!info){info=document.createElement('div');info.id='perFacSummary';
+      const tb=document.getElementById('perFacTbody');
+      if(tb&&tb.closest('.card-body'))tb.closest('.card-body').appendChild(info);
+    }
+    info.style.cssText='margin-top:12px;padding:12px 16px;background:rgba(26,111,181,0.05);border-radius:10px;font-size:0.82rem;display:flex;gap:24px;flex-wrap:wrap;border:1px solid rgba(26,111,181,0.12);';
+    info.innerHTML=`
+      ${batchName?`<span style="color:#1a6fb5;font-weight:700;">🎓 ${batchName}</span>`:``}
+      <span>📚 Total: <strong>${lecs.length}</strong></span>
+      <span style="color:#15803d;">✔ Valid: <strong>${validLecs.length}</strong></span>
+      <span style="color:#dc2626;">✖ Invalid: <strong>${lecs.filter(l=>l.validationStatus==='invalid').length}</strong></span>
+      <span style="color:#92400e;">? Unknown: <strong>${lecs.filter(l=>l.validationStatus==='unknown').length}</strong></span>
+      <span style="color:#0d1b2e;font-weight:700;">Billable: &#8377;${amt.toLocaleString('en-IN')}</span>`;
+  }
+  showActiveFilterChip('perFac');
 }
 
 // ══════════════════════════════════
 //  FACULTY
 // ══════════════════════════════════
 function renderFacultyTable(){
-  document.getElementById('facultyTbody').innerHTML=DB.faculties.map(f=>{
-    const cnt=DB.lectures.filter(l=>l.facultyId===f.id).length;
-    const subs=DB.subjects.filter(s=>(f.subjects||[]).includes(s.id)).map(s=>s.name).join(', ');
-    return`<tr>
-      <td><strong>${f.name}</strong>${f.mustChangePassword?` <span class="pill pill-orange" style="font-size:0.62rem;">Temp Pwd</span>`:''}</td>
-      <td>${f.email}</td><td>${f.phone}</td><td>${subs||'—'}</td>
-      <td><span class="pill pill-blue">${cnt}</span></td>
-      <td><div style="display:flex;gap:4px;">
-        <button class="btn btn-primary btn-sm" onclick="openEditFaculty('${f.id}')">✏️</button>
-        <button class="btn btn-warning btn-sm" onclick="openResetPwd('${f.id}')">🔑</button>
-        <button class="btn btn-danger btn-sm"  onclick="deleteFaculty('${f.id}')">🗑️</button>
-      </div></td>
-    </tr>`;
-  }).join('');
+  const batchId=(document.getElementById('facBatchFilter')||{}).value||'';
+  let faculties=DB.faculties;
+  // Filter by batch: show faculties who teach that batch (have batchId in their batches array)
+  if(batchId) faculties=faculties.filter(f=>(f.batches||[]).includes(batchId));
+  document.getElementById('facultyTbody').innerHTML=!faculties.length
+    ?'<tr><td colspan="7" style="text-align:center;color:#64748b;padding:24px;">No faculty found for selected batch</td></tr>'
+    :faculties.map(f=>{
+      const cnt=DB.lectures.filter(l=>l.facultyId===f.id&&(!batchId||l.batchId===batchId)).length;
+      const subs=DB.subjects.filter(s=>(f.subjects||[]).includes(s.id)).map(s=>s.code||s.name).join(', ');
+      const bNames=(f.batches||[]).map(bid=>{
+        const b=DB.batches.find(x=>x.id===bid);
+        return b?`<span class="pill pill-blue" style="font-size:0.65rem;margin:1px;">${b.year}</span>`:'';
+      }).join('');
+      return`<tr>
+        <td><strong>${f.name}</strong>${f.mustChangePassword?` <span class="pill pill-orange" style="font-size:0.62rem;">Temp Pwd</span>`:''}</td>
+        <td>${f.email}</td><td>${f.phone}</td>
+        <td style="font-size:0.78rem;">${subs||'—'}</td>
+        <td>${bNames||'<span style="color:#94a3b8;font-size:0.75rem;">None assigned</span>'}</td>
+        <td><span class="pill pill-blue">${cnt}</span></td>
+        <td><div style="display:flex;gap:4px;">
+          <button class="btn btn-primary btn-sm" onclick="openEditFaculty('${f.id}')">✏️</button>
+          <button class="btn btn-warning btn-sm" onclick="openResetPwd('${f.id}')">🔑</button>
+          <button class="btn btn-danger btn-sm"  onclick="deleteFaculty('${f.id}')">🗑️</button>
+        </div></td>
+      </tr>`;
+    }).join('');
 }
 function openAddFacultyModal(){
   document.getElementById('facEditId').value='';
   document.getElementById('facModalTitle').textContent='➕ Add Faculty';
   ['facName','facEmail','facPhone','facPassword'].forEach(id=>document.getElementById(id).value='');
   refreshFacSubjectList([]);
+  refreshFacBatchList([]);
   document.getElementById('facultyModal').classList.add('show');
 }
 function openEditFaculty(id){
@@ -1169,10 +1712,16 @@ function openEditFaculty(id){
   document.getElementById('facPhone').value=f.phone;
   document.getElementById('facPassword').value=f.password;
   refreshFacSubjectList(f.subjects||[]);
+  refreshFacBatchList(f.batches||[]);
   document.getElementById('facultyModal').classList.add('show');
 }
 function refreshFacSubjectList(sel){
   document.getElementById('facSubjectAssign').innerHTML=DB.subjects.map(s=>`<option value="${s.id}"${sel.includes(s.id)?' selected':''}>${s.name} (${s.code||'—'})</option>`).join('');
+}
+function refreshFacBatchList(sel){
+  const el=document.getElementById('facBatchAssign');
+  if(!el)return;
+  el.innerHTML=DB.batches.map(b=>`<option value="${b.id}"${sel.includes(b.id)?' selected':''}>${b.name}</option>`).join('');
 }
 function saveFaculty(){
   const editId  =document.getElementById('facEditId').value;
@@ -1181,16 +1730,16 @@ function saveFaculty(){
   const phone   =document.getElementById('facPhone').value.trim();
   const password=document.getElementById('facPassword').value;
   const subjects=[...document.getElementById('facSubjectAssign').selectedOptions].map(o=>o.value);
+  const batches =[...document.getElementById('facBatchAssign').selectedOptions].map(o=>o.value);
   if(!name||!email||!phone||!password){showToast('Fill all mandatory fields','error');return;}
   let facs=DB.faculties;
   if(editId){
     const i=facs.findIndex(f=>f.id===editId);
-    if(i>=0)facs[i]={...facs[i],name,email,phone,password,subjects};
+    if(i>=0)facs[i]={...facs[i],name,email,phone,password,subjects,batches};
     showToast('Faculty updated!','success');
   } else {
     if(facs.find(f=>f.email===email)){showToast('Email already exists','error');return;}
-    // New faculty always must change password on first login
-    facs.push({id:'f'+Date.now(),name,email,phone,password,subjects,role:'faculty',mustChangePassword:true});
+    facs.push({id:'f'+Date.now(),name,email,phone,password,subjects,batches,role:'faculty',mustChangePassword:true});
     showToast('Faculty added! They will set a new password on first login.','success');
   }
   DB.faculties=facs;closeModal('facultyModal');renderFacultyTable();populateFilters();
@@ -1253,6 +1802,85 @@ function saveSubject(){
 function deleteSubject(id){
   if(!confirm('Delete this subject?'))return;
   DB.subjects=DB.subjects.filter(s=>s.id!==id);renderSyllabusTable();showToast('Subject deleted','warning');
+}
+
+// ══════════════════════════════════
+//  BATCH MANAGEMENT
+// ══════════════════════════════════
+function renderBatchTable(){
+  const batches=DB.batches;
+  document.getElementById('batchTbody').innerHTML=!batches.length
+    ?'<tr><td colspan="7" style="text-align:center;color:#64748b;padding:20px;">No batches yet. Click ➕ Add Batch to create one.</td></tr>'
+    :batches.map(b=>{
+      const cnt=DB.lectures.filter(l=>l.batchId===b.id).length;
+      return`<tr>
+        <td><strong>${b.name}</strong></td>
+        <td>${b.program}</td>
+        <td><span class="pill pill-blue">${b.dept}</span></td>
+        <td style="text-align:center;">${b.year}</td>
+        <td><span class="pill ${b.active?'pill-green':'pill-orange'}">${b.active?'Active':'Inactive'}</span></td>
+        <td style="text-align:center;"><span class="pill pill-blue">${cnt}</span></td>
+        <td><div style="display:flex;gap:4px;">
+          <button class="btn btn-primary btn-sm" onclick="openEditBatch('${b.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm"  onclick="deleteBatch('${b.id}')">🗑️</button>
+        </div></td>
+      </tr>`;
+    }).join('');
+}
+function openAddBatchModal(){
+  document.getElementById('batchEditId').value='';
+  document.getElementById('batchModalTitle').textContent='🎓 Add Batch';
+  document.getElementById('batchName').value='';
+  document.getElementById('batchProgram').value='BTech Working Professional';
+  document.getElementById('batchDept').value='IT';
+  document.getElementById('batchYear').value=new Date().getFullYear();
+  document.getElementById('batchStatus').value='true';
+  document.getElementById('batchModal').classList.add('show');
+}
+function openEditBatch(id){
+  const b=DB.batches.find(x=>x.id===id);if(!b)return;
+  document.getElementById('batchEditId').value=id;
+  document.getElementById('batchModalTitle').textContent='✏️ Edit Batch';
+  document.getElementById('batchName').value=b.name;
+  document.getElementById('batchProgram').value=b.program;
+  document.getElementById('batchDept').value=b.dept;
+  document.getElementById('batchYear').value=b.year;
+  document.getElementById('batchStatus').value=String(b.active);
+  document.getElementById('batchModal').classList.add('show');
+}
+function saveBatch(){
+  const editId =document.getElementById('batchEditId').value;
+  const name   =document.getElementById('batchName').value.trim();
+  const program=document.getElementById('batchProgram').value.trim();
+  const dept   =document.getElementById('batchDept').value.trim();
+  const year   =document.getElementById('batchYear').value;
+  const active =document.getElementById('batchStatus').value==='true';
+  if(!name||!program||!dept||!year){showToast('Fill all fields','error');return;}
+  let batches=DB.batches;
+  if(editId){
+    const i=batches.findIndex(b=>b.id===editId);
+    if(i>=0)batches[i]={...batches[i],name,program,dept,year,active};
+    showToast('Batch updated!','success');
+  } else {
+    batches.push({id:'b'+Date.now(),name,program,dept,year,active});
+    showToast('Batch added!','success');
+  }
+  DB.batches=batches;
+  closeModal('batchModal');
+  renderBatchTable();
+  populateFilters();
+}
+function deleteBatch(id){
+  const cnt=DB.lectures.filter(l=>l.batchId===id).length;
+  if(cnt>0&&!confirm(`This batch has ${cnt} lecture(s). Delete anyway?`))return;
+  DB.batches=DB.batches.filter(b=>b.id!==id);
+  renderBatchTable();showToast('Batch deleted','warning');
+}
+function populateBatchDropdown(){
+  const sel=document.getElementById('lecBatch');
+  if(!sel)return;
+  const active=DB.batches.filter(b=>b.active);
+  sel.innerHTML='<option value="">Select Batch</option>'+active.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
 }
 
 // ══════════════════════════════════
@@ -1374,78 +2002,55 @@ function fmtMoney(n){
   // jsPDF helvetica cannot render ₹ — use Rs. prefix instead
   return 'Rs. '+Number(n).toLocaleString('en-IN');
 }
-function exportBillPDF(){
-  const mf=(document.getElementById('billMonthFilter')||{}).value||'';
-  let lecs=DB.lectures;if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
-  if(!lecs.length){showToast('No lectures found','error');return;}
-  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
-  const byFac={};
-  lecs.forEach(l=>{
-    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0};
-    byFac[l.facultyId].count++;
-  });
-  const rate=750, rows=Object.values(byFac);
-  let grand=0;
-  rows.forEach(r=>{grand+=r.count*rate;});
+// ══════════════════════════════════
+//  SHARED EXPORT HELPERS
+// ══════════════════════════════════
 
-  const{jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:'mm',format:'a4'});
-  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+function getExportLecs(context){
+  let lecs=context==='bills'
+    ?DB.lectures.filter(l=>l.validationStatus==='valid')
+    :getVisibleLectures();
+  // Apply batch filter
+  if(context==='bills'){
+    const bid=(document.getElementById('billBatchFilter')||{}).value||'';
+    if(bid) lecs=lecs.filter(l=>l.batchId===bid);
+  }
+  if(context==='perFac'||context==='lectures'){
+    const bid=(document.getElementById(context==='perFac'?'perFacBatchFilter':'lecBatch')||{}).value||'';
+    if(bid) lecs=lecs.filter(l=>l.batchId===bid);
+  }
+  if(context==='perFac'){
+    const fid=(document.getElementById('perFacSelect')||{}).value||'';
+    if(fid) lecs=lecs.filter(l=>l.facultyId===fid);
+  }
+  const hasFilter=advFilter.months.length>0||advFilter.type==='year'||advFilter.type==='date'||(advFilter.type==='range'&&advFilter.fromDate);
+  if(hasFilter) lecs=applyAdvFilterToLecs(lecs);
+  return [...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
+}
 
-  billHeader(doc,pw,'Faculty Lecture Payment Bill',monthLabel);
+// Build a short filter label for PDF/XLSX headers
+function filterLabel(){
+  const d = describeFilter(advFilter);
+  return d==='All data' ? 'All Records' : d;
+}
 
-  // Table — all amounts as plain ASCII (Rs. prefix)
-  doc.autoTable({
-    startY:47,
-    head:[['Sr.','Faculty Name','Total Lectures','Amount (Rs.)','Signature']],
-    body:rows.map((r,i)=>{
-      const a=r.count*rate;
-      return[i+1, r.name, r.count, fmtMoney(a), ''];
-    }),
-    styles:{fontSize:9,cellPadding:4.5,valign:'middle',lineColor:[200,220,240],lineWidth:0.25},
-    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:9},
-    alternateRowStyles:{fillColor:[240,248,255]},
-    columnStyles:{
-      0:{cellWidth:14, halign:'center'},
-      1:{cellWidth:72},
-      2:{cellWidth:28, halign:'center'},
-      3:{cellWidth:42, halign:'center'},
-      4:{cellWidth:34},
-    },
-    margin:{left:10,right:10},
-  });
-
-  // Grand total banner — centered amounts
-  const fy=doc.lastAutoTable.finalY+4;
-  doc.setFillColor(26,111,181);
-  doc.rect(10,fy,pw-20,11,'F');
-  doc.setTextColor(255,255,255);
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(9.5);
-  doc.text('Total Lectures: '+lecs.length, pw/2-20, fy+7.2);
-  doc.text('Grand Total: '+fmtMoney(grand), pw/2+20, fy+7.2);
-
-  billFooter(doc,pw,ph);
-  doc.save('Bill_'+monthLabel.replace(' ','_')+'.pdf');
-  showToast('Bill PDF downloaded!','success');
+// Build filename suffix from filter
+function filterSuffix(){
+  const d = describeFilter(advFilter);
+  if(d==='All data') return 'All';
+  return d.replace(/[^a-zA-Z0-9_\-]/g,'_').replace(/__+/g,'_');
 }
 
 // ══════════════════════════════════
-//  PDF — PER FACULTY SHEET
+//  MONTHLY SHEET — PDF  (filter-aware)
 // ══════════════════════════════════
-function exportPerFacultyPDF(){
-  const mf =(document.getElementById('perFacMonthFilter')||{}).value||'';
-  const fid=(document.getElementById('perFacSelect')     ||{}).value||'';
-  let lecs=DB.lectures;
-  if(mf) lecs=lecs.filter(l=>l.date.startsWith(mf));
-  if(fid)lecs=lecs.filter(l=>l.facultyId===fid);
-  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  if(!lecs.length){showToast('No lectures found for selection','error');return;}
-  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
-  const facName=fid?(DB.faculties.find(f=>f.id===fid)||{name:'All Faculty'}).name:'All Faculty';
-  const{jsPDF}=window.jspdf;
+function exportMonthlyPDF(){
+  const lecs = getExportLecs('lectures');
+  if(!lecs.length){showToast('No lectures match current filter','error');return;}
+  const label = filterLabel();
+  const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
 
   function addHeader(){
     doc.setFillColor(26,111,181);doc.rect(0,0,pw,26,'F');
@@ -1453,109 +2058,689 @@ function exportPerFacultyPDF(){
     doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
     doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,10,{align:'center'});
     doc.setFontSize(9);
-    doc.text('Faculty Lecture Detail Sheet – '+monthLabel,pw/2,17,{align:'center'});
-    doc.setFontSize(7.5);doc.text('Faculty: '+facName,pw/2,23,{align:'center'});
+    doc.text('Monthly Lecture Sheet  |  Period: '+label,pw/2,17,{align:'center'});
     doc.setFillColor(240,248,255);doc.rect(0,30,pw,10,'F');
-    doc.setTextColor(26,111,181);doc.setFontSize(8);doc.setFont('helvetica','normal');
-    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pw/2,36,{align:'center'});
-  }
-  function addLsFooter(pn,tp){
-    const fh=22,fy=ph-fh;
-    doc.setFillColor(240,248,255);doc.rect(0,fy,pw,fh,'F');
-    doc.setDrawColor(26,111,181);doc.line(0,fy,pw,fy);
-    const cw=pw/3;
-    doc.setTextColor(60,60,90);doc.setFontSize(7);doc.setFont('helvetica','normal');
-    doc.text('Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',cw*0+8,fy+5);
-    doc.text('Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',    cw*1+8,fy+5);
-    doc.text('Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',     cw*2+8,fy+5);
-    [cw*0+55,cw*1+55,cw*2+55].forEach(x=>{doc.setDrawColor(160,160,190);doc.line(x,fy+19,x-44,fy+19);});
-    doc.setTextColor(160,160,180);doc.setFontSize(6);
-    doc.text(`Page ${pn} of ${tp}`,pw-10,fy+19,{align:'right'});
-  }
-
-  addHeader();
-  doc.autoTable({
-    startY:42,
-    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link','Signature']],
-    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join(', '),l.students??'—',l.driveLink||'—','']),
-    styles:{fontSize:7,cellPadding:2.8,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
-    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:7},
-    alternateRowStyles:{fillColor:[240,248,255]},
-    columnStyles:{
-      0:{cellWidth:8, halign:'center'},
-      1:{cellWidth:21},
-      2:{cellWidth:16},
-      3:{cellWidth:13},
-      4:{cellWidth:32},
-      5:{cellWidth:28},
-      6:{cellWidth:52,overflow:'linebreak'},
-      7:{cellWidth:16,halign:'center'},
-      8:{cellWidth:38,overflow:'linebreak',textColor:[26,111,181]},
-      9:{cellWidth:32},
-    },
-    margin:{top:42,bottom:26,left:8,right:8},
-    didDrawPage:(d)=>{addHeader();addLsFooter(d.pageNumber,1);},
-  });
-  const tp=doc.internal.getNumberOfPages();
-  for(let p=1;p<=tp;p++){doc.setPage(p);addLsFooter(p,tp);}
-  doc.save(`FacultySheet_${facName.replace(/\s/g,'_')}_${monthLabel.replace(' ','_')}.pdf`);
-  showToast('Per-Faculty PDF downloaded!','success');
-}
-
-// ══════════════════════════════════
-//  PDF — MONTHLY LECTURE SHEET
-// ══════════════════════════════════
-function exportMonthlyPDF(){
-  const mf=(document.getElementById('lecMonthFilter')||{}).value||'';
-  let lecs=getVisibleLectures();
-  if(mf)lecs=lecs.filter(l=>l.date.startsWith(mf));
-  lecs=[...lecs].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  if(!lecs.length){showToast('No lectures for selected period','error');return;}
-  const monthLabel=mf?MONTHS[parseInt(mf.split('-')[1])-1]+' '+mf.split('-')[0]:'All Months';
-  const{jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
-  function addHeader(){
-    doc.setFillColor(26,111,181);doc.rect(0,0,pw,22,'F');
-    doc.setFillColor(0,180,216);doc.rect(0,22,pw,4,'F');
-    doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
-    doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,10,{align:'center'});
-    doc.setFontSize(9);doc.text('Daily Lecture Sheet – '+monthLabel,pw/2,17,{align:'center'});
-    doc.setFillColor(240,248,255);doc.rect(0,26,pw,10,'F');
-    doc.setTextColor(26,111,181);doc.setFontSize(8);doc.setFont('helvetica','normal');
-    doc.text('Department: Information Technology (IT)   |   Program: BTech Working Professional (IT)   |   Batch: 2025   |   Date: '+new Date().toLocaleDateString('en-IN'),pw/2,32,{align:'center'});
+    doc.setTextColor(26,111,181);doc.setFontSize(7.5);doc.setFont('helvetica','normal');
+    doc.text(
+      'Dept: IT  |  Program: BTech WP (IT)  |  Batch: 2025  |  '+
+      'Generated: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+
+      '  |  Total Records: '+lecs.length,
+      pw/2,36,{align:'center'}
+    );
   }
   function addFooter(pn,tp){
     doc.setFillColor(240,248,255);doc.rect(0,ph-22,pw,22,'F');
     doc.setDrawColor(26,111,181);doc.line(0,ph-22,pw,ph-22);
     const cw=pw/3;
     doc.setTextColor(60,60,90);doc.setFontSize(7);doc.setFont('helvetica','normal');
-    doc.text('Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT Bardoli',cw*0+8,ph-18);
-    doc.text('Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT Bardoli',    cw*1+8,ph-18);
-    doc.text('Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT Bardoli',     cw*2+8,ph-18);
-    [cw*0+55,cw*1+55,cw*2+55].forEach(x=>{doc.setDrawColor(160,160,190);doc.line(x,ph-4,x-44,ph-4);});
-    doc.setTextColor(160,160,180);doc.setFontSize(6.5);doc.text(`Page ${pn} of ${tp}`,pw-12,ph-4,{align:'right'});
+    ['Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT',
+     'Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT',
+     'Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT'].forEach((t,i)=>{
+      doc.text(t, cw*i+8, ph-18);
+      doc.setDrawColor(160,160,190);
+      doc.line(cw*i+8, ph-4, cw*i+52, ph-4);
+    });
+    doc.setTextColor(160,160,180);doc.setFontSize(6);
+    doc.text('Page '+pn+' of '+tp, pw-10, ph-4, {align:'right'});
   }
+
   addHeader();
   doc.autoTable({
-    startY:37,
-    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Drive Link']],
-    body:lecs.map((l,i)=>[i+1,formatDate(l.date),l.day,formatTime(l.time),l.facultyName+(l.swappedFrom?' (Swap)':''),l.subjectName,(l.topics||[]).join(', '),l.students??'—',l.driveLink||'—']),
-    styles:{fontSize:7.5,cellPadding:3,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
-    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:7.5},
+    startY:42,
+    head:[['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Duration','Status','Drive Link']],
+    body:lecs.map((l,i)=>[
+      i+1, formatDate(l.date), l.day, formatTime(l.time),
+      l.facultyName+(l.swappedFrom?' (Swap)':''),
+      l.subjectName,
+      (l.topics||[]).join(', '),
+      l.students??'—',
+      l.duration!=null ? l.duration+' min' : '—',
+      (l.validationStatus||'unknown').toUpperCase(),
+      l.driveLink||'—'
+    ]),
+    styles:{fontSize:6.5,cellPadding:2.5,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:6.5},
     alternateRowStyles:{fillColor:[240,248,255]},
-    columnStyles:{0:{cellWidth:8,halign:'center'},1:{cellWidth:22},2:{cellWidth:18},3:{cellWidth:14},4:{cellWidth:35},5:{cellWidth:30},6:{cellWidth:52,overflow:'linebreak'},7:{cellWidth:16,halign:'center'},8:{cellWidth:45,overflow:'linebreak',textColor:[26,111,181]}},
-    margin:{top:37,bottom:26,left:8,right:8},
+    columnStyles:{
+      0:{cellWidth:7,  halign:'center'},
+      1:{cellWidth:20},
+      2:{cellWidth:14},
+      3:{cellWidth:12},
+      4:{cellWidth:28},
+      5:{cellWidth:26},
+      6:{cellWidth:44,overflow:'linebreak'},
+      7:{cellWidth:14, halign:'center'},
+      8:{cellWidth:16, halign:'center'},
+      9:{cellWidth:14, halign:'center'},
+      10:{cellWidth:38,overflow:'linebreak',textColor:[26,111,181]},
+    },
+    margin:{top:42,bottom:26,left:8,right:8},
     didDrawPage:(d)=>{addHeader();addFooter(d.pageNumber,1);},
   });
   const tp=doc.internal.getNumberOfPages();
   for(let p=1;p<=tp;p++){doc.setPage(p);addFooter(p,tp);}
-  doc.save(`LectureSheet_${monthLabel.replace(' ','_')}.pdf`);showToast('Monthly PDF downloaded!','success');
+  doc.save('MonthlySheet_'+filterSuffix()+'.pdf');
+  showToast('Monthly PDF exported — '+lecs.length+' records','success');
+}
+
+// ══════════════════════════════════
+//  MONTHLY SHEET — XLSX  (filter-aware)
+// ══════════════════════════════════
+function exportMonthlyXLSX(){
+  if(typeof XLSX==='undefined'){showToast('XLSX library still loading, try again','error');return;}
+  const lecs = getExportLecs('lectures');
+  if(!lecs.length){showToast('No lectures match current filter','error');return;}
+  const label = filterLabel();
+  const now   = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+
+  const wsData=[
+    ['R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI'],
+    ['Monthly Lecture Sheet  |  Period: '+label],
+    ['Department: IT  |  Program: BTech WP (IT)  |  Batch: 2025  |  Generated: '+now],
+    [],
+    ['#','Date','Day','Time','Faculty','Subject','Topics Covered','Students','Duration (min)','Status','Drive Link'],
+    ...lecs.map((l,i)=>[
+      i+1, l.date, l.day, l.time,
+      l.facultyName, l.subjectName,
+      (l.topics||[]).join(', '),
+      l.students??'',
+      l.duration??'',
+      (l.validationStatus||'unknown').toUpperCase(),
+      l.driveLink
+    ]),
+    [],
+    ['Summary','','','','','','',
+     'Total: '+lecs.length,
+     'Valid: '+lecs.filter(l=>l.validationStatus==='valid').length,
+     'Invalid: '+lecs.filter(l=>l.validationStatus==='invalid').length,
+     'Unknown: '+lecs.filter(l=>l.validationStatus==='unknown').length
+    ],
+  ];
+
+  const wb=XLSX.utils.book_new();
+  const ws=XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols']=[
+    {wch:5},{wch:13},{wch:11},{wch:8},{wch:24},{wch:24},
+    {wch:38},{wch:10},{wch:14},{wch:10},{wch:44}
+  ];
+  // Style header rows bold (rows 0-3) — basic XLSX styling via cell format
+  ['A1','A2','A3'].forEach(ref=>{
+    if(ws[ref]) ws[ref].s={font:{bold:true}};
+  });
+  ws['!merges']=[
+    {s:{r:0,c:0},e:{r:0,c:10}},
+    {s:{r:1,c:0},e:{r:1,c:10}},
+    {s:{r:2,c:0},e:{r:2,c:10}},
+  ];
+  XLSX.utils.book_append_sheet(wb,ws,'Monthly Sheet');
+  XLSX.writeFile(wb,'MonthlySheet_'+filterSuffix()+'.xlsx');
+  showToast('Monthly XLSX exported — '+lecs.length+' records','success');
+}
+
+// ══════════════════════════════════
+//  BILLING SHEET — PDF  (filter-aware)
+// ══════════════════════════════════
+function exportBillPDF(){
+  const lecs = getExportLecs('bills');
+  if(!lecs.length){showToast('No valid lectures match current filter','error');return;}
+  const label = filterLabel();
+
+  const byFac={};
+  lecs.forEach(l=>{
+    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0,totalDur:0};
+    byFac[l.facultyId].count++;
+    byFac[l.facultyId].totalDur+=(l.duration||0);
+  });
+  const rate=750, rows=Object.values(byFac);
+  let grand=0; rows.forEach(r=>{grand+=r.count*rate;});
+
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+
+  // ── Header ──
+  doc.setFillColor(26,111,181);doc.rect(0,0,pw,30,'F');
+  doc.setFillColor(0,180,216);doc.rect(0,30,pw,4,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');doc.setFontSize(13);
+  doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,11,{align:'center'});
+  doc.setFontSize(10);
+  doc.text('Faculty Lecture Payment Bill',pw/2,19,{align:'center'});
+  doc.setFontSize(8);
+  doc.text('Dept: IT  |  Program: BTech WP (IT)  |  Batch: 2025',pw/2,26,{align:'center'});
+
+  // ── Info row ──
+  doc.setFillColor(240,248,255);doc.rect(0,34,pw,12,'F');
+  doc.setTextColor(26,111,181);doc.setFontSize(8.5);doc.setFont('helvetica','normal');
+  doc.text('Period: '+label, 14, 41);
+  doc.text('Rate: Rs. '+rate+' per lecture  |  Billable lectures: '+lecs.length, pw/2, 41, {align:'center'});
+  doc.text('Generated: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'}), pw-14, 41, {align:'right'});
+
+  // ── Table ──
+  doc.autoTable({
+    startY:48,
+    head:[['Sr.','Faculty Name','Valid Lectures','Total Duration','Amount (Rs.)','Signature']],
+    body:rows.map((r,i)=>{
+      const a=r.count*rate;
+      return[i+1, r.name, r.count, r.totalDur ? r.totalDur+' min' : '—', fmtMoney(a), ''];
+    }),
+    styles:{fontSize:9,cellPadding:4.5,valign:'middle',lineColor:[200,220,240],lineWidth:0.25},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:9},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    columnStyles:{
+      0:{cellWidth:12, halign:'center'},
+      1:{cellWidth:62},
+      2:{cellWidth:24, halign:'center'},
+      3:{cellWidth:28, halign:'center'},
+      4:{cellWidth:36, halign:'center'},
+      5:{cellWidth:28},
+    },
+    margin:{left:10,right:10},
+  });
+
+  // ── Grand total banner ──
+  const fy=doc.lastAutoTable.finalY+4;
+  doc.setFillColor(26,111,181);doc.rect(10,fy,pw-20,12,'F');
+  doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(10);
+  doc.text('Total Lectures: '+lecs.length, 18, fy+8);
+  doc.text('Grand Total: '+fmtMoney(grand), pw-14, fy+8, {align:'right'});
+
+  billFooter(doc,pw,ph);
+  doc.save('Bill_'+filterSuffix()+'.pdf');
+  showToast('Bill PDF exported — '+fmtMoney(grand),'success');
+}
+
+// ══════════════════════════════════
+//  BILLING SHEET — XLSX  (filter-aware)
+// ══════════════════════════════════
+function exportBillXLSX(){
+  if(typeof XLSX==='undefined'){showToast('XLSX library still loading, try again','error');return;}
+  const lecs = getExportLecs('bills');
+  if(!lecs.length){showToast('No valid lectures match current filter','error');return;}
+  const label = filterLabel();
+  const now   = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const rate  = 750;
+
+  const byFac={};
+  lecs.forEach(l=>{
+    if(!byFac[l.facultyId])byFac[l.facultyId]={name:l.facultyName,count:0,totalDur:0,lectures:[]};
+    byFac[l.facultyId].count++;
+    byFac[l.facultyId].totalDur+=(l.duration||0);
+    byFac[l.facultyId].lectures.push(l);
+  });
+  const rows=Object.values(byFac);
+  const grand=rows.reduce((s,r)=>s+r.count*rate,0);
+
+  // Sheet 1 — Summary
+  const summaryData=[
+    ['R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI'],
+    ['Faculty Lecture Payment Bill  |  Period: '+label],
+    ['Dept: IT  |  Program: BTech WP (IT)  |  Batch: 2025  |  Generated: '+now],
+    ['Dept: IT  |  Program: BTech WP (IT)  |  Generated: '+now],
+    [],
+    ['Sr.','Faculty Name','Valid Lectures','Total Duration (min)','Amount (Rs.)'],
+    ...rows.map((r,i)=>[i+1, r.name, r.count, r.totalDur||0, r.count*rate]),
+    [],
+    ['','GRAND TOTAL','','',grand],
+  ];
+
+  // Sheet 2 — Lecture-level detail (for audit)
+  const detailData=[
+    ['Lecture Detail  |  Period: '+label],
+    [],
+    ['#','Date','Day','Time','Faculty','Subject','Topics','Students','Duration (min)','Status','Drive Link'],
+    ...lecs.map((l,i)=>[
+      i+1, l.date, l.day, l.time,
+      l.facultyName, l.subjectName,
+      (l.topics||[]).join(', '),
+      l.students??'',
+      l.duration??'',
+      'VALID',
+      l.driveLink
+    ]),
+  ];
+
+  const wb = XLSX.utils.book_new();
+
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+  wsSummary['!cols']=[{wch:5},{wch:30},{wch:16},{wch:22},{wch:18}];
+  wsSummary['!merges']=[
+    {s:{r:0,c:0},e:{r:0,c:4}},{s:{r:1,c:0},e:{r:1,c:4}},
+    {s:{r:2,c:0},e:{r:2,c:4}},{s:{r:3,c:0},e:{r:3,c:4}},
+  ];
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Bill Summary');
+
+  const wsDetail = XLSX.utils.aoa_to_sheet(detailData);
+  wsDetail['!cols']=[
+    {wch:5},{wch:12},{wch:10},{wch:8},{wch:24},{wch:24},
+    {wch:36},{wch:10},{wch:14},{wch:8},{wch:44}
+  ];
+  XLSX.utils.book_append_sheet(wb, wsDetail, 'Lecture Detail');
+
+  XLSX.writeFile(wb, 'Bill_'+filterSuffix()+'.xlsx');
+  showToast('Bill XLSX exported — '+rows.length+' faculty, '+fmtMoney(grand),'success');
+}
+
+// ══════════════════════════════════
+//  PER FACULTY SHEET — PDF  (filter-aware)
+// ══════════════════════════════════
+function exportPerFacultyPDF(){
+  const fid=(document.getElementById('perFacSelect')||{}).value||'';
+  if(!fid){showToast('Select a faculty first','error');return;}
+  const lecs = getExportLecs('perFac');
+  if(!lecs.length){showToast('No lectures match current filter','error');return;}
+  const label   = filterLabel();
+  const facName = (DB.faculties.find(f=>f.id===fid)||{name:'Faculty'}).name;
+  const validLecs = lecs.filter(l=>l.validationStatus==='valid');
+
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth(), ph=doc.internal.pageSize.getHeight();
+
+  function addHeader(){
+    doc.setFillColor(26,111,181);doc.rect(0,0,pw,28,'F');
+    doc.setFillColor(0,180,216);doc.rect(0,28,pw,4,'F');
+    doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);
+    doc.text('R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI',pw/2,10,{align:'center'});
+    doc.setFontSize(9);
+    doc.text('Faculty Lecture Detail Sheet  |  '+facName,pw/2,17,{align:'center'});
+    doc.setFontSize(7.5);
+    doc.text('Period: '+label+'  |  Valid: '+validLecs.length+'  |  Total: '+lecs.length, pw/2,24,{align:'center'});
+    doc.setFillColor(240,248,255);doc.rect(0,32,pw,10,'F');
+    doc.setTextColor(26,111,181);doc.setFontSize(7.5);doc.setFont('helvetica','normal');
+    doc.text(
+      'Dept: IT  |  Program: BTech WP (IT)  |  Batch: 2025  |  '+
+      'Billable Amount: Rs. '+(validLecs.length*750).toLocaleString('en-IN')+'  |  '+
+      'Generated: '+new Date().toLocaleDateString('en-IN'),
+      pw/2, 38, {align:'center'}
+    );
+  }
+  function addFooter(pn,tp){
+    const fh=22,fy=ph-fh;
+    doc.setFillColor(240,248,255);doc.rect(0,fy,pw,fh,'F');
+    doc.setDrawColor(26,111,181);doc.line(0,fy,pw,fy);
+    const cw=pw/3;
+    doc.setTextColor(60,60,90);doc.setFontSize(7);doc.setFont('helvetica','normal');
+    ['Prepared by: Ms. R.S.Patel\nAsst.Prof IT Dept, RNGPIT',
+     'Verified by: Mr. V.C.Joshi\nHead, IT Dept, RNGPIT',
+     'Approved by: Dr. L.B.Chaudhari\nDirector, RNGPIT'].forEach((t,i)=>{
+      doc.text(t, cw*i+8, fy+5);
+      doc.setDrawColor(160,160,190);
+      doc.line(cw*i+8, fy+19, cw*i+52, fy+19);
+    });
+    doc.setTextColor(160,160,180);doc.setFontSize(6);
+    doc.text('Page '+pn+' of '+tp, pw-10, fy+19, {align:'right'});
+  }
+
+  addHeader();
+  doc.autoTable({
+    startY:44,
+    head:[['#','Date','Day','Time','Subject','Topics Covered','Students','Duration','Status','Drive Link','Signature']],
+    body:lecs.map((l,i)=>[
+      i+1, formatDate(l.date), l.day, formatTime(l.time),
+      l.subjectName, (l.topics||[]).join(', '),
+      l.students??'—',
+      l.duration!=null ? l.duration+' min' : '—',
+      (l.validationStatus||'unknown').toUpperCase(),
+      l.driveLink||'—',
+      ''
+    ]),
+    styles:{fontSize:6.5,cellPadding:2.5,valign:'middle',lineColor:[200,220,240],lineWidth:0.2},
+    headStyles:{fillColor:[26,111,181],textColor:[255,255,255],fontStyle:'bold',fontSize:6.5},
+    alternateRowStyles:{fillColor:[240,248,255]},
+    // Dim invalid rows
+    didParseCell:(d)=>{
+      if(d.section==='body'&&lecs[d.row.index]?.validationStatus==='invalid'){
+        d.cell.styles.textColor=[180,100,100];
+      }
+    },
+    columnStyles:{
+      0:{cellWidth:7, halign:'center'},
+      1:{cellWidth:20},
+      2:{cellWidth:14},
+      3:{cellWidth:12},
+      4:{cellWidth:26},
+      5:{cellWidth:44,overflow:'linebreak'},
+      6:{cellWidth:13,halign:'center'},
+      7:{cellWidth:16,halign:'center'},
+      8:{cellWidth:14,halign:'center'},
+      9:{cellWidth:38,overflow:'linebreak',textColor:[26,111,181]},
+      10:{cellWidth:28},
+    },
+    margin:{top:44,bottom:26,left:8,right:8},
+    didDrawPage:(d)=>{addHeader();addFooter(d.pageNumber,1);},
+  });
+  const tp=doc.internal.getNumberOfPages();
+  for(let p=1;p<=tp;p++){doc.setPage(p);addFooter(p,tp);}
+  doc.save('FacultySheet_'+facName.replace(/\s+/g,'_')+'_'+filterSuffix()+'.pdf');
+  showToast('Faculty PDF exported — '+lecs.length+' lectures','success');
+}
+
+// ══════════════════════════════════
+//  PER FACULTY SHEET — XLSX  (filter-aware)
+// ══════════════════════════════════
+function exportPerFacultyXLSX(){
+  if(typeof XLSX==='undefined'){showToast('XLSX library still loading, try again','error');return;}
+  const fid=(document.getElementById('perFacSelect')||{}).value||'';
+  if(!fid){showToast('Select a faculty first','error');return;}
+  const lecs = getExportLecs('perFac');
+  if(!lecs.length){showToast('No lectures match current filter','error');return;}
+  const label   = filterLabel();
+  const facName = (DB.faculties.find(f=>f.id===fid)||{name:'Faculty'}).name;
+  const now     = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const validLecs = lecs.filter(l=>l.validationStatus==='valid');
+  const amt = validLecs.length*750;
+
+  const wsData=[
+    ['R.N.G. PATEL INSTITUTE OF TECHNOLOGY, BARDOLI'],
+    ['Faculty Lecture Sheet  |  '+facName+'  |  Period: '+label],
+    ['Dept: IT  |  Program: BTech WP (IT)  |  Batch: 2025  |  Generated: '+now],
+    ['Valid: '+validLecs.length+'  |  Total: '+lecs.length+'  |  Billable: Rs. '+amt.toLocaleString('en-IN')],
+    [],
+    ['#','Date','Day','Time','Subject','Topics Covered','Students','Duration (min)','Status','Drive Link'],
+    ...lecs.map((l,i)=>[
+      i+1, l.date, l.day, l.time,
+      l.subjectName, (l.topics||[]).join(', '),
+      l.students??'',
+      l.duration??'',
+      (l.validationStatus||'unknown').toUpperCase(),
+      l.driveLink
+    ]),
+    [],
+    ['Summary:','','','',
+     'Valid: '+validLecs.length,
+     'Invalid: '+lecs.filter(l=>l.validationStatus==='invalid').length,
+     'Unknown: '+lecs.filter(l=>l.validationStatus==='unknown').length,
+     'Total Duration: '+lecs.reduce((s,l)=>s+(l.duration||0),0)+' min',
+     'Billable Amt:','Rs. '+amt.toLocaleString('en-IN')],
+  ];
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols']=[
+    {wch:5},{wch:12},{wch:10},{wch:8},{wch:26},
+    {wch:38},{wch:10},{wch:14},{wch:10},{wch:44}
+  ];
+  ws['!merges']=[
+    {s:{r:0,c:0},e:{r:0,c:9}},{s:{r:1,c:0},e:{r:1,c:9}},
+    {s:{r:2,c:0},e:{r:2,c:9}},{s:{r:3,c:0},e:{r:3,c:9}},
+  ];
+  XLSX.utils.book_append_sheet(wb, ws, facName.split(' ').slice(-1)[0].substring(0,28));
+  XLSX.writeFile(wb, 'FacultySheet_'+facName.replace(/\s+/g,'_')+'_'+filterSuffix()+'.xlsx');
+  showToast('Faculty XLSX exported — '+lecs.length+' lectures','success');
 }
 
 // ══════════════════════════════════
 //  UTILS
 // ══════════════════════════════════
+// ══════════════════════════════════
+//  ADVANCED FILTER — COMPLETE ENGINE
+// ══════════════════════════════════
+function openAdvancedFilter(context){
+  advFilter.context = context;
+  const titles = {lectures:'Lecture Records', bills:'Bill Summary', perFac:'Per Faculty Sheet'};
+  document.getElementById('advFilterTitle').textContent = '🗓 Filter — ' + (titles[context]||context);
+  // Restore UI to current filter state
+  setFilterType(advFilter.type, false);
+  buildYearGrid();
+  buildMonthGrid();
+  updateFilterPreview();
+  document.getElementById('advFilterModal').classList.add('show');
+}
+
+// ── Filter type switch ──
+function setFilterType(type, updateState=true){
+  if(updateState) advFilter.type = type;
+  // Tab highlighting
+  ['month','multi','year','date','range'].forEach(t=>{
+    const el = document.getElementById('ftab-'+t);
+    if(el) el.classList.toggle('active', t===type);
+  });
+  // Section visibility
+  document.getElementById('fsYear').style.display  = type==='range'||type==='date' ? 'none' : 'block';
+  document.getElementById('fsMonth').style.display = (type==='month'||type==='multi') ? 'block' : 'none';
+  document.getElementById('fsDate').style.display  = type==='date'  ? 'block' : 'none';
+  document.getElementById('fsRange').style.display = type==='range' ? 'block' : 'none';
+  // Update month title
+  const mt = document.getElementById('fsMonthTitle');
+  if(mt) mt.textContent = type==='multi' ? '📅 Select Months (tap multiple)' : '📅 Select Month';
+  updateFilterPreview();
+}
+
+// ── Decade bar (quick jump: 2000s, 2010s, 2020s … 2090s) ──
+function buildDecadeBar(){
+  let html = '';
+  for(let d=2000; d<=2090; d+=10){
+    const isActive = advFilter.year>=d && advFilter.year<d+10;
+    html += `<div class="decade-btn${isActive?' active-decade':''}" onclick="jumpToDecade(${d})">${d}s</div>`;
+  }
+  document.getElementById('decadeBar').innerHTML = html;
+}
+function jumpToDecade(start){
+  yearPageStart=start;
+  buildYearGrid();
+}
+// ── Year grid (10 years per page, paginated) ──
+function buildYearGrid(){
+  const end = Math.min(yearPageStart+10, 2101);
+  document.getElementById('yearPageLabel').textContent = yearPageStart + ' – ' + (end-1);
+  let html = '';
+  for(let y = yearPageStart; y < end; y++){
+    const isSel = advFilter.year === y;
+    const isCur = y === CURRENT_YEAR;
+    html += `<div class="year-btn${isSel?' selected':''}${isCur&&!isSel?' current-year':''}"
+      onclick="selectYear(${y})" title="${y}${isCur?' (current year)':''}">${y}</div>`;
+  }
+  document.getElementById('yearGrid').innerHTML = html;
+}
+function shiftYearPage(dir){
+  yearPageStart=Math.max(2000,Math.min(2091,yearPageStart+dir*10));
+  buildYearGrid();
+}
+function selectYear(y){
+  advFilter.year=y;
+  buildYearGrid();
+  updateFilterPreview();
+}
+
+// ── Month grid ──
+function buildMonthGrid(){
+  let html = '';
+  MONTH_SHORT.forEach((m,i)=>{
+    const num = i+1;
+    const isSel = advFilter.months.includes(num);
+    const isCur = num===CURRENT_MONTH && advFilter.year===CURRENT_YEAR;
+    html += `<div class="month-btn${isSel?' selected':''}${isCur&&!isSel?' current-month':''}"
+      onclick="toggleMonth(${num})">${m}</div>`;
+  });
+  document.getElementById('monthGrid').innerHTML = html;
+}
+function toggleMonth(num){
+  if(advFilter.type === 'month'){
+    advFilter.months = [num]; // single-select
+  } else {
+    const idx = advFilter.months.indexOf(num);
+    idx>=0 ? advFilter.months.splice(idx,1) : advFilter.months.push(num);
+    advFilter.months.sort((a,b)=>a-b);
+  }
+  buildMonthGrid();
+  updateFilterPreview();
+}
+
+// ── Specific date handler ──
+function onSpecificDateChange(){
+  const d = document.getElementById('filterSpecificDate').value;
+  if(!d){ document.getElementById('specificDateInfo').textContent=''; return; }
+  const dt = new Date(d+'T00:00:00');
+  const info = document.getElementById('specificDateInfo');
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  info.textContent = days[dt.getDay()] + ', ' + dt.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+  advFilter.specificDate = d;
+  updateFilterPreview();
+}
+
+function updateFilterPreview(){
+  const f=advFilter;
+  const el=document.getElementById('filterPreview');
+  if(!el)return;
+  let desc='';
+  if(f.type==='month'){
+    desc=f.year&&f.months.length
+      ?'📅 '+MONTHS[f.months[0]-1]+' '+f.year
+      :f.year?'📌 Year '+f.year+' — pick a month below':'Select year and month';
+  } else if(f.type==='multi'){
+    desc=f.year&&f.months.length
+      ?'📆 '+f.months.map(m=>MONTH_SHORT[m-1]).join(', ')+' '+f.year+' ('+f.months.length+' months)'
+      :'Select year then tap months';
+  } else if(f.type==='year'){
+    desc=f.year?'📊 Full year: '+f.year:'Select a year';
+  } else if(f.type==='date'){
+    const d=document.getElementById('filterSpecificDate');
+    desc=d&&d.value?'🗒 Date: '+formatDate(d.value):'Pick a specific date';
+  } else if(f.type==='range'){
+    const from=document.getElementById('filterFromDate');
+    const to  =document.getElementById('filterToDate');
+    const fv=from&&from.value, tv=to&&to.value;
+    if(fv&&tv){
+      const days=Math.round((new Date(tv)-new Date(fv))/(86400000))+1;
+      desc='📏 '+formatDate(fv)+' → '+formatDate(tv)+' ('+days+' days)';
+      const ri=document.getElementById('rangeInfo');
+      if(ri)ri.textContent=days+' day range selected';
+    } else {
+      desc='Select From and To dates';
+    }
+  }
+  el.innerHTML=desc
+    ?'<strong>Filter:</strong> <span style="color:var(--primary);">'+desc+'</span>'
+    :'<span style="opacity:0.5;">No filter selected yet</span>';
+}
+
+// ── Status checkbox ──
+function onStatusAllChange(){
+  const all = document.getElementById('fStatusAll').checked;
+  ['fStatusValid','fStatusInvalid','fStatusUnknown'].forEach(id=>{
+    document.getElementById(id).checked = all;
+  });
+}
+
+// ── Apply filter ──
+function applyAdvFilter(){
+  const type=advFilter.type;
+  if(type==='date'){
+    advFilter.specificDate=document.getElementById('filterSpecificDate').value;
+    if(!advFilter.specificDate){showToast('Please select a specific date','error');return;}
+  }
+  if(type==='range'){
+    advFilter.fromDate=document.getElementById('filterFromDate').value;
+    advFilter.toDate  =document.getElementById('filterToDate').value;
+    if(!advFilter.fromDate||!advFilter.toDate){showToast('Set both From and To dates','error');return;}
+    if(advFilter.fromDate>advFilter.toDate){showToast('From date must be before To date','error');return;}
+  }
+  // always keep status all-true (UI removed)
+  advFilter.status={valid:true,invalid:true,unknown:true};
+  closeModal('advFilterModal');
+  // Re-render whatever page we're on — filter is global so refresh all that need it
+  const ctx=advFilter.context;
+  if(ctx==='lectures'){renderLectureTable();showActiveFilterChip('lectures');}
+  else if(ctx==='bills'){renderBillTable();showActiveFilterChip('bills');}
+  else if(ctx==='perFac'){renderPerFacultyTable();showActiveFilterChip('perFac');}
+  showToast('✔ Filter applied — '+describeFilter(advFilter),'success');
+}
+
+// ── Describes the filter in a short human string ──
+function describeFilter(f){
+  if(f.type==='month'&&f.year&&f.months.length)
+    return MONTHS[f.months[0]-1]+' '+f.year;
+  if(f.type==='multi'&&f.year&&f.months.length)
+    return f.months.map(m=>MONTH_SHORT[m-1]).join('+')+' '+f.year;
+  if(f.type==='year'&&f.year) return 'Year '+f.year;
+  if(f.type==='date'&&f.specificDate) return formatDate(f.specificDate);
+  if(f.type==='range'&&f.fromDate&&f.toDate)
+    return formatDate(f.fromDate)+' → '+formatDate(f.toDate);
+  return 'All data';
+}
+
+// ── Show active filter chip in page header ──
+function showActiveFilterChip(context){
+  const desc=describeFilter(advFilter);
+  const ids={lectures:'lecFilterChip',bills:'billFilterLabel',perFac:'perFacFilterLabel'};
+  const chipId=ids[context];
+  if(!chipId)return;
+  const el=document.getElementById(chipId);
+  if(!el)return;
+  if(desc==='All data'){el.style.display='none';el.innerHTML='';return;}
+  el.style.display='inline-flex';
+  el.className='active-filter-chip';
+  el.innerHTML=`🗓 ${desc} <span class="clr" onclick="clearContextFilter('${context}')">✕</span>`;
+}
+
+function clearContextFilter(context){
+  advFilter.type='month'; advFilter.months=[]; advFilter.year=CURRENT_YEAR;
+  advFilter.specificDate=''; advFilter.fromDate=''; advFilter.toDate='';
+  advFilter.status={valid:true,invalid:true,unknown:true};
+  const ids={lectures:'lecFilterChip',bills:'billFilterLabel',perFac:'perFacFilterLabel'};
+  const el=document.getElementById(ids[context]);
+  if(el){el.style.display='none';el.innerHTML='';}
+  if(context==='lectures')renderLectureTable();
+  else if(context==='bills')renderBillTable();
+  else if(context==='perFac')renderPerFacultyTable();
+  showToast('Filter cleared','warning');
+}
+
+// ── Clear all in modal ──
+function clearAdvFilter(){
+  advFilter.type='month'; advFilter.months=[]; advFilter.year=CURRENT_YEAR;
+  advFilter.specificDate=''; advFilter.fromDate=''; advFilter.toDate='';
+  advFilter.status={valid:true,invalid:true,unknown:true};
+  setFilterType('month',true);
+  yearPageStart=Math.floor(CURRENT_YEAR/10)*10;
+  buildYearGrid();buildMonthGrid();
+  const fromEl=document.getElementById('filterFromDate');
+  const toEl  =document.getElementById('filterToDate');
+  const specEl=document.getElementById('filterSpecificDate');
+  if(fromEl)fromEl.value='';
+  if(toEl)  toEl.value='';
+  if(specEl)specEl.value='';
+  document.getElementById('specificDateInfo').textContent='';
+  document.getElementById('rangeInfo').textContent='';
+  ['fStatusAll','fStatusValid','fStatusInvalid','fStatusUnknown'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.checked=true;
+  });
+  updateFilterPreview();
+}
+
+// ── Core filter logic applied to a lectures array ──
+function applyAdvFilterToLecs(lecs){
+  const f = advFilter;
+  // Date filtering
+  if(f.type==='month' && f.year && f.months.length===1){
+    const prefix = f.year+'-'+String(f.months[0]).padStart(2,'0');
+    lecs = lecs.filter(l=>l.date.startsWith(prefix));
+  } else if(f.type==='multi' && f.year && f.months.length>0){
+    lecs = lecs.filter(l=>{
+      const [y,m] = l.date.split('-');
+      return parseInt(y)===f.year && f.months.includes(parseInt(m));
+    });
+  } else if(f.type==='year' && f.year){
+    lecs = lecs.filter(l=>l.date.startsWith(String(f.year)));
+  } else if(f.type==='date' && f.specificDate){
+    lecs = lecs.filter(l=>l.date===f.specificDate);
+  } else if(f.type==='range' && f.fromDate && f.toDate){
+    lecs = lecs.filter(l=>l.date>=f.fromDate && l.date<=f.toDate);
+  }
+  // Status filtering
+  if(!f.status.valid)   lecs = lecs.filter(l=>l.validationStatus!=='valid');
+  if(!f.status.invalid) lecs = lecs.filter(l=>l.validationStatus!=='invalid');
+  if(!f.status.unknown) lecs = lecs.filter(l=>l.validationStatus!=='unknown');
+  return lecs;
+}
+
+function togglePwd(inputId,btn){
+  const inp=document.getElementById(inputId);
+  if(!inp)return;
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';btn.style.color='#1a6fb5';}
+  else{inp.type='password';btn.textContent='👁';btn.style.color='#64748b';}
+}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
 function formatDate(d){if(!d)return'';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
